@@ -12,6 +12,7 @@
 		31F4348921115AFE003F8A34 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 31F4348721115AFE003F8A34 /* Main.storyboard */; };
 		31F4348B21115AFE003F8A34 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 31F4348A21115AFE003F8A34 /* Assets.xcassets */; };
 		31F4348E21115AFE003F8A34 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 31F4348C21115AFE003F8A34 /* LaunchScreen.storyboard */; };
+		31F4349621115B32003F8A34 /* SDFancyTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31F4349521115B32003F8A34 /* SDFancyTextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		31F4348A21115AFE003F8A34 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		31F4348D21115AFE003F8A34 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		31F4348F21115AFE003F8A34 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		31F4349521115B32003F8A34 /* SDFancyTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDFancyTextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 			children = (
 				31F4348321115AFE003F8A34 /* AppDelegate.swift */,
 				31F4348521115AFE003F8A34 /* ViewController.swift */,
+				31F4349521115B32003F8A34 /* SDFancyTextField.swift */,
 				31F4348721115AFE003F8A34 /* Main.storyboard */,
 				31F4348A21115AFE003F8A34 /* Assets.xcassets */,
 				31F4348C21115AFE003F8A34 /* LaunchScreen.storyboard */,
@@ -138,6 +141,7 @@
 			files = (
 				31F4348621115AFE003F8A34 /* ViewController.swift in Sources */,
 				31F4348421115AFE003F8A34 /* AppDelegate.swift in Sources */,
+				31F4349621115B32003F8A34 /* SDFancyTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
