@@ -16,8 +16,10 @@ class SDFancyTextField: UIView {
     private var textFieldHolderView: UIView = UIView()
     var textField: UITextField = UITextField()
     
+    private var borderColorDefaultValue: UIColor = UIColor.lightGray
     @IBInspectable var borderColor: UIColor {
-        set {   self.dividerView?.backgroundColor = newValue
+        set {   self.borderColorDefaultValue = newValue
+                self.dividerView?.backgroundColor = newValue
                 self.backgroundColor = newValue
         } get { return self.backgroundColor ?? UIColor.lightGray
         }
@@ -46,13 +48,16 @@ class SDFancyTextField: UIView {
         }
     }
     
+    private var cornerRadiusDefaultValue: CGFloat = 10.0
     @IBInspectable var cornerRadius: CGFloat {
         set {
             let acceptableRadius = self.frame.size.height / 2
             if newValue > acceptableRadius {
+                self.cornerRadiusDefaultValue = acceptableRadius
                 self.layer.cornerRadius = acceptableRadius
                 self.textFieldHolderView.layer.cornerRadius = acceptableRadius - 2
             } else {
+                self.cornerRadiusDefaultValue = newValue
                 self.layer.cornerRadius = newValue
                 self.textFieldHolderView.layer.cornerRadius = newValue - 2
             }
@@ -66,16 +71,21 @@ class SDFancyTextField: UIView {
         get { return self.iconImageView.image }
     }
     
+    private var shadowColorDefaultValue: UIColor = UIColor.black
     @IBInspectable var shadowColor: UIColor {
         set {
+            self.shadowColorDefaultValue = newValue
             self.layer.shadowColor = newValue.cgColor
             self.layer.shadowOpacity = 0.0
             self.layer.shadowOffset = CGSize(width: 1.5, height: 1.5)
             self.layer.shadowRadius = 1}
         get {return UIColor(cgColor:self.layer.shadowColor!)}}
     
+    private var fieldBackgroundColorDefaultValue: UIColor = UIColor.white
     @IBInspectable var fieldBackgroundColor: UIColor {
-        set { self.textFieldHolderView.backgroundColor = newValue }
+        set {
+            fieldBackgroundColorDefaultValue = newValue
+            self.textFieldHolderView.backgroundColor = newValue }
         get { return self.textFieldHolderView.backgroundColor ?? UIColor.white }}
     
     override init(frame: CGRect) {
@@ -93,6 +103,7 @@ class SDFancyTextField: UIView {
     }
     
     func setup() {
+        self.setupMainView()
         self.setupTextFieldHolderView()
         self.setupTextField()
         self.addDividerView()
@@ -100,7 +111,17 @@ class SDFancyTextField: UIView {
         self.setupActions()
     }
     
+    func setupMainView() {
+        self.backgroundColor = self.borderColorDefaultValue
+        self.layer.cornerRadius = self.cornerRadiusDefaultValue
+        self.layer.shadowColor = self.shadowColorDefaultValue.cgColor
+        self.layer.shadowOpacity = 0.0
+        self.layer.shadowOffset = CGSize(width: 1.5, height: 1.5)
+        self.layer.shadowRadius = 1
+    }
+    
     private func addDividerView() {
+        self.dividerView!.backgroundColor = self.borderColorDefaultValue
         self.dividerView!.translatesAutoresizingMaskIntoConstraints = false
         self.textFieldHolderView.addSubview(self.dividerView!)
         NSLayoutConstraint(item: self.dividerView!, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1.0, constant: 2).isActive = true
@@ -192,6 +213,8 @@ class SDFancyTextField: UIView {
     }
     
     private func setupTextFieldHolderView() {
+        self.textFieldHolderView.backgroundColor = self.fieldBackgroundColorDefaultValue
+        self.textFieldHolderView.layer.cornerRadius = self.cornerRadiusDefaultValue - 2
         self.textFieldHolderView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(self.textFieldHolderView)
         NSLayoutConstraint(item: self.textFieldHolderView, attribute: NSLayoutAttribute.leading, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.leadingMargin, multiplier: 1.0, constant: -6.0).isActive = true
