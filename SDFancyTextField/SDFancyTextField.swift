@@ -16,6 +16,7 @@ class SDFancyTextField: UIView {
     private var textFieldHolderView: UIView = UIView()
     var textField: UITextField = UITextField()
     
+    private var originalBorderColor: UIColor?
     private var borderColorDefaultValue: UIColor = UIColor.lightGray
     @IBInspectable var borderColor: UIColor {
         set {   self.borderColorDefaultValue = newValue
@@ -47,6 +48,8 @@ class SDFancyTextField: UIView {
         } get { return self.textField.placeholder
         }
     }
+    
+    @IBInspectable var selectedColor: UIColor?
     
     private var cornerRadiusDefaultValue: CGFloat = 10.0
     @IBInspectable var cornerRadius: CGFloat {
@@ -179,6 +182,10 @@ class SDFancyTextField: UIView {
                        initialSpringVelocity: CGFloat(6.0),
                        options: UIViewAnimationOptions.allowUserInteraction,
                        animations: {
+                        if let possibleSelectedColor = self.selectedColor {
+                            self.originalBorderColor = self.borderColor
+                            self.borderColor = possibleSelectedColor
+                        }
                         self.imageHolderView.transform = CGAffineTransform.identity},
                        completion: nil)
     }
@@ -208,6 +215,9 @@ class SDFancyTextField: UIView {
                        initialSpringVelocity: CGFloat(6.0),
                        options: UIViewAnimationOptions.allowUserInteraction,
                        animations: {
+                        if let possibleOriginalColor = self.originalBorderColor {
+                            self.borderColor = possibleOriginalColor
+                        }
                         self.textField.transform = CGAffineTransform.identity},
                        completion: nil)
     }
