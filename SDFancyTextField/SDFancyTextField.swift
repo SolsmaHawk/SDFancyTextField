@@ -11,31 +11,56 @@ import UIKit
 @IBDesignable
 class SDFancyTextField: UIView {
     
-    static private var validationGroupsHashTable = NSHashTable<SDFancyTextField>(options: .weakMemory)
+    struct ValidationGroup {
+        var name: String
+    }
     
-    class func validate(group: String) -> (isValid: Bool, invalidFields: [SDFancyTextField]?) {
-        var invalidFields: [SDFancyTextField]?
+    static private var validationGroupsHashTable = NSHashTable<SDFancyTextField>(options: .weakMemory)
+    static private var groupValidationClosures: [String:((_ textFieldText: String) -> (success: Bool, errorMessage: String?))]?
+    
+    class func addValidationFor(group:ValidationGroup, with validation:@escaping ((_ textFieldText: String) -> (success: Bool, errorMessage: String?))) {
+        if groupValidationClosures == nil {
+            groupValidationClosures = [String:((textFieldText: String) -> (success: Bool, errorMessage: String?))]()
+        }
+        groupValidationClosures![group.name] = validation
+    }
+    
+    class func validate(group: ValidationGroup) -> (isValid: Bool, invalidFields: [SDFancyTextField:[ValidationGroup]]?) {
+        var invalidFields: [SDFancyTextField:[ValidationGroup]]?
         for fancyTextField in SDFancyTextField.validationGroupsHashTable.allObjects {
-            if fancyTextField.validationGroupValue == group {
-                if !fancyTextField.fieldIsValid {
-                    if invalidFields == nil {
-                        invalidFields = [SDFancyTextField]()
+            for validationGroup in fancyTextField.validationGroupValues ?? [] {
+                if validationGroup.name == group.name {
+                    if !fancyTextField.fieldIsValid {
+                        if invalidFields == nil {
+                            invalidFields = [SDFancyTextField:[ValidationGroup]]()
+                        }
+                        if let possibleExistingValidationArray = invalidFields?[fancyTextField] {
+                            var tempValidationArray = [ValidationGroup]()
+                            tempValidationArray.append(contentsOf: possibleExistingValidationArray)
+                            tempValidationArray.append(validationGroup)
+                            invalidFields![fancyTextField] = tempValidationArray
+                            
+                        } else {
+                            invalidFields![fancyTextField] = [validationGroup]
+                        }
                     }
-                    invalidFields!.append(fancyTextField)
                 }
             }
         }
         return((invalidFields?.isEmpty ?? false, invalidFields))
     }
     
-    private var validationGroupValue: String?
-    @IBInspectable var validationGroup: String? {
+    private var validationGroupValues: [ValidationGroup]?
+    var validationGroups: [ValidationGroup]? {
         set {
             if let possibleValue = newValue {
-                validationGroupValue = possibleValue
+                if validationGroupValues == nil {
+                    validationGroupValues = [ValidationGroup]()
+                }
+                validationGroupValues = possibleValue
                 SDFancyTextField.validationGroupsHashTable.add(self)
             }
-        } get { return validationGroupValue }
+        } get { return validationGroupValues }
     }
     
     private var imageHolderView: UIView = UIView()
@@ -122,7 +147,15 @@ class SDFancyTextField: UIView {
     
     var fieldIsValid: Bool {
         if let possibleFieldValidationClosure = self.fieldValidationClosure {
-            return possibleFieldValidationClosure(self.textField.text ?? "").success
+            if !possibleFieldValidationClosure(self.textField.text ?? "").success {
+                return false
+            }
+            for group in self.validationGroupValues ?? [] {
+                if !SDFancyTextField.validate(group: group).isValid {
+                    return false
+                }
+            }
+            return true
         }
         print("Field validation closure not set")
         return false

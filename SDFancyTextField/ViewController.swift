@@ -25,12 +25,20 @@ class ViewController: UIViewController {
             return (false, "String does not contain test")
         }
         if fancyTextView.fieldIsValid {
-            
+        
         }
-        fancyTextView.validationGroup = "test"
-        fancyTextView2.validationGroup = "test"
-        let validationGroupTuple = SDFancyTextField.validate(group: "test")
-        let validationGroupTuple2 = SDFancyTextField.validate(group: "new")
+        SDFancyTextField.addValidationFor(group: SDFancyTextField.ValidationGroup.init(name:"test"), with: {textFieldText in
+            if textFieldText.contains("t") {
+                return (true,nil)
+            }
+            return(false,"The field does not contain the letter 't'")
+        })
+        
+        fancyTextView.validationGroups = [SDFancyTextField.ValidationGroup.init(name: "test")]
+        fancyTextView2.validationGroups = [SDFancyTextField.ValidationGroup.init(name: "test"),SDFancyTextField.ValidationGroup.init(name: "new")]
+        
+        let validationGroupTuple = SDFancyTextField.validate(group: SDFancyTextField.ValidationGroup.init(name: "test"))
+        let validationGroupTuple2 = SDFancyTextField.validate(group:SDFancyTextField.ValidationGroup.init(name: "new"))
         self.view.addSubview(fancyTextView)
         
     }
