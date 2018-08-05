@@ -16,6 +16,15 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         let fancyTextView = SDFancyTextField.init(with: CGRect.init(x: 50, y: 50, width: 300, height: 40), iconImage: UIImage.init(named: "solsma_Dev_even"), cornerRadius: 20, borderColor: UIColor.blue)
         fancyTextView.borderColor = UIColor.green
+        fancyTextView.fieldValidationClosure = {textfieldText in
+            if textfieldText.contains("test") {
+                return (true, nil)
+            }
+            return (false, "String does not contain test")
+        }
+        if fancyTextView.fieldIsValid {
+            
+        }
         self.view.addSubview(fancyTextView)
     }
 

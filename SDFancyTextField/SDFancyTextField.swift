@@ -91,6 +91,24 @@ class SDFancyTextField: UIView {
             self.textFieldHolderView.backgroundColor = newValue }
         get { return self.textFieldHolderView.backgroundColor ?? UIColor.white }}
     
+    var fieldValidationClosure: ((_ textFieldText: String) -> (success: Bool, errorMessage: String?))?
+    
+    var fieldIsValid: Bool {
+        if let possibleFieldValidationClosure = self.fieldValidationClosure {
+            return possibleFieldValidationClosure(self.textField.text ?? "").success
+        }
+        print("Field validation closure not set")
+        return false
+    }
+    
+    var fieldValidationError: String? {
+        if let possibleFieldValidationClosure = self.fieldValidationClosure {
+            return possibleFieldValidationClosure(self.textField.text ?? "").errorMessage
+        }
+        print("Field validation closure not set")
+        return nil
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
@@ -176,17 +194,31 @@ class SDFancyTextField: UIView {
         self.layer.add(animation, forKey: animation.keyPath)
         self.layer.shadowOpacity = 0.5
         
-        UIView.animate(withDuration: 1.0,
+        UIView.animate(withDuration: 0.7,
                        delay: 0,
-                       usingSpringWithDamping: CGFloat(0.20),
-                       initialSpringVelocity: CGFloat(6.0),
+                       usingSpringWithDamping: CGFloat(0.30),
+                       initialSpringVelocity: CGFloat(3.0),
+                       options: UIViewAnimationOptions.allowUserInteraction,
+                       animations: {
+                        /*
+                        if let possibleSelectedColor = self.selectedColor {
+                            self.originalBorderColor = self.borderColor
+                            self.borderColor = possibleSelectedColor
+                        }
+ */
+                        self.imageHolderView.transform = CGAffineTransform.identity},
+                       completion: nil)
+        
+        UIView.animate(withDuration: 0.5,
+                       delay: 0,
+                       usingSpringWithDamping: CGFloat(0.0),
+                       initialSpringVelocity: CGFloat(0.0),
                        options: UIViewAnimationOptions.allowUserInteraction,
                        animations: {
                         if let possibleSelectedColor = self.selectedColor {
                             self.originalBorderColor = self.borderColor
                             self.borderColor = possibleSelectedColor
-                        }
-                        self.imageHolderView.transform = CGAffineTransform.identity},
+                        }},
                        completion: nil)
     }
     
@@ -209,17 +241,28 @@ class SDFancyTextField: UIView {
         animation.duration = 0.2
         self.layer.add(animation, forKey: animation.keyPath)
         self.layer.shadowOpacity = 0.0
-        UIView.animate(withDuration: 1.0,
+        UIView.animate(withDuration: 0.7,
                        delay: 0,
-                       usingSpringWithDamping: CGFloat(0.20),
-                       initialSpringVelocity: CGFloat(6.0),
+                       usingSpringWithDamping: CGFloat(0.30),
+                       initialSpringVelocity: CGFloat(2.0),
+                       options: UIViewAnimationOptions.allowUserInteraction,
+                       animations: {
+                        /*
+                        if let possibleOriginalColor = self.originalBorderColor {
+                            self.borderColor = possibleOriginalColor
+                        }
+                        */
+                        self.textField.transform = CGAffineTransform.identity},
+                       completion: nil)
+        UIView.animate(withDuration: 0.5,
+                       delay: 0,
+                       usingSpringWithDamping: CGFloat(0.00),
+                       initialSpringVelocity: CGFloat(0.0),
                        options: UIViewAnimationOptions.allowUserInteraction,
                        animations: {
                         if let possibleOriginalColor = self.originalBorderColor {
                             self.borderColor = possibleOriginalColor
-                        }
-                        self.textField.transform = CGAffineTransform.identity},
-                       completion: nil)
+                        }},completion: nil)
     }
     
     private func setupTextFieldHolderView() {
