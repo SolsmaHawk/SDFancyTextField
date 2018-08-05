@@ -11,6 +11,33 @@ import UIKit
 @IBDesignable
 class SDFancyTextField: UIView {
     
+    static private var validationGroupsHashTable = NSHashTable<SDFancyTextField>(options: .weakMemory)
+    
+    class func validate(group: String) -> (isValid: Bool, invalidFields: [SDFancyTextField]?) {
+        var invalidFields: [SDFancyTextField]?
+        for fancyTextField in SDFancyTextField.validationGroupsHashTable.allObjects {
+            if fancyTextField.validationGroupValue == group {
+                if !fancyTextField.fieldIsValid {
+                    if invalidFields == nil {
+                        invalidFields = [SDFancyTextField]()
+                    }
+                    invalidFields!.append(fancyTextField)
+                }
+            }
+        }
+        return((invalidFields?.isEmpty ?? false, invalidFields))
+    }
+    
+    private var validationGroupValue: String?
+    @IBInspectable var validationGroup: String? {
+        set {
+            if let possibleValue = newValue {
+                validationGroupValue = possibleValue
+                SDFancyTextField.validationGroupsHashTable.add(self)
+            }
+        } get { return validationGroupValue }
+    }
+    
     private var imageHolderView: UIView = UIView()
     private var dividerView: UIView? = UIView()
     private var textFieldHolderView: UIView = UIView()

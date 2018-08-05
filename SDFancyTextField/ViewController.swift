@@ -16,6 +16,8 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         let fancyTextView = SDFancyTextField.init(with: CGRect.init(x: 50, y: 50, width: 300, height: 40), iconImage: UIImage.init(named: "solsma_Dev_even"), cornerRadius: 20, borderColor: UIColor.blue)
         fancyTextView.borderColor = UIColor.green
+        let fancyTextView2 = SDFancyTextField.init(with: CGRect.init(x: 50, y: 50, width: 300, height: 40), iconImage: UIImage.init(named: "solsma_Dev_even"), cornerRadius: 20, borderColor: UIColor.blue)
+        fancyTextView2.borderColor = UIColor.green
         fancyTextView.fieldValidationClosure = {textfieldText in
             if textfieldText.contains("test") {
                 return (true, nil)
@@ -25,7 +27,12 @@ class ViewController: UIViewController {
         if fancyTextView.fieldIsValid {
             
         }
+        fancyTextView.validationGroup = "test"
+        fancyTextView2.validationGroup = "test"
+        let validationGroupTuple = SDFancyTextField.validate(group: "test")
+        let validationGroupTuple2 = SDFancyTextField.validate(group: "new")
         self.view.addSubview(fancyTextView)
+        
     }
 
     override func didReceiveMemoryWarning() {

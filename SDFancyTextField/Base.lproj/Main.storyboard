@@ -44,6 +44,7 @@
                                     <userDefinedRuntimeAttribute type="color" keyPath="selectedColor">
                                         <color key="value" red="0.30185431239999999" green="0.54745078089999999" blue="0.81736385820000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="validationGroup" value="new"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aac-DG-apZ" customClass="SDFancyTextField" customModule="SDFancyTextField" customModuleProvider="target">
@@ -64,6 +65,7 @@
                                     <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
                                         <color key="value" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="validationGroup" value="test"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
