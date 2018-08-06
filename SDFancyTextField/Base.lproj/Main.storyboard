@@ -58,7 +58,7 @@
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="15"/>
                                     </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="placeHolderText" value="Username"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="placeHolderText" value="Must contain 'new' to be valid"/>
                                     <userDefinedRuntimeAttribute type="color" keyPath="selectedColor">
                                         <color key="value" red="0.30185431239999999" green="0.54745078089999999" blue="0.81736385820000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </userDefinedRuntimeAttribute>

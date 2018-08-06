@@ -303,8 +303,8 @@ class SDFancyTextField: UIView {
                        completion: nil)
     }
     
-    @objc private func textFieldDidChange(_ textField: UITextField) {
-        if !self.fieldIsValid {
+    private func animateFieldIsNotValidMessage(valid: Bool) {
+        if !valid {
             UIView.animate(withDuration: 0.5,
                            delay: 0,
                            usingSpringWithDamping: CGFloat(0.0),
@@ -321,11 +321,14 @@ class SDFancyTextField: UIView {
                            options: UIViewAnimationOptions.allowUserInteraction,
                            animations: {
                             if let possibleSelectedColor = self.selectedColor {
-                                self.originalBorderColor = self.borderColor
                                 self.borderColor = possibleSelectedColor
                             }},
                            completion: nil)
         }
+    }
+    
+    @objc private func textFieldDidChange(_ textField: UITextField) {
+        animateFieldIsNotValidMessage(valid: self.fieldIsValid)
         self.dividerView!.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
         UIView.animate(withDuration: 1.0,
                        delay: 0,
