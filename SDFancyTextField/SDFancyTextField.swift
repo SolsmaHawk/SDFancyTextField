@@ -18,6 +18,13 @@ class SDFancyTextField: UIView {
     static private var validationGroupsHashTable = NSHashTable<SDFancyTextField>(options: .weakMemory)
     static private var groupValidationClosures: [String:((_ textFieldText: String) -> (success: Bool, errorMessage: String?))]?
     
+    static private func validationClosureFor(_ group:String) -> ((_ textFieldText: String) -> (success: Bool, errorMessage: String?))? {
+        if let possibleValidation = SDFancyTextField.groupValidationClosures?[group] {
+            return possibleValidation
+        }
+        return nil
+    }
+    
     class func addValidationFor(group:ValidationGroup, with validation:@escaping ((_ textFieldText: String) -> (success: Bool, errorMessage: String?))) {
         if groupValidationClosures == nil {
             groupValidationClosures = [String:((textFieldText: String) -> (success: Bool, errorMessage: String?))]()
@@ -30,24 +37,26 @@ class SDFancyTextField: UIView {
         for fancyTextField in SDFancyTextField.validationGroupsHashTable.allObjects {
             for validationGroup in fancyTextField.validationGroupValues ?? [] {
                 if validationGroup.name == group.name {
-                    if !fancyTextField.fieldIsValid {
-                        if invalidFields == nil {
-                            invalidFields = [SDFancyTextField:[ValidationGroup]]()
-                        }
-                        if let possibleExistingValidationArray = invalidFields?[fancyTextField] {
-                            var tempValidationArray = [ValidationGroup]()
-                            tempValidationArray.append(contentsOf: possibleExistingValidationArray)
-                            tempValidationArray.append(validationGroup)
-                            invalidFields![fancyTextField] = tempValidationArray
-                            
-                        } else {
-                            invalidFields![fancyTextField] = [validationGroup]
+                    if let possibleValidationClosureForGroup = SDFancyTextField.validationClosureFor(validationGroup.name) {
+                        if !possibleValidationClosureForGroup(fancyTextField.textField.text ?? "").success {
+                            if invalidFields == nil {
+                                invalidFields = [SDFancyTextField:[ValidationGroup]]()
+                            }
+                            if let possibleExistingValidationArray = invalidFields?[fancyTextField] {
+                                var tempValidationArray = [ValidationGroup]()
+                                tempValidationArray.append(contentsOf: possibleExistingValidationArray)
+                                tempValidationArray.append(validationGroup)
+                                invalidFields![fancyTextField] = tempValidationArray
+                                
+                            } else {
+                                invalidFields![fancyTextField] = [validationGroup]
+                            }
                         }
                     }
                 }
             }
         }
-        return((invalidFields?.isEmpty ?? false, invalidFields))
+        return((invalidFields?.isEmpty ?? true, invalidFields))
     }
     
     private var validationGroupValues: [ValidationGroup]?
@@ -146,10 +155,7 @@ class SDFancyTextField: UIView {
     var fieldValidationClosure: ((_ textFieldText: String) -> (success: Bool, errorMessage: String?))?
     
     var fieldIsValid: Bool {
-        if let possibleFieldValidationClosure = self.fieldValidationClosure {
-            if !possibleFieldValidationClosure(self.textField.text ?? "").success {
-                return false
-            }
+        func groupValidationsAreCorrect() -> Bool {
             for group in self.validationGroupValues ?? [] {
                 if !SDFancyTextField.validate(group: group).isValid {
                     return false
@@ -157,8 +163,13 @@ class SDFancyTextField: UIView {
             }
             return true
         }
-        print("Field validation closure not set")
-        return false
+        if let possibleFieldValidationClosure = self.fieldValidationClosure {
+            if !possibleFieldValidationClosure(self.textField.text ?? "").success {
+                return false
+            }
+            return groupValidationsAreCorrect()
+        }
+        return groupValidationsAreCorrect()
     }
     
     var fieldValidationError: String? {

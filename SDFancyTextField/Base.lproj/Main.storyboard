@@ -68,6 +68,20 @@
                                     <userDefinedRuntimeAttribute type="string" keyPath="validationGroup" value="test"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lZl-EE-cpa">
+                                <rect key="frame" x="123" y="366" width="128" height="64"/>
+                                <color key="backgroundColor" red="0.93635863065719604" green="0.61471742391586304" blue="0.12686514854431152" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="128" id="Tlo-Jr-N2Y"/>
+                                    <constraint firstAttribute="height" constant="64" id="aof-6U-UL9"/>
+                                </constraints>
+                                <state key="normal" title="Button">
+                                    <color key="titleColor" red="0.21173727512359619" green="0.21178042888641357" blue="0.2117345929145813" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="validateTextFieldsButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9ZM-Ob-x0U"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <constraints>
@@ -75,11 +89,17 @@
                             <constraint firstItem="dbf-0B-F5H" firstAttribute="top" secondItem="aac-DG-apZ" secondAttribute="bottom" constant="8" id="72i-kq-UDS"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="dbf-0B-F5H" secondAttribute="bottom" constant="309" id="9v3-g6-zIb"/>
                             <constraint firstItem="aac-DG-apZ" firstAttribute="width" secondItem="dbf-0B-F5H" secondAttribute="width" id="BDa-k0-xsS"/>
+                            <constraint firstItem="lZl-EE-cpa" firstAttribute="top" secondItem="dbf-0B-F5H" secondAttribute="bottom" constant="8" id="GHU-ne-4XH"/>
                             <constraint firstItem="dbf-0B-F5H" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="Wii-Us-REh"/>
                             <constraint firstItem="aac-DG-apZ" firstAttribute="centerX" secondItem="dbf-0B-F5H" secondAttribute="centerX" id="nCB-Ok-ay3"/>
+                            <constraint firstItem="lZl-EE-cpa" firstAttribute="centerX" secondItem="dbf-0B-F5H" secondAttribute="centerX" id="xYP-Ku-uOR"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="passwordFancyTextField" destination="dbf-0B-F5H" id="jIN-Ny-5ec"/>
+                        <outlet property="userNameFancyTextField" destination="aac-DG-apZ" id="Aon-Fg-XOX"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
