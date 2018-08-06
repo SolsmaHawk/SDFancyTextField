@@ -16,29 +16,43 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
        
-        userNameFancyTextField.validationGroups = [SDFancyTextField.ValidationGroup.init(name:"test")]
-        passwordFancyTextField.validationGroups = [SDFancyTextField.ValidationGroup.init(name:"new"),SDFancyTextField.ValidationGroup.init(name:"test"),SDFancyTextField.ValidationGroup.init(name:"test2")]
+        userNameFancyTextField.validationGroups = [SDFancyTextField.ValidationGroup.init(name:"email")]
+        passwordFancyTextField.validationGroups = [SDFancyTextField.ValidationGroup.init(name:"passwordValidation")]
         
-        SDFancyTextField.addValidationFor(group: SDFancyTextField.ValidationGroup.init(name:"test"), with: {textFieldText in
-            if textFieldText.contains("t") {
+        SDFancyTextField.addValidationFor(group: SDFancyTextField.ValidationGroup.init(name:"email"), with: {textFieldText in
+            let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+            
+            let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+            if emailTest.evaluate(with: textFieldText) {
                 return (true,nil)
             }
-            return(false,"The field does not contain the letter 't'")
+            return (false,"Not a valid email")
         })
         
-        SDFancyTextField.addValidationFor(group: SDFancyTextField.ValidationGroup.init(name:"test2"), with: {textFieldText in
-            if textFieldText.contains("h") {
+        func validate(password: String) -> Bool {
+            let capitalLetterRegEx  = ".*[A-Z]+.*"
+            let texttest = NSPredicate(format:"SELF MATCHES %@", capitalLetterRegEx)
+            guard texttest.evaluate(with: password) else { return false }
+            
+            let numberRegEx  = ".*[0-9]+.*"
+            let texttest1 = NSPredicate(format:"SELF MATCHES %@", numberRegEx)
+            guard texttest1.evaluate(with: password) else { return false }
+            
+            let specialCharacterRegEx  = ".*[!&^%$#@()/_*+-]+.*"
+            let texttest2 = NSPredicate(format:"SELF MATCHES %@", specialCharacterRegEx)
+            guard texttest2.evaluate(with: password) else { return false }
+            
+            return true
+        }
+        
+        SDFancyTextField.addValidationFor(group: SDFancyTextField.ValidationGroup.init(name:"passwordValidation"), with: {textFieldText in
+            if validate(password: textFieldText)  {
                 return (true,nil)
+            } else {
+                return(false,"Password not complex")
             }
-            return(false,"The field does not contain the letter 'h'")
         })
         
-        SDFancyTextField.addValidationFor(group: SDFancyTextField.ValidationGroup.init(name:"new"), with: {textFieldText in
-            if textFieldText.contains("new") {
-                return (true,nil)
-            }
-            return(false,"The field does not contain the letters 'new'")
-        })
     }
     
     @IBAction func validateTextFieldsButtonPressed(_ sender: Any) {

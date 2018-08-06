@@ -320,9 +320,7 @@ class SDFancyTextField: UIView {
                            initialSpringVelocity: CGFloat(0.0),
                            options: UIViewAnimationOptions.allowUserInteraction,
                            animations: {
-                            if let possibleSelectedColor = self.selectedColor {
-                                self.borderColor = possibleSelectedColor
-                            }},
+                            self.borderColor = UIColor.green},
                            completion: nil)
         }
     }
