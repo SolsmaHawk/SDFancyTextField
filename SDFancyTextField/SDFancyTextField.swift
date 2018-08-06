@@ -16,9 +16,9 @@ class SDFancyTextField: UIView {
     }
     
     static private var validationGroupsHashTable = NSHashTable<SDFancyTextField>(options: .weakMemory)
-    static private var groupValidationClosures: [String:((_ textFieldText: String) -> (success: Bool, errorMessage: String?))]?
+    static private var groupValidationClosures: [String:[((_ textFieldText: String) -> (success: Bool, errorMessage: String?))]]?
     
-    static private func validationClosureFor(_ group:String) -> ((_ textFieldText: String) -> (success: Bool, errorMessage: String?))? {
+    static private func validationClosuresFor(_ group:String) -> [((_ textFieldText: String) -> (success: Bool, errorMessage: String?))]? {
         if let possibleValidation = SDFancyTextField.groupValidationClosures?[group] {
             return possibleValidation
         }
@@ -27,9 +27,13 @@ class SDFancyTextField: UIView {
     
     class func addValidationFor(group:ValidationGroup, with validation:@escaping ((_ textFieldText: String) -> (success: Bool, errorMessage: String?))) {
         if groupValidationClosures == nil {
-            groupValidationClosures = [String:((textFieldText: String) -> (success: Bool, errorMessage: String?))]()
+            groupValidationClosures = [String:[((textFieldText: String) -> (success: Bool, errorMessage: String?))]]()
         }
-        groupValidationClosures![group.name] = validation
+        if (groupValidationClosures?[group.name] ?? []).isEmpty {
+            groupValidationClosures![group.name] = [validation]
+        } else {
+            groupValidationClosures![group.name]?.append(validation)
+        }
     }
     
     class func validate(group: ValidationGroup) -> (isValid: Bool, invalidFields: [SDFancyTextField:[ValidationGroup]]?) {
@@ -37,19 +41,21 @@ class SDFancyTextField: UIView {
         for fancyTextField in SDFancyTextField.validationGroupsHashTable.allObjects {
             for validationGroup in fancyTextField.validationGroupValues ?? [] {
                 if validationGroup.name == group.name {
-                    if let possibleValidationClosureForGroup = SDFancyTextField.validationClosureFor(validationGroup.name) {
-                        if !possibleValidationClosureForGroup(fancyTextField.textField.text ?? "").success {
-                            if invalidFields == nil {
-                                invalidFields = [SDFancyTextField:[ValidationGroup]]()
-                            }
-                            if let possibleExistingValidationArray = invalidFields?[fancyTextField] {
-                                var tempValidationArray = [ValidationGroup]()
-                                tempValidationArray.append(contentsOf: possibleExistingValidationArray)
-                                tempValidationArray.append(validationGroup)
-                                invalidFields![fancyTextField] = tempValidationArray
-                                
-                            } else {
-                                invalidFields![fancyTextField] = [validationGroup]
+                    if let possibleValidationClosuresForGroup = SDFancyTextField.validationClosuresFor(validationGroup.name) {
+                        for closure in possibleValidationClosuresForGroup {
+                            if !closure(fancyTextField.textField.text ?? "").success {
+                                if invalidFields == nil {
+                                    invalidFields = [SDFancyTextField:[ValidationGroup]]()
+                                }
+                                if let possibleExistingValidationArray = invalidFields?[fancyTextField] {
+                                    var tempValidationArray = [ValidationGroup]()
+                                    tempValidationArray.append(contentsOf: possibleExistingValidationArray)
+                                    tempValidationArray.append(validationGroup)
+                                    invalidFields![fancyTextField] = tempValidationArray
+                                    
+                                } else {
+                                    invalidFields![fancyTextField] = [validationGroup]
+                                }
                             }
                         }
                     }
@@ -157,8 +163,12 @@ class SDFancyTextField: UIView {
     var fieldIsValid: Bool {
         func groupValidationsAreCorrect() -> Bool {
             for group in self.validationGroupValues ?? [] {
-                if !SDFancyTextField.validate(group: group).isValid {
-                    return false
+                if let possibleInvalidFields = SDFancyTextField.validate(group: group).invalidFields {
+                    for fancyTextView in possibleInvalidFields.keys {
+                        if fancyTextView === self {
+                            return false
+                        }
+                    }
                 }
             }
             return true
@@ -294,6 +304,28 @@ class SDFancyTextField: UIView {
     }
     
     @objc private func textFieldDidChange(_ textField: UITextField) {
+        if !self.fieldIsValid {
+            UIView.animate(withDuration: 0.5,
+                           delay: 0,
+                           usingSpringWithDamping: CGFloat(0.0),
+                           initialSpringVelocity: CGFloat(0.0),
+                           options: UIViewAnimationOptions.allowUserInteraction,
+                           animations: {
+                            self.borderColor = UIColor.red },
+                           completion: nil)
+        } else {
+            UIView.animate(withDuration: 0.5,
+                           delay: 0,
+                           usingSpringWithDamping: CGFloat(0.0),
+                           initialSpringVelocity: CGFloat(0.0),
+                           options: UIViewAnimationOptions.allowUserInteraction,
+                           animations: {
+                            if let possibleSelectedColor = self.selectedColor {
+                                self.originalBorderColor = self.borderColor
+                                self.borderColor = possibleSelectedColor
+                            }},
+                           completion: nil)
+        }
         self.dividerView!.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
         UIView.animate(withDuration: 1.0,
                        delay: 0,
