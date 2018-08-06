@@ -78,11 +78,13 @@ class SDFancyTextField: UIView {
         } get { return validationGroupValues }
     }
     
+    private var messageTopConstraint: NSLayoutConstraint?
+    private var textFieldBottomConstraint: NSLayoutConstraint?
     private var imageHolderView: UIView = UIView()
     private var dividerView: UIView? = UIView()
     private var textFieldHolderView: UIView = UIView()
     var textField: UITextField = UITextField()
-    
+    private var messageLabel = UILabel()
     private var originalBorderColor: UIColor?
     private var borderColorDefaultValue: UIColor = UIColor.lightGray
     @IBInspectable var borderColor: UIColor {
@@ -210,10 +212,11 @@ class SDFancyTextField: UIView {
         self.setupTextField()
         self.addDividerView()
         self.setupImageHolderViewAndImage()
+        self.setupMessageLabel()
         self.setupActions()
     }
     
-    func setupMainView() {
+    private func setupMainView() {
         self.backgroundColor = self.borderColorDefaultValue
         self.layer.cornerRadius = self.cornerRadiusDefaultValue
         self.layer.shadowColor = self.shadowColorDefaultValue.cgColor
@@ -303,30 +306,43 @@ class SDFancyTextField: UIView {
                        completion: nil)
     }
     
-    private func animateFieldIsNotValidMessage(valid: Bool) {
-        if !valid {
+    private func animateFieldIsNotValidMessage(valid: Bool, textIsEmpty: Bool) {
+        if textIsEmpty {
+            self.showMessage(false)
             UIView.animate(withDuration: 0.5,
                            delay: 0,
                            usingSpringWithDamping: CGFloat(0.0),
                            initialSpringVelocity: CGFloat(0.0),
                            options: UIViewAnimationOptions.allowUserInteraction,
                            animations: {
-                            self.borderColor = UIColor.red },
+                            self.borderColor = self.originalBorderColor!},
                            completion: nil)
         } else {
-            UIView.animate(withDuration: 0.5,
-                           delay: 0,
-                           usingSpringWithDamping: CGFloat(0.0),
-                           initialSpringVelocity: CGFloat(0.0),
-                           options: UIViewAnimationOptions.allowUserInteraction,
-                           animations: {
-                            self.borderColor = UIColor.green},
-                           completion: nil)
+            self.showMessage(!valid)
+            if !valid {
+                UIView.animate(withDuration: 0.5,
+                               delay: 0,
+                               usingSpringWithDamping: CGFloat(0.0),
+                               initialSpringVelocity: CGFloat(0.0),
+                               options: UIViewAnimationOptions.allowUserInteraction,
+                               animations: {
+                                self.borderColor = UIColor.red },
+                               completion: nil)
+            } else {
+                UIView.animate(withDuration: 0.5,
+                               delay: 0,
+                               usingSpringWithDamping: CGFloat(0.0),
+                               initialSpringVelocity: CGFloat(0.0),
+                               options: UIViewAnimationOptions.allowUserInteraction,
+                               animations: {
+                                self.borderColor = self.originalBorderColor!},
+                               completion: nil)
+            }
         }
     }
     
     @objc private func textFieldDidChange(_ textField: UITextField) {
-        animateFieldIsNotValidMessage(valid: self.fieldIsValid)
+        animateFieldIsNotValidMessage(valid: self.fieldIsValid, textIsEmpty: (textField.text ?? "").isEmpty)
         self.dividerView!.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
         UIView.animate(withDuration: 1.0,
                        delay: 0,
@@ -380,6 +396,22 @@ class SDFancyTextField: UIView {
         NSLayoutConstraint(item: self.textFieldHolderView, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.bottomMargin, multiplier: 1.0, constant: 6.0).isActive = true
     }
     
+    private func setupMessageLabel() {
+        self.messageLabel.backgroundColor = UIColor.clear
+        self.messageLabel.text = "Must contain one number, capital letter and symbol"
+        self.messageLabel.font = self.messageLabel.font.withSize(14)
+        self.messageLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.messageLabel.textColor = self.borderColor
+        self.messageLabel.alpha = 0.0
+        self.textFieldHolderView.addSubview(self.messageLabel)
+        
+        NSLayoutConstraint(item: self.messageLabel, attribute: NSLayoutAttribute.leading, relatedBy: NSLayoutRelation.equal, toItem: textFieldHolderView, attribute: NSLayoutAttribute.leadingMargin, multiplier: 1.0, constant: 45).isActive = true
+        NSLayoutConstraint(item: self.messageLabel, attribute: NSLayoutAttribute.trailing, relatedBy: NSLayoutRelation.equal, toItem: textFieldHolderView, attribute: NSLayoutAttribute.trailingMargin, multiplier: 1.0, constant: -5).isActive = true
+       self.messageTopConstraint = NSLayoutConstraint(item: self.messageLabel, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: textFieldHolderView, attribute: NSLayoutAttribute.topMargin, multiplier: 1.0, constant: -30.0)
+        self.messageTopConstraint!.isActive = true
+        NSLayoutConstraint(item: self.messageLabel, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: textFieldHolderView, attribute: NSLayoutAttribute.bottomMargin, multiplier: 1.0, constant: 6.0).isActive = true
+    }
+    
     private func setupTextField() {
         self.textField.backgroundColor = UIColor.clear
         self.textField.translatesAutoresizingMaskIntoConstraints = false
@@ -387,8 +419,27 @@ class SDFancyTextField: UIView {
         
         NSLayoutConstraint(item: self.textField, attribute: NSLayoutAttribute.leading, relatedBy: NSLayoutRelation.equal, toItem: textFieldHolderView, attribute: NSLayoutAttribute.leadingMargin, multiplier: 1.0, constant: 45).isActive = true
         NSLayoutConstraint(item: self.textField, attribute: NSLayoutAttribute.trailing, relatedBy: NSLayoutRelation.equal, toItem: textFieldHolderView, attribute: NSLayoutAttribute.trailingMargin, multiplier: 1.0, constant: -5).isActive = true
-        NSLayoutConstraint(item: self.textField, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: textFieldHolderView, attribute: NSLayoutAttribute.topMargin, multiplier: 1.0, constant: -6.0).isActive = true
+        self.textFieldBottomConstraint = NSLayoutConstraint(item: self.textField, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: textFieldHolderView, attribute: NSLayoutAttribute.topMargin, multiplier: 1.0, constant: -6.0)
+        self.textFieldBottomConstraint!.isActive = true
         NSLayoutConstraint(item: self.textField, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: textFieldHolderView, attribute: NSLayoutAttribute.bottomMargin, multiplier: 1.0, constant: 6.0).isActive = true
+    }
+    
+    func showMessage(_ show: Bool) {
+        if show {
+            self.textFieldBottomConstraint?.constant = 7.0
+            self.messageTopConstraint?.constant = -21.0
+        } else {
+            self.textFieldBottomConstraint?.constant = -6.0
+            self.messageTopConstraint?.constant = -30.0
+        }
+        UIView.animate(withDuration: 0.2, animations: {
+            self.layoutIfNeeded()
+            if show {
+                self.messageLabel.alpha = 1.0
+            } else {
+                self.messageLabel.alpha = 0.0
+            }
+        })
     }
     
     override func awakeFromNib() {
