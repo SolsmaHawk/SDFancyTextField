@@ -299,9 +299,13 @@ class SDFancyTextField: UIView {
                        initialSpringVelocity: CGFloat(0.0),
                        options: UIViewAnimationOptions.allowUserInteraction,
                        animations: {
-                        if let possibleSelectedColor = self.selectedColor {
-                            self.originalBorderColor = self.borderColor
-                            self.borderColor = possibleSelectedColor
+                        if !self.fieldIsValid && !(self.textField.text ?? "").isEmpty {
+                            self.borderColor = UIColor.red
+                        } else {
+                            if let possibleSelectedColor = self.selectedColor {
+                                self.originalBorderColor = self.borderColor
+                                self.borderColor = possibleSelectedColor
+                            }
                         }},
                        completion: nil)
     }
@@ -380,8 +384,12 @@ class SDFancyTextField: UIView {
                        initialSpringVelocity: CGFloat(0.0),
                        options: UIViewAnimationOptions.allowUserInteraction,
                        animations: {
-                        if let possibleOriginalColor = self.originalBorderColor {
-                            self.borderColor = possibleOriginalColor
+                        if !self.fieldIsValid && !(self.textField.text ?? "").isEmpty {
+                            self.borderColor = UIColor.red
+                        } else {
+                            if let possibleOriginalColor = self.originalBorderColor {
+                                self.borderColor = possibleOriginalColor
+                            }
                         }},completion: nil)
     }
     
