@@ -2,7 +2,7 @@
 //  SDFancyTextField.swift
 //  SDFancyTextField
 //
-//  Created by ZuluAlpha on 7/31/18.
+//  Created by John Solsma on 7/31/18.
 //  Copyright © 2018 Solsma Dev Inc. All rights reserved.
 //
 
@@ -29,16 +29,16 @@ class SDFancyTextField: UIView {
     }
     
     static private var validationGroupsHashTable = NSHashTable<SDFancyTextField>(options: .weakMemory)
-    static private var groupValidationClosures: [String:[((_ textFieldText: String) -> (success: Bool, errorMessage: String?))]]?
+    static private var groupValidationClosures: [String:[TextFieldValidationClosure]]?
     
-    static private func validationClosuresFor(_ group:String) -> [((_ textFieldText: String) -> (success: Bool, errorMessage: String?))]? {
+    static private func validationClosuresFor(_ group:String) -> [TextFieldValidationClosure]? {
         if let possibleValidation = SDFancyTextField.groupValidationClosures?[group] {
             return possibleValidation
         }
         return nil
     }
     
-    class func addValidationFor(group:ValidationGroup, with validation:@escaping ((_ textFieldText: String) -> (success: Bool, errorMessage: String?))) {
+    class func addValidationFor(group:ValidationGroup, with validation: @escaping TextFieldValidationClosure) {
         if groupValidationClosures == nil {
             groupValidationClosures = [String:[((textFieldText: String) -> (success: Bool, errorMessage: String?))]]()
         }
@@ -48,8 +48,6 @@ class SDFancyTextField: UIView {
             groupValidationClosures![group.name]?.append(validation)
         }
     }
-   // private func validationResponseFor(group: ValidationGroup, fancyTextField: SDFancyTextField) ->
-    //}
     
     class func validate(group: ValidationGroup) -> [ValidationResponse]? {
         var validationResponses: [ValidationResponse]?
@@ -182,7 +180,7 @@ class SDFancyTextField: UIView {
             self.textFieldHolderView.backgroundColor = newValue }
         get { return self.textFieldHolderView.backgroundColor ?? UIColor.white }}
     
-    var fieldValidationClosure: ((_ textFieldText: String) -> (success: Bool, errorMessage: String?))?
+    var fieldValidationClosure: TextFieldValidationClosure?
     
     var fieldIsValid: Bool {
         func groupValidationsAreCorrect() -> Bool {
@@ -190,6 +188,7 @@ class SDFancyTextField: UIView {
                 let validationResponses = SDFancyTextField.validate(group: group)
                 for validationResponse in validationResponses ?? [] {
                     if !validationResponse.success && self === validationResponse.fancyTextField {
+                        self.fieldValidationErrors = validationResponse.errorMessages
                         return false
                     }
                 }
@@ -205,13 +204,13 @@ class SDFancyTextField: UIView {
         return groupValidationsAreCorrect()
     }
     
-    var fieldValidationError: String? {
+    var fieldValidationErrors: [String]? /*{
         if let possibleFieldValidationClosure = self.fieldValidationClosure {
             return possibleFieldValidationClosure(self.textField.text ?? "").errorMessage
         }
         print("Field validation closure not set")
         return nil
-    }
+    }*/
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -345,6 +344,7 @@ class SDFancyTextField: UIView {
         } else {
             self.showMessage(!valid)
             if !valid {
+                self.messageLabel.text = self.fieldValidationErrors?[0] ?? "Invalid input"
                 UIView.animate(withDuration: 0.5,
                                delay: 0,
                                usingSpringWithDamping: CGFloat(0.0),
