@@ -40,7 +40,7 @@ class SDFancyTextField: UIView {
     
     class func addValidationFor(group:ValidationGroup, with validation: @escaping TextFieldValidationClosure) {
         if groupValidationClosures == nil {
-            groupValidationClosures = [String:[((textFieldText: String) -> (success: Bool, errorMessage: String?))]]()
+            groupValidationClosures = [String:[TextFieldValidationClosure]]()
         }
         if (groupValidationClosures?[group.name] ?? []).isEmpty {
             groupValidationClosures![group.name] = [validation]
