@@ -32,8 +32,6 @@ class ViewController: UIViewController {
             return (false,"Not a valid email")
         })
         
-        //passwordFancyTextField.mustContainAnUppercaseLetter = true
-        
         SDFancyTextField.addValidationFor(group: SDFancyTextField.ValidationGroup.init(name:"passwordCheckForNumber"), with: {textFieldText in
             let numberRegEx  = ".*[0-9]+.*"
             let texttest1 = NSPredicate(format:"SELF MATCHES %@", numberRegEx)

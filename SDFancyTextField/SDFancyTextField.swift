@@ -228,77 +228,9 @@ class SDFancyTextField: UIView {
         return groupValidationsAreCorrect()
     }
     
-    var fieldValidationErrors: [String]? /*{
-        if let possibleFieldValidationClosure = self.fieldValidationClosure {
-            return possibleFieldValidationClosure(self.textField.text ?? "").errorMessage
-        }
-        print("Field validation closure not set")
-        return nil
-    }*/
+    var fieldValidationErrors: [String]?
     
-    // MARK: Protected Groups
-    private enum ProtectedGroup: String {
-        case ContainsAnUppercaseLetter = "protectedContainsAnUppercaseLetter"
-        case ContainsASpecialCharacter = "protectedContainsASpecialCharacter"
-        case ContainsANumber = "protectedContainsANumber"
-        case FieledTextEqualToOrGraterThan = "protectedFieledTextEqualToOrGraterThan"
-        case ConformsToRegex = "protectedConformsToRegex"
-    }
-    
-    // MARK: Quick Access Validations
-    
-    private var mustContainAnUppercaseLetterValue = false
-    @IBInspectable var mustContainAnUppercaseLetter: Bool {
-        set {
-                self.mustContainAnUppercaseLetterValue = newValue
-            let protectedValidationGroup = ValidationGroup.init(name: ProtectedGroup.ContainsAnUppercaseLetter.rawValue)
-            if self.validationGroups != nil {
-                self.validationGroups?.append(protectedValidationGroup)
-            } else {
-                self.validationGroups = [protectedValidationGroup]
-            }
-            SDFancyTextField.addValidationFor(group: protectedValidationGroup, with: {textFieldText in
-                let capitalLetterRegEx  = ".*[A-Z]+.*"
-                let texttest = NSPredicate(format:"SELF MATCHES %@", capitalLetterRegEx)
-                guard texttest.evaluate(with: textFieldText) else { return (false, "Must contain a capital letter") }
-                return (true, nil)
-            })
-        }
-        get {
-            return self.mustContainAnUppercaseLetterValue
-        }
-    }
-    
-    private var mustContainASpecialCharacterValue = false
-    @IBInspectable var mustContainASpecialCharacter: Bool {
-        set {
-            let protectedValidationGroup = ValidationGroup.init(name: ProtectedGroup.ContainsASpecialCharacter.rawValue)
-            if newValue {
-                self.mustContainASpecialCharacterValue = newValue
-                if self.validationGroups != nil {
-                    self.validationGroups?.append(protectedValidationGroup)
-                } else {
-                    self.validationGroups = [protectedValidationGroup]
-                }
-                SDFancyTextField.addValidationFor(group: protectedValidationGroup, with: {textFieldText in
-                    let specialCharacterRegEx  = ".*[!&^%$#@()/_*+-]+.*"
-                    let texttest2 = NSPredicate(format:"SELF MATCHES %@", specialCharacterRegEx)
-                    guard texttest2.evaluate(with: textFieldText) else { return (false, "Must contain a special character") }
-                    return (true,nil)
-                })
-            } else {
-                for (index, group) in (self.validationGroups ?? []).enumerated() {
-                    if group.name == protectedValidationGroup.name {
-                        self.validationGroups?.remove(at: index)
-                    }
-                }
-            }
-        }
-        get {
-            return self.mustContainASpecialCharacterValue
-        }
-    }
-    
+
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -314,8 +246,8 @@ class SDFancyTextField: UIView {
         self.setup()
     }
     
-    // MARK: Fancy Text Field Setup
     
+    // MARK: Fancy Text Field Setup
     func setup() {
         self.setupMainView()
         self.setupTextFieldHolderView()
