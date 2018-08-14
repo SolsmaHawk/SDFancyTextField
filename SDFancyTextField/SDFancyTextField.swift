@@ -29,6 +29,14 @@ class SDFancyTextField: UIView {
         var errorMessages: [String]?
     }
     
+    private enum QuickValidationType: String {
+        case UppercaseLetter    = "QuickValidationType_uppercaseLetter"
+        case SpecialCharacter   = "QuickValidationType_specialCharacter"
+        case ContainsNumber     = "QuickValidationType_containsNumber"
+        case CharacterLength    = "QuickValidationType_characterLength"
+        case NotEmpty           = "QuickValidationType_notEmpty"
+    }
+    
     static private var validationFormsHashTable = NSHashTable<SDFancyTextField>(options: .weakMemory)
     static private var validationGroupsHashTable = NSHashTable<SDFancyTextField>(options: .weakMemory)
     static private var groupValidationClosures: [String:[TextFieldValidationClosure]]?
@@ -38,6 +46,30 @@ class SDFancyTextField: UIView {
             return possibleValidation
         }
         return nil
+    }
+    
+    private class func addValidationFor(type: QuickValidationType) {
+        switch type {
+        case .UppercaseLetter:
+            SDFancyTextField.addValidationFor(group:ValidationGroup.init(name: type.rawValue    ), with: {  textFieldText in
+                let capitalLetterRegEx  = "[A-Z]+"
+                let texttest = NSPredicate(format:"SELF MATCHES %@", capitalLetterRegEx)
+                let capitalresult = texttest.evaluate(with: textFieldText)
+                if capitalresult {
+                    return(true,nil)
+                }
+                return(false,"Must contain a capital letter")
+            })
+        case .SpecialCharacter:
+            SDFancyTextField.addValidationFor(group: ValidationGroup.init(name: type.rawValue), with: { textFieldText in
+                let specialCharacterRegEx  = ".*[!&^%$#@()/_*+-]+.*"
+                let texttest2 = NSPredicate(format:"SELF MATCHES %@", specialCharacterRegEx)
+                guard texttest2.evaluate(with: textFieldText) else { return (false, "Must contain a special character") }
+                return (true,nil)
+            })
+        default:
+            break
+        }
     }
     
     class func addValidationFor(group:ValidationGroup, with validation: @escaping TextFieldValidationClosure) {
