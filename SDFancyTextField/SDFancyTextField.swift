@@ -11,6 +11,7 @@ import UIKit
 @IBDesignable
 class SDFancyTextField: UIView {
     
+    // MARK: Form Validation
     typealias TextFieldValidationClosure = ((_ textFieldText: String) -> (success: Bool, errorMessage: String?))
     
     struct ValidationGroup {
@@ -28,6 +29,7 @@ class SDFancyTextField: UIView {
         var errorMessages: [String]?
     }
     
+    static private var validationFormsHashTable = NSHashTable<SDFancyTextField>(options: .weakMemory)
     static private var validationGroupsHashTable = NSHashTable<SDFancyTextField>(options: .weakMemory)
     static private var groupValidationClosures: [String:[TextFieldValidationClosure]]?
     
@@ -47,6 +49,21 @@ class SDFancyTextField: UIView {
         } else {
             groupValidationClosures![group.name]?.append(validation)
         }
+    }
+    
+    class func validate(form: String, withAnimation: Bool) -> Bool {
+        var formIsValid = true
+        for fancyTextField in SDFancyTextField.validationGroupsHashTable.allObjects {
+            if fancyTextField.form == form {
+                if !fancyTextField.fieldIsValid {
+                    formIsValid = false
+                    if withAnimation {
+                        // animate textField with invalid animation
+                    }
+                }
+            }
+        }
+        return formIsValid
     }
     
     class func validate(group: ValidationGroup) -> [ValidationResponse]? {
@@ -115,6 +132,13 @@ class SDFancyTextField: UIView {
         }
     }
     
+    private var formValue: String?
+    @IBInspectable var form: String? {
+        set {   self.formValue = newValue
+            SDFancyTextField.validationFormsHashTable.add(self)
+        } get { return self.formValue
+        }
+    }
     private var iconImageColorMatchesBorderColorValue: Bool = false
     @IBInspectable var iconImageColorMatchesBorderColor: Bool {
         set {   self.iconImageColorMatchesBorderColorValue = newValue
@@ -212,6 +236,70 @@ class SDFancyTextField: UIView {
         return nil
     }*/
     
+    // MARK: Protected Groups
+    private enum ProtectedGroup: String {
+        case ContainsAnUppercaseLetter = "protectedContainsAnUppercaseLetter"
+        case ContainsASpecialCharacter = "protectedContainsASpecialCharacter"
+        case ContainsANumber = "protectedContainsANumber"
+        case FieledTextEqualToOrGraterThan = "protectedFieledTextEqualToOrGraterThan"
+        case ConformsToRegex = "protectedConformsToRegex"
+    }
+    
+    // MARK: Quick Access Validations
+    
+    private var mustContainAnUppercaseLetterValue = false
+    @IBInspectable var mustContainAnUppercaseLetter: Bool {
+        set {
+                self.mustContainAnUppercaseLetterValue = newValue
+            let protectedValidationGroup = ValidationGroup.init(name: ProtectedGroup.ContainsAnUppercaseLetter.rawValue)
+            if self.validationGroups != nil {
+                self.validationGroups?.append(protectedValidationGroup)
+            } else {
+                self.validationGroups = [protectedValidationGroup]
+            }
+            SDFancyTextField.addValidationFor(group: protectedValidationGroup, with: {textFieldText in
+                let capitalLetterRegEx  = ".*[A-Z]+.*"
+                let texttest = NSPredicate(format:"SELF MATCHES %@", capitalLetterRegEx)
+                guard texttest.evaluate(with: textFieldText) else { return (false, "Must contain a capital letter") }
+                return (true, nil)
+            })
+        }
+        get {
+            return self.mustContainAnUppercaseLetterValue
+        }
+    }
+    
+    private var mustContainASpecialCharacterValue = false
+    @IBInspectable var mustContainASpecialCharacter: Bool {
+        set {
+            let protectedValidationGroup = ValidationGroup.init(name: ProtectedGroup.ContainsASpecialCharacter.rawValue)
+            if newValue {
+                self.mustContainASpecialCharacterValue = newValue
+                if self.validationGroups != nil {
+                    self.validationGroups?.append(protectedValidationGroup)
+                } else {
+                    self.validationGroups = [protectedValidationGroup]
+                }
+                SDFancyTextField.addValidationFor(group: protectedValidationGroup, with: {textFieldText in
+                    let specialCharacterRegEx  = ".*[!&^%$#@()/_*+-]+.*"
+                    let texttest2 = NSPredicate(format:"SELF MATCHES %@", specialCharacterRegEx)
+                    guard texttest2.evaluate(with: textFieldText) else { return (false, "Must contain a special character") }
+                    return (true,nil)
+                })
+            } else {
+                for (index, group) in (self.validationGroups ?? []).enumerated() {
+                    if group.name == protectedValidationGroup.name {
+                        self.validationGroups?.remove(at: index)
+                    }
+                }
+            }
+        }
+        get {
+            return self.mustContainASpecialCharacterValue
+        }
+    }
+    
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
@@ -225,6 +313,8 @@ class SDFancyTextField: UIView {
         self.fieldBackgroundColor = fieldBackgroundColor
         self.setup()
     }
+    
+    // MARK: Fancy Text Field Setup
     
     func setup() {
         self.setupMainView()
@@ -287,6 +377,8 @@ class SDFancyTextField: UIView {
         self.textField.addTarget(self, action: #selector(SDFancyTextField.textFieldEditingDidBegin(_:)), for: UIControlEvents.editingDidBegin)
         self.textField.addTarget(self, action: #selector(SDFancyTextField.textFieldEditingDidEnd(_:)), for: UIControlEvents.editingDidEnd)
     }
+    
+    // MARK: Text Field Actions
     
     @objc private func textFieldEditingDidBegin(_ textField: UITextField) {
         self.imageHolderView.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
