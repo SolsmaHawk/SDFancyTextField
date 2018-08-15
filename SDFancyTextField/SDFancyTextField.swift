@@ -29,7 +29,7 @@ class SDFancyTextField: UIView {
         var errorMessages: [String]?
     }
     
-    private enum QuickValidationType: String {
+    enum QuickValidationType: String {
         case UppercaseLetter    = "QuickValidationType_uppercaseLetter"
         case SpecialCharacter   = "QuickValidationType_specialCharacter"
         case ContainsNumber     = "QuickValidationType_containsNumber"
@@ -52,13 +52,10 @@ class SDFancyTextField: UIView {
         switch type {
         case .UppercaseLetter:
             SDFancyTextField.addValidationFor(group:ValidationGroup.init(name: type.rawValue    ), with: {  textFieldText in
-                let capitalLetterRegEx  = "[A-Z]+"
+                let capitalLetterRegEx  = ".*[A-Z]+.*"
                 let texttest = NSPredicate(format:"SELF MATCHES %@", capitalLetterRegEx)
-                let capitalresult = texttest.evaluate(with: textFieldText)
-                if capitalresult {
-                    return(true,nil)
-                }
-                return(false,"Must contain a capital letter")
+                guard texttest.evaluate(with: textFieldText) else { return (false, "Must contain a capital letter") }
+                return (true,nil)
             })
         case .SpecialCharacter:
             SDFancyTextField.addValidationFor(group: ValidationGroup.init(name: type.rawValue), with: { textFieldText in
@@ -138,11 +135,10 @@ class SDFancyTextField: UIView {
     var validationGroups: [ValidationGroup]? {
         set {
             if let possibleValue = newValue {
-                if validationGroupValues == nil {
-                    validationGroupValues = [ValidationGroup]()
-                }
                 validationGroupValues = possibleValue
-                SDFancyTextField.validationGroupsHashTable.add(self)
+                if !SDFancyTextField.validationGroupsHashTable.contains(self) {
+                    SDFancyTextField.validationGroupsHashTable.add(self)
+                }
             }
         } get { return validationGroupValues }
     }
@@ -161,6 +157,27 @@ class SDFancyTextField: UIView {
                 self.dividerView?.backgroundColor = newValue
                 self.backgroundColor = newValue
         } get { return self.backgroundColor ?? UIColor.lightGray
+        }
+    }
+    
+    private var quickValidationTypeValues: [QuickValidationType]?
+    var quickValidationTypes: [QuickValidationType]? {
+        set {   if let possibleValidationTypes = newValue {
+            self.quickValidationTypeValues = possibleValidationTypes
+            for validationType in possibleValidationTypes {
+                if self.validationGroupValues == nil {
+                    self.validationGroupValues = [ValidationGroup]()
+                    self.validationGroupValues?.append(ValidationGroup.init(name: validationType.rawValue))
+                } else {
+                    self.validationGroupValues?.append(ValidationGroup.init(name: validationType.rawValue))
+                }
+                SDFancyTextField.addValidationFor(type: validationType)
+            }
+            if !SDFancyTextField.validationGroupsHashTable.contains(self) {
+                SDFancyTextField.validationGroupsHashTable.add(self)
+            }
+            }
+        } get { return self.quickValidationTypeValues
         }
     }
     

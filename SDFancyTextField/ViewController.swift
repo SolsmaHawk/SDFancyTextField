@@ -17,11 +17,12 @@ class ViewController: UIViewController {
         super.viewDidLoad()
        
         userNameFancyTextField.validationGroups = [SDFancyTextField.ValidationGroup.init(name:"email")]
-        passwordFancyTextField.validationGroups = [SDFancyTextField.ValidationGroup.init(name:"passwordCheckForCapitalLetter"),SDFancyTextField.ValidationGroup.init(name:"passwordCheckForNumber"),SDFancyTextField.ValidationGroup.init(name:"passwordCheckForSymbol"),SDFancyTextField.ValidationGroup.init(name:"passwordLengthCheck")]
+       // passwordFancyTextField.validationGroups = [SDFancyTextField.ValidationGroup.init(name:"passwordCheckForCapitalLetter"),SDFancyTextField.ValidationGroup.init(name:"passwordCheckForNumber"),SDFancyTextField.ValidationGroup.init(name:"passwordCheckForSymbol"),SDFancyTextField.ValidationGroup.init(name:"passwordLengthCheck")]
         
         userNameFancyTextField.form = "Main Form"
         passwordFancyTextField.form = "Main Form"
-        
+        passwordFancyTextField.quickValidationTypes = [.UppercaseLetter,.SpecialCharacter]
+       
         SDFancyTextField.addValidationFor(group: SDFancyTextField.ValidationGroup.init(name:"email"), with: {textFieldText in
             let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
             
@@ -31,7 +32,8 @@ class ViewController: UIViewController {
             }
             return (false,"Not a valid email")
         })
-        
+ 
+        /*
         SDFancyTextField.addValidationFor(group: SDFancyTextField.ValidationGroup.init(name:"passwordCheckForNumber"), with: {textFieldText in
             let numberRegEx  = ".*[0-9]+.*"
             let texttest1 = NSPredicate(format:"SELF MATCHES %@", numberRegEx)
@@ -52,7 +54,7 @@ class ViewController: UIViewController {
             }
             return (false, "Must be at least 7 characters")
         })
-        
+        */
     }
     
     @IBAction func validateTextFieldsButtonPressed(_ sender: Any) {

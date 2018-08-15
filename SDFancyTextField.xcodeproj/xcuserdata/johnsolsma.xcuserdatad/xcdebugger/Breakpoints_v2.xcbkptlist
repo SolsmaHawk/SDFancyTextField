@@ -10,28 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SDFancyTextField/SDFancyTextField.swift"
-            timestampString = "555967499.297525"
+            timestampString = "555990714.370651"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "506"
-            endingLineNumber = "506"
-            landmarkName = "SDFancyTextField"
-            landmarkType = "3">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SDFancyTextField/SDFancyTextField.swift"
-            timestampString = "555967499.297598"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "498"
-            endingLineNumber = "498"
-            landmarkName = "setupTextField()"
+            startingLineNumber = "555"
+            endingLineNumber = "555"
+            landmarkName = "init(coder:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -42,12 +26,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SDFancyTextField/SDFancyTextField.swift"
-            timestampString = "555967499.297658"
+            timestampString = "555990714.371117"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "273"
-            endingLineNumber = "273"
-            landmarkName = "init(with:iconImage:cornerRadius:borderColor:shadowColor:fieldBackgroundColor:)"
+            startingLineNumber = "547"
+            endingLineNumber = "547"
+            landmarkName = "awakeFromNib()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -58,11 +42,43 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SDFancyTextField/SDFancyTextField.swift"
-            timestampString = "555967499.297717"
+            timestampString = "555990714.37146"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "108"
-            endingLineNumber = "108"
+            startingLineNumber = "322"
+            endingLineNumber = "322"
+            landmarkName = "addDividerView()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SDFancyTextField/SDFancyTextField.swift"
+            timestampString = "555990714.371788"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "137"
+            endingLineNumber = "137"
+            landmarkName = "validationGroups"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SDFancyTextField/SDFancyTextField.swift"
+            timestampString = "555990714.372118"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "99"
+            endingLineNumber = "99"
             landmarkName = "validate(group:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -70,15 +86,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SDFancyTextField/SDFancyTextField.swift"
-            timestampString = "555967499.297774"
+            timestampString = "555990714.372434"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "70"
-            endingLineNumber = "70"
+            startingLineNumber = "73"
+            endingLineNumber = "73"
             landmarkName = "addValidationFor(group:with:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -90,28 +106,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SDFancyTextField/SDFancyTextField.swift"
-            timestampString = "555967499.2978311"
+            timestampString = "555990714.372744"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "44"
-            endingLineNumber = "44"
-            landmarkName = "validationClosuresFor(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SDFancyTextField/SDFancyTextField.swift"
-            timestampString = "555967499.297888"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "222"
-            endingLineNumber = "222"
-            landmarkName = "shadowColor"
+            startingLineNumber = "271"
+            endingLineNumber = "271"
+            landmarkName = "fieldIsValid"
             landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
@@ -122,11 +122,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SDFancyTextField/ViewController.swift"
-            timestampString = "555967499.297947"
+            timestampString = "555990714.373067"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "60"
-            endingLineNumber = "60"
+            startingLineNumber = "62"
+            endingLineNumber = "62"
             landmarkName = "validateTextFieldsButtonPressed(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -138,11 +138,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SDFancyTextField/ViewController.swift"
-            timestampString = "555967499.298329"
+            timestampString = "555990714.373136"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "61"
-            endingLineNumber = "61"
+            startingLineNumber = "63"
+            endingLineNumber = "63"
             landmarkName = "validateTextFieldsButtonPressed(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -154,28 +154,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SDFancyTextField/SDFancyTextField.swift"
-            timestampString = "555967499.298589"
+            timestampString = "555990714.373201"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "210"
-            endingLineNumber = "210"
-            landmarkName = "SDFancyTextField"
-            landmarkType = "3">
+            startingLineNumber = "259"
+            endingLineNumber = "259"
+            landmarkName = "fieldIsValid"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SDFancyTextField/SDFancyTextField.swift"
-            timestampString = "555967499.298648"
+            timestampString = "555990714.373517"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "481"
-            endingLineNumber = "481"
-            landmarkName = "setupMessageLabel()"
+            startingLineNumber = "530"
+            endingLineNumber = "530"
+            landmarkName = "showMessage(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -186,11 +186,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SDFancyTextField/SDFancyTextField.swift"
-            timestampString = "555967499.298704"
+            timestampString = "555990714.37384"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "432"
-            endingLineNumber = "432"
+            startingLineNumber = "481"
+            endingLineNumber = "481"
             landmarkName = "textFieldEditingDidEnd(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -202,13 +202,157 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "SDFancyTextField/ViewController.swift"
-            timestampString = "555967499.298764"
+            timestampString = "555990714.374153"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "65"
-            endingLineNumber = "65"
+            startingLineNumber = "67"
+            endingLineNumber = "67"
             landmarkName = "validateTextFieldsButtonPressed(_:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SDFancyTextField/SDFancyTextField.swift"
+            timestampString = "555990714.374217"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "64"
+            endingLineNumber = "64"
+            landmarkName = "addValidationFor(type:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SDFancyTextField/SDFancyTextField.swift"
+            timestampString = "555990714.374512"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "166"
+            endingLineNumber = "166"
+            landmarkName = "quickValidationTypes"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SDFancyTextField/SDFancyTextField.swift"
+            timestampString = "555990714.374801"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
+            landmarkName = "addValidationFor(type:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SDFancyTextField/SDFancyTextField.swift"
+            timestampString = "555990714.375092"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "167"
+            endingLineNumber = "167"
+            landmarkName = "quickValidationTypes"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SDFancyTextField/SDFancyTextField.swift"
+            timestampString = "555990714.3753771"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "62"
+            endingLineNumber = "62"
+            landmarkName = "addValidationFor(type:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SDFancyTextField/ViewController.swift"
+            timestampString = "555990714.375645"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "24"
+            endingLineNumber = "24"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SDFancyTextField/SDFancyTextField.swift"
+            timestampString = "555990714.375713"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "54"
+            endingLineNumber = "54"
+            landmarkName = "addValidationFor(type:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static SDFancyTextField.SDFancyTextField.(addValidationFor in _85147693356687AAF5B454F9D21B4272)(type: SDFancyTextField.SDFancyTextField.QuickValidationType) -&gt; ()"
+                  moduleName = "SDFancyTextField"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/johnsolsma/Desktop/SDFancyTextField/SDFancyTextField/SDFancyTextField.swift"
+                  timestampString = "555990504.252467"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "54"
+                  endingLineNumber = "54"
+                  offsetFromSymbolStart = "44">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.String) -&gt; (success: Swift.Bool, errorMessage: Swift.Optional&lt;Swift.String&gt;) in static SDFancyTextField.SDFancyTextField.(addValidationFor in _85147693356687AAF5B454F9D21B4272)(type: SDFancyTextField.SDFancyTextField.QuickValidationType) -&gt; ()"
+                  moduleName = "SDFancyTextField"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/johnsolsma/Desktop/SDFancyTextField/SDFancyTextField/SDFancyTextField.swift"
+                  timestampString = "555990504.2544889"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "55"
+                  endingLineNumber = "55"
+                  offsetFromSymbolStart = "47">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
