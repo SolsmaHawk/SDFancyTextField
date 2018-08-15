@@ -176,6 +176,7 @@ class SDFancyTextField: UIView {
     private var messageLabel = UILabel()
     private var originalBorderColor: UIColor?
     private var borderColorDefaultValue: UIColor = UIColor.lightGray
+    @IBInspectable var allowAutoValidation: Bool = false
     @IBInspectable var borderColor: UIColor {
         set {   self.borderColorDefaultValue = newValue
                 self.dividerView?.backgroundColor = newValue
@@ -416,7 +417,7 @@ class SDFancyTextField: UIView {
                        initialSpringVelocity: CGFloat(0.0),
                        options: UIViewAnimationOptions.allowUserInteraction,
                        animations: {
-                        if !self.fieldIsValid && !(self.textField.text ?? "").isEmpty {
+                        if !self.fieldIsValid && !(self.textField.text ?? "").isEmpty && self.allowAutoValidation {
                             self.borderColor = UIColor.red
                         } else {
                             if let possibleSelectedColor = self.selectedColor {
@@ -464,15 +465,17 @@ class SDFancyTextField: UIView {
     }
     
     @objc private func textFieldDidChange(_ textField: UITextField) {
-        animateFieldIsNotValidMessage(valid: self.fieldIsValid, textIsEmpty: (textField.text ?? "").isEmpty)
-        self.dividerView!.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
-        UIView.animate(withDuration: 1.0,
-                       delay: 0,
-                       usingSpringWithDamping: CGFloat(0.20),
-                       initialSpringVelocity: CGFloat(6.0),
-                       options: UIViewAnimationOptions.allowUserInteraction,
-                       animations: {self.dividerView!.transform = CGAffineTransform.identity},
-                       completion:nil)
+        if allowAutoValidation {
+            animateFieldIsNotValidMessage(valid: self.fieldIsValid, textIsEmpty: (textField.text ?? "").isEmpty)
+        }
+            self.dividerView!.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+            UIView.animate(withDuration: 1.0,
+                           delay: 0,
+                           usingSpringWithDamping: CGFloat(0.20),
+                           initialSpringVelocity: CGFloat(6.0),
+                           options: UIViewAnimationOptions.allowUserInteraction,
+                           animations: {self.dividerView!.transform = CGAffineTransform.identity},
+                           completion:nil)
     }
     
     @objc private func textFieldEditingDidEnd(_ textField: UITextField) {
@@ -496,19 +499,20 @@ class SDFancyTextField: UIView {
                         */
                         self.textField.transform = CGAffineTransform.identity},
                        completion: nil)
-        UIView.animate(withDuration: 0.5,
-                       delay: 0,
-                       usingSpringWithDamping: CGFloat(0.00),
-                       initialSpringVelocity: CGFloat(0.0),
-                       options: UIViewAnimationOptions.allowUserInteraction,
-                       animations: {
-                        if !self.fieldIsValid && !(self.textField.text ?? "").isEmpty {
-                            self.borderColor = UIColor.red
-                        } else {
-                            if let possibleOriginalColor = self.originalBorderColor {
-                                self.borderColor = possibleOriginalColor
-                            }
-                        }},completion: nil)
+
+            UIView.animate(withDuration: 0.5,
+                           delay: 0,
+                           usingSpringWithDamping: CGFloat(0.00),
+                           initialSpringVelocity: CGFloat(0.0),
+                           options: UIViewAnimationOptions.allowUserInteraction,
+                           animations: {
+                            if !self.fieldIsValid && !(self.textField.text ?? "").isEmpty && self.allowAutoValidation {
+                                self.borderColor = UIColor.red
+                            } else {
+                                if let possibleOriginalColor = self.originalBorderColor {
+                                    self.borderColor = possibleOriginalColor
+                                }
+                            }},completion: nil)
     }
     
     private func setupTextFieldHolderView() {

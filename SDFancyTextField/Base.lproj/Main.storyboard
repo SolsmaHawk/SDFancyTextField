@@ -47,6 +47,7 @@
                                     <userDefinedRuntimeAttribute type="string" keyPath="validationGroup" value="new"/>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="mustContainAnUppercaseLetter" value="YES"/>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="mustContainASpecialCharacter" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="allowAutoValidation" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aac-DG-apZ" customClass="SDFancyTextField" customModule="SDFancyTextField" customModuleProvider="target">
@@ -68,6 +69,7 @@
                                         <color key="value" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="string" keyPath="validationGroup" value="test"/>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="allowAutoValidation" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lZl-EE-cpa">
