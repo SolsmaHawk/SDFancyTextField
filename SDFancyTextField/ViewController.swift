@@ -16,23 +16,23 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
        
-        userNameFancyTextField.validationGroups = [SDFancyTextField.ValidationGroup.init(name:"email")]
+        //userNameFancyTextField.validationGroups = [SDFancyTextField.ValidationGroup.init(name:"email")]
        // passwordFancyTextField.validationGroups = [SDFancyTextField.ValidationGroup.init(name:"passwordCheckForCapitalLetter"),SDFancyTextField.ValidationGroup.init(name:"passwordCheckForNumber"),SDFancyTextField.ValidationGroup.init(name:"passwordCheckForSymbol"),SDFancyTextField.ValidationGroup.init(name:"passwordLengthCheck")]
         
         userNameFancyTextField.form = "Main Form"
         passwordFancyTextField.form = "Main Form"
-        passwordFancyTextField.quickValidationTypes = [.UppercaseLetter,.SpecialCharacter]
-       
+        passwordFancyTextField.quickValidationTypes = [.UppercaseLetter,.SpecialCharacter,.NotEmpty,.ContainsNumber]
+        userNameFancyTextField.quickValidationTypes = [.UppercaseLetter,.SpecialCharacter,.NotEmpty,.ContainsNumber,.ValidEmail]
+       /*
         SDFancyTextField.addValidationFor(group: SDFancyTextField.ValidationGroup.init(name:"email"), with: {textFieldText in
             let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-            
             let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
             if emailTest.evaluate(with: textFieldText) {
                 return (true,nil)
             }
             return (false,"Not a valid email")
         })
- 
+ */
         /*
         SDFancyTextField.addValidationFor(group: SDFancyTextField.ValidationGroup.init(name:"passwordCheckForNumber"), with: {textFieldText in
             let numberRegEx  = ".*[0-9]+.*"

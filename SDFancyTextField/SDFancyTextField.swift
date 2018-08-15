@@ -35,6 +35,7 @@ class SDFancyTextField: UIView {
         case ContainsNumber     = "QuickValidationType_containsNumber"
         case CharacterLength    = "QuickValidationType_characterLength"
         case NotEmpty           = "QuickValidationType_notEmpty"
+        case ValidEmail         = "QuickValidationType_validEmail"
     }
     
     static private var validationFormsHashTable = NSHashTable<SDFancyTextField>(options: .weakMemory)
@@ -63,6 +64,29 @@ class SDFancyTextField: UIView {
                 let texttest2 = NSPredicate(format:"SELF MATCHES %@", specialCharacterRegEx)
                 guard texttest2.evaluate(with: textFieldText) else { return (false, "Must contain a special character") }
                 return (true,nil)
+            })
+        case .ContainsNumber:
+            SDFancyTextField.addValidationFor(group: ValidationGroup.init(name: type.rawValue), with: { textFieldText in
+                let numberRegEx  = ".*[0-9]+.*"
+                let texttest1 = NSPredicate(format:"SELF MATCHES %@", numberRegEx)
+                guard texttest1.evaluate(with: textFieldText) else { return (false, "Must contain a number")}
+                return (true, nil)
+            })
+        case .NotEmpty:
+            SDFancyTextField.addValidationFor(group: ValidationGroup.init(name: type.rawValue), with: { textFieldText in
+                if textFieldText.isEmpty {
+                    return (false, "Cannot be empty")
+                }
+                    return (true, nil)
+            })
+        case .ValidEmail:
+            SDFancyTextField.addValidationFor(group: ValidationGroup.init(name: type.rawValue), with: { textFieldText in
+                let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+                let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+                if emailTest.evaluate(with: textFieldText) {
+                    return (true,nil)
+                }
+                return (false,"Not a valid email")
             })
         default:
             break
