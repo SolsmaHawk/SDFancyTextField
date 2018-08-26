@@ -111,7 +111,6 @@ class SDFancyTextField: UIView {
                 if !fancyTextField.fieldIsValid {
                     formIsValid = false
                     if withAnimation {
-                        // animate textField with invalid animation
                         fancyTextField.animateFieldIsNotValidMessage(valid: false, textIsEmpty: false)
                         fancyTextField.isUserInteractionEnabled = false
                         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
@@ -453,12 +452,6 @@ class SDFancyTextField: UIView {
                        initialSpringVelocity: CGFloat(3.0),
                        options: UIViewAnimationOptions.allowUserInteraction,
                        animations: {
-                        /*
-                        if let possibleSelectedColor = self.selectedColor {
-                            self.originalBorderColor = self.borderColor
-                            self.borderColor = possibleSelectedColor
-                        }
- */
                         self.imageHolderView.transform = CGAffineTransform.identity},
                        completion: nil)
         
@@ -477,50 +470,6 @@ class SDFancyTextField: UIView {
                             }
                         }},
                        completion: nil)
-    }
-    
-    private func animateFieldIsNotValidMessage(valid: Bool, textIsEmpty: Bool) {
-        if textIsEmpty {
-            self.showMessage(false)
-            UIView.animate(withDuration: 0.5,
-                           delay: 0,
-                           usingSpringWithDamping: CGFloat(0.0),
-                           initialSpringVelocity: CGFloat(0.0),
-                           options: UIViewAnimationOptions.allowUserInteraction,
-                           animations: {
-                            if let originalBorderColor = self.originalBorderColor {
-                               self.borderColor = originalBorderColor
-                            }
-                            },
-                           completion: nil)
-        } else {
-            self.showMessage(!valid)
-            if !valid {
-                self.messageLabel.text = self.queuedValidationErrorMessage() ?? "Input invalid"
-                UIView.animate(withDuration: 0.5,
-                               delay: 0,
-                               usingSpringWithDamping: CGFloat(0.0),
-                               initialSpringVelocity: CGFloat(0.0),
-                               options: UIViewAnimationOptions.allowUserInteraction,
-                               animations: {
-                                self.borderColor = UIColor.red },
-                               completion: nil)
-            } else {
-                UIView.animate(withDuration: 0.5,
-                               delay: 0,
-                               usingSpringWithDamping: CGFloat(0.0),
-                               initialSpringVelocity: CGFloat(0.0),
-                               options: UIViewAnimationOptions.allowUserInteraction,
-                               animations: {
-                                    if self.fancyTextFieldIsSelected {
-                                        self.borderColor = self.selectedColor ?? self.originalBorderColor!
-                                    } else {
-                                        self.borderColor = self.originalBorderColor!
-                                    }
-                                },
-                               completion: nil)
-            }
-        }
     }
     
     @objc private func textFieldDidChange(_ textField: UITextField) {
@@ -552,11 +501,6 @@ class SDFancyTextField: UIView {
                        initialSpringVelocity: CGFloat(2.0),
                        options: UIViewAnimationOptions.allowUserInteraction,
                        animations: {
-                        /*
-                        if let possibleOriginalColor = self.originalBorderColor {
-                            self.borderColor = possibleOriginalColor
-                        }
-                        */
                         self.textField.transform = CGAffineTransform.identity},
                        completion: nil)
 
@@ -576,6 +520,50 @@ class SDFancyTextField: UIView {
     }
     
     // MARK: Helper Methods
+    
+    private func animateFieldIsNotValidMessage(valid: Bool, textIsEmpty: Bool) {
+        if textIsEmpty {
+            self.showMessage(false)
+            UIView.animate(withDuration: 0.5,
+                           delay: 0,
+                           usingSpringWithDamping: CGFloat(0.0),
+                           initialSpringVelocity: CGFloat(0.0),
+                           options: UIViewAnimationOptions.allowUserInteraction,
+                           animations: {
+                            if let originalBorderColor = self.originalBorderColor {
+                                self.borderColor = originalBorderColor
+                            }
+            },
+                           completion: nil)
+        } else {
+            self.showMessage(!valid)
+            if !valid {
+                self.messageLabel.text = self.queuedValidationErrorMessage() ?? "Input invalid"
+                UIView.animate(withDuration: 0.5,
+                               delay: 0,
+                               usingSpringWithDamping: CGFloat(0.0),
+                               initialSpringVelocity: CGFloat(0.0),
+                               options: UIViewAnimationOptions.allowUserInteraction,
+                               animations: {
+                                self.borderColor = UIColor.red },
+                               completion: nil)
+            } else {
+                UIView.animate(withDuration: 0.5,
+                               delay: 0,
+                               usingSpringWithDamping: CGFloat(0.0),
+                               initialSpringVelocity: CGFloat(0.0),
+                               options: UIViewAnimationOptions.allowUserInteraction,
+                               animations: {
+                                if self.fancyTextFieldIsSelected {
+                                    self.borderColor = self.selectedColor ?? self.originalBorderColor!
+                                } else {
+                                    self.borderColor = self.originalBorderColor!
+                                }
+                },
+                               completion: nil)
+            }
+        }
+    }
     
     private func allFieldValidationErrorMessages() -> [String]? {
         var fieldValidationErrors: [String]?
@@ -631,5 +619,4 @@ class SDFancyTextField: UIView {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-
 }
