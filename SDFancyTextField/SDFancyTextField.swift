@@ -12,7 +12,11 @@ import UIKit
 class SDFancyTextField: UIView {
     
     // MARK: Form Validation
+    
     typealias TextFieldValidationClosure = ((_ textFieldText: String) -> (success: Bool, errorMessage: String?))
+    static private var validationFormsHashTable = NSHashTable<SDFancyTextField>(options: .weakMemory)
+    static private var validationGroupsHashTable = NSHashTable<SDFancyTextField>(options: .weakMemory)
+    static private var groupValidationClosures: [String:[TextFieldValidationClosure]]?
     
     struct ValidationGroup {
         var name: String
@@ -37,10 +41,6 @@ class SDFancyTextField: UIView {
         case NotEmpty           = "QuickValidationType_notEmpty"
         case ValidEmail         = "QuickValidationType_validEmail"
     }
-    
-    static private var validationFormsHashTable = NSHashTable<SDFancyTextField>(options: .weakMemory)
-    static private var validationGroupsHashTable = NSHashTable<SDFancyTextField>(options: .weakMemory)
-    static private var groupValidationClosures: [String:[TextFieldValidationClosure]]?
     
     static private func validationClosuresFor(_ group:String) -> [TextFieldValidationClosure]? {
         if let possibleValidation = SDFancyTextField.groupValidationClosures?[group] {
@@ -161,6 +161,8 @@ class SDFancyTextField: UIView {
         return validationResponses
     }
     
+    // MARK: Properties
+    
     private var validationGroupValues: [ValidationGroup]?
     var validationGroups: [ValidationGroup]? {
         set {
@@ -220,6 +222,7 @@ class SDFancyTextField: UIView {
         } get { return self.formValue
         }
     }
+    
     private var iconImageColorMatchesBorderColorValue: Bool = false
     @IBInspectable var iconImageColorMatchesBorderColor: Bool {
         set {   self.iconImageColorMatchesBorderColorValue = newValue
@@ -312,6 +315,7 @@ class SDFancyTextField: UIView {
     var fieldValidationErrors: [String]?
     
 
+    // MARK: Init Methods
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -389,6 +393,45 @@ class SDFancyTextField: UIView {
         self.textField.addTarget(self, action: #selector(SDFancyTextField.textFieldDidChange(_:)), for: UIControlEvents.editingChanged)
         self.textField.addTarget(self, action: #selector(SDFancyTextField.textFieldEditingDidBegin(_:)), for: UIControlEvents.editingDidBegin)
         self.textField.addTarget(self, action: #selector(SDFancyTextField.textFieldEditingDidEnd(_:)), for: UIControlEvents.editingDidEnd)
+    }
+    
+    private func setupTextFieldHolderView() {
+        self.textFieldHolderView.backgroundColor = self.fieldBackgroundColorDefaultValue
+        self.textFieldHolderView.layer.cornerRadius = self.cornerRadiusDefaultValue - 2
+        self.textFieldHolderView.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(self.textFieldHolderView)
+        NSLayoutConstraint(item: self.textFieldHolderView, attribute: NSLayoutAttribute.leading, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.leadingMargin, multiplier: 1.0, constant: -6.0).isActive = true
+        NSLayoutConstraint(item: self.textFieldHolderView, attribute: NSLayoutAttribute.trailing, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.trailingMargin, multiplier: 1.0, constant: 6.0).isActive = true
+        NSLayoutConstraint(item: self.textFieldHolderView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.topMargin, multiplier: 1.0, constant: -6.0).isActive = true
+        NSLayoutConstraint(item: self.textFieldHolderView, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.bottomMargin, multiplier: 1.0, constant: 6.0).isActive = true
+    }
+    
+    private func setupMessageLabel() {
+        self.messageLabel.backgroundColor = UIColor.clear
+        self.messageLabel.text = "Must contain one number, capital letter and symbol"
+        self.messageLabel.font = self.messageLabel.font.withSize(14)
+        self.messageLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.messageLabel.textColor = self.borderColor
+        self.messageLabel.alpha = 0.0
+        self.textFieldHolderView.addSubview(self.messageLabel)
+        
+        NSLayoutConstraint(item: self.messageLabel, attribute: NSLayoutAttribute.leading, relatedBy: NSLayoutRelation.equal, toItem: textFieldHolderView, attribute: NSLayoutAttribute.leadingMargin, multiplier: 1.0, constant: 45).isActive = true
+        NSLayoutConstraint(item: self.messageLabel, attribute: NSLayoutAttribute.trailing, relatedBy: NSLayoutRelation.equal, toItem: textFieldHolderView, attribute: NSLayoutAttribute.trailingMargin, multiplier: 1.0, constant: -5).isActive = true
+        self.messageTopConstraint = NSLayoutConstraint(item: self.messageLabel, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: textFieldHolderView, attribute: NSLayoutAttribute.topMargin, multiplier: 1.0, constant: -30.0)
+        self.messageTopConstraint!.isActive = true
+        NSLayoutConstraint(item: self.messageLabel, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: textFieldHolderView, attribute: NSLayoutAttribute.bottomMargin, multiplier: 1.0, constant: 6.0).isActive = true
+    }
+    
+    private func setupTextField() {
+        self.textField.backgroundColor = UIColor.clear
+        self.textField.translatesAutoresizingMaskIntoConstraints = false
+        self.textFieldHolderView.addSubview(self.textField)
+        
+        NSLayoutConstraint(item: self.textField, attribute: NSLayoutAttribute.leading, relatedBy: NSLayoutRelation.equal, toItem: textFieldHolderView, attribute: NSLayoutAttribute.leadingMargin, multiplier: 1.0, constant: 45).isActive = true
+        NSLayoutConstraint(item: self.textField, attribute: NSLayoutAttribute.trailing, relatedBy: NSLayoutRelation.equal, toItem: textFieldHolderView, attribute: NSLayoutAttribute.trailingMargin, multiplier: 1.0, constant: -5).isActive = true
+        self.textFieldBottomConstraint = NSLayoutConstraint(item: self.textField, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: textFieldHolderView, attribute: NSLayoutAttribute.topMargin, multiplier: 1.0, constant: -6.0)
+        self.textFieldBottomConstraint!.isActive = true
+        NSLayoutConstraint(item: self.textField, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: textFieldHolderView, attribute: NSLayoutAttribute.bottomMargin, multiplier: 1.0, constant: 6.0).isActive = true
     }
     
     // MARK: Text Field Actions
@@ -556,45 +599,6 @@ class SDFancyTextField: UIView {
                             }},completion: nil)
     }
     
-    private func setupTextFieldHolderView() {
-        self.textFieldHolderView.backgroundColor = self.fieldBackgroundColorDefaultValue
-        self.textFieldHolderView.layer.cornerRadius = self.cornerRadiusDefaultValue - 2
-        self.textFieldHolderView.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(self.textFieldHolderView)
-        NSLayoutConstraint(item: self.textFieldHolderView, attribute: NSLayoutAttribute.leading, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.leadingMargin, multiplier: 1.0, constant: -6.0).isActive = true
-        NSLayoutConstraint(item: self.textFieldHolderView, attribute: NSLayoutAttribute.trailing, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.trailingMargin, multiplier: 1.0, constant: 6.0).isActive = true
-        NSLayoutConstraint(item: self.textFieldHolderView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.topMargin, multiplier: 1.0, constant: -6.0).isActive = true
-        NSLayoutConstraint(item: self.textFieldHolderView, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.bottomMargin, multiplier: 1.0, constant: 6.0).isActive = true
-    }
-    
-    private func setupMessageLabel() {
-        self.messageLabel.backgroundColor = UIColor.clear
-        self.messageLabel.text = "Must contain one number, capital letter and symbol"
-        self.messageLabel.font = self.messageLabel.font.withSize(14)
-        self.messageLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.messageLabel.textColor = self.borderColor
-        self.messageLabel.alpha = 0.0
-        self.textFieldHolderView.addSubview(self.messageLabel)
-        
-        NSLayoutConstraint(item: self.messageLabel, attribute: NSLayoutAttribute.leading, relatedBy: NSLayoutRelation.equal, toItem: textFieldHolderView, attribute: NSLayoutAttribute.leadingMargin, multiplier: 1.0, constant: 45).isActive = true
-        NSLayoutConstraint(item: self.messageLabel, attribute: NSLayoutAttribute.trailing, relatedBy: NSLayoutRelation.equal, toItem: textFieldHolderView, attribute: NSLayoutAttribute.trailingMargin, multiplier: 1.0, constant: -5).isActive = true
-       self.messageTopConstraint = NSLayoutConstraint(item: self.messageLabel, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: textFieldHolderView, attribute: NSLayoutAttribute.topMargin, multiplier: 1.0, constant: -30.0)
-        self.messageTopConstraint!.isActive = true
-        NSLayoutConstraint(item: self.messageLabel, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: textFieldHolderView, attribute: NSLayoutAttribute.bottomMargin, multiplier: 1.0, constant: 6.0).isActive = true
-    }
-    
-    private func setupTextField() {
-        self.textField.backgroundColor = UIColor.clear
-        self.textField.translatesAutoresizingMaskIntoConstraints = false
-        self.textFieldHolderView.addSubview(self.textField)
-        
-        NSLayoutConstraint(item: self.textField, attribute: NSLayoutAttribute.leading, relatedBy: NSLayoutRelation.equal, toItem: textFieldHolderView, attribute: NSLayoutAttribute.leadingMargin, multiplier: 1.0, constant: 45).isActive = true
-        NSLayoutConstraint(item: self.textField, attribute: NSLayoutAttribute.trailing, relatedBy: NSLayoutRelation.equal, toItem: textFieldHolderView, attribute: NSLayoutAttribute.trailingMargin, multiplier: 1.0, constant: -5).isActive = true
-        self.textFieldBottomConstraint = NSLayoutConstraint(item: self.textField, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: textFieldHolderView, attribute: NSLayoutAttribute.topMargin, multiplier: 1.0, constant: -6.0)
-        self.textFieldBottomConstraint!.isActive = true
-        NSLayoutConstraint(item: self.textField, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: textFieldHolderView, attribute: NSLayoutAttribute.bottomMargin, multiplier: 1.0, constant: 6.0).isActive = true
-    }
-    
     func showMessage(_ show: Bool) {
         if show {
             self.textFieldBottomConstraint?.constant = 7.0
@@ -612,6 +616,8 @@ class SDFancyTextField: UIView {
             }
         })
     }
+    
+    // MARK: Interface BUilder Setup
     
     override func awakeFromNib() {
         self.setup()
