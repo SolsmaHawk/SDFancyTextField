@@ -2,8 +2,8 @@
 //  ViewController.swift
 //  SDFancyTextField
 //
-//  Created by John Solsma on 7/31/18.
-//  Copyright © 2018 Solsma Dev Inc. All rights reserved.
+//  Created by John Solsma (Solsma Dev Inc.) http://solsmadev.com on 7/31/18.
+//  Copyright © 2018 Solsma Dev Inc. All rights reserved. Test
 //
 
 import UIKit
