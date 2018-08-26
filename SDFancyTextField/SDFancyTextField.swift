@@ -11,7 +11,12 @@ import UIKit
 @IBDesignable
 class SDFancyTextField: UIView {
     
+    // MARK: Form Validation
+    
     typealias TextFieldValidationClosure = ((_ textFieldText: String) -> (success: Bool, errorMessage: String?))
+    static private var validationFormsHashTable = NSHashTable<SDFancyTextField>(options: .weakMemory)
+    static private var validationGroupsHashTable = NSHashTable<SDFancyTextField>(options: .weakMemory)
+    static private var groupValidationClosures: [String:[TextFieldValidationClosure]]?
     
     struct ValidationGroup {
         var name: String
@@ -28,14 +33,64 @@ class SDFancyTextField: UIView {
         var errorMessages: [String]?
     }
     
-    static private var validationGroupsHashTable = NSHashTable<SDFancyTextField>(options: .weakMemory)
-    static private var groupValidationClosures: [String:[TextFieldValidationClosure]]?
+    enum QuickValidationType: String {
+        case UppercaseLetter    = "QuickValidationType_uppercaseLetter"
+        case SpecialCharacter   = "QuickValidationType_specialCharacter"
+        case ContainsNumber     = "QuickValidationType_containsNumber"
+        case CharacterLength    = "QuickValidationType_characterLength"
+        case NotEmpty           = "QuickValidationType_notEmpty"
+        case ValidEmail         = "QuickValidationType_validEmail"
+    }
     
     static private func validationClosuresFor(_ group:String) -> [TextFieldValidationClosure]? {
         if let possibleValidation = SDFancyTextField.groupValidationClosures?[group] {
             return possibleValidation
         }
         return nil
+    }
+    
+    private class func addValidationFor(type: QuickValidationType) {
+        switch type {
+        case .UppercaseLetter:
+            SDFancyTextField.addValidationFor(group:ValidationGroup.init(name: type.rawValue    ), with: {  textFieldText in
+                let capitalLetterRegEx  = ".*[A-Z]+.*"
+                let texttest = NSPredicate(format:"SELF MATCHES %@", capitalLetterRegEx)
+                guard texttest.evaluate(with: textFieldText) else { return (false, "Must contain a capital letter") }
+                return (true,nil)
+            })
+        case .SpecialCharacter:
+            SDFancyTextField.addValidationFor(group: ValidationGroup.init(name: type.rawValue), with: { textFieldText in
+                let specialCharacterRegEx  = ".*[!&^%$#@()/_*+-]+.*"
+                let texttest2 = NSPredicate(format:"SELF MATCHES %@", specialCharacterRegEx)
+                guard texttest2.evaluate(with: textFieldText) else { return (false, "Must contain a special character") }
+                return (true,nil)
+            })
+        case .ContainsNumber:
+            SDFancyTextField.addValidationFor(group: ValidationGroup.init(name: type.rawValue), with: { textFieldText in
+                let numberRegEx  = ".*[0-9]+.*"
+                let texttest1 = NSPredicate(format:"SELF MATCHES %@", numberRegEx)
+                guard texttest1.evaluate(with: textFieldText) else { return (false, "Must contain a number")}
+                return (true, nil)
+            })
+        case .NotEmpty:
+            SDFancyTextField.addValidationFor(group: ValidationGroup.init(name: type.rawValue), with: { textFieldText in
+                if textFieldText.isEmpty {
+                    return (false, "Cannot be empty")
+                }
+                    return (true, nil)
+            })
+        case .ValidEmail:
+            SDFancyTextField.addValidationFor(group: ValidationGroup.init(name: type.rawValue), with: { textFieldText in
+                let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+                let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+                if emailTest.evaluate(with: textFieldText) {
+                    return (true,nil)
+                }
+                return (false,"Not a valid email")
+            })
+        default:
+            break
+        }
     }
     
     class func addValidationFor(group:ValidationGroup, with validation: @escaping TextFieldValidationClosure) {
@@ -47,6 +102,27 @@ class SDFancyTextField: UIView {
         } else {
             groupValidationClosures![group.name]?.append(validation)
         }
+    }
+    
+    class func validate(form: String, withAnimation: Bool) -> Bool {
+        var formIsValid = true
+        for fancyTextField in SDFancyTextField.validationGroupsHashTable.allObjects {
+            if fancyTextField.form == form {
+                if !fancyTextField.fieldIsValid {
+                    formIsValid = false
+                    if withAnimation {
+                        // animate textField with invalid animation
+                        fancyTextField.animateFieldIsNotValidMessage(valid: false, textIsEmpty: false)
+                        fancyTextField.isUserInteractionEnabled = false
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                            fancyTextField.animateFieldIsNotValidMessage(valid: false, textIsEmpty: true)
+                            fancyTextField.isUserInteractionEnabled = true
+                        }
+                    }
+                }
+            }
+        }
+        return formIsValid
     }
     
     class func validate(group: ValidationGroup) -> [ValidationResponse]? {
@@ -85,19 +161,21 @@ class SDFancyTextField: UIView {
         return validationResponses
     }
     
+    // MARK: Properties
+    
     private var validationGroupValues: [ValidationGroup]?
     var validationGroups: [ValidationGroup]? {
         set {
             if let possibleValue = newValue {
-                if validationGroupValues == nil {
-                    validationGroupValues = [ValidationGroup]()
-                }
                 validationGroupValues = possibleValue
-                SDFancyTextField.validationGroupsHashTable.add(self)
+                if !SDFancyTextField.validationGroupsHashTable.contains(self) {
+                    SDFancyTextField.validationGroupsHashTable.add(self)
+                }
             }
         } get { return validationGroupValues }
     }
     
+    private var fancyTextFieldIsSelected: Bool = false
     private var messageTopConstraint: NSLayoutConstraint?
     private var textFieldBottomConstraint: NSLayoutConstraint?
     private var imageHolderView: UIView = UIView()
@@ -107,11 +185,41 @@ class SDFancyTextField: UIView {
     private var messageLabel = UILabel()
     private var originalBorderColor: UIColor?
     private var borderColorDefaultValue: UIColor = UIColor.lightGray
+    @IBInspectable var allowAutoValidation: Bool = false
     @IBInspectable var borderColor: UIColor {
         set {   self.borderColorDefaultValue = newValue
                 self.dividerView?.backgroundColor = newValue
                 self.backgroundColor = newValue
         } get { return self.backgroundColor ?? UIColor.lightGray
+        }
+    }
+    
+    private var quickValidationTypeValues: [QuickValidationType]?
+    var quickValidationTypes: [QuickValidationType]? {
+        set {   if let possibleValidationTypes = newValue {
+            self.quickValidationTypeValues = possibleValidationTypes
+            for validationType in possibleValidationTypes {
+                if self.validationGroupValues == nil {
+                    self.validationGroupValues = [ValidationGroup]()
+                    self.validationGroupValues?.append(ValidationGroup.init(name: validationType.rawValue))
+                } else {
+                    self.validationGroupValues?.append(ValidationGroup.init(name: validationType.rawValue))
+                }
+                SDFancyTextField.addValidationFor(type: validationType)
+            }
+            if !SDFancyTextField.validationGroupsHashTable.contains(self) {
+                SDFancyTextField.validationGroupsHashTable.add(self)
+            }
+            }
+        } get { return self.quickValidationTypeValues
+        }
+    }
+    
+    private var formValue: String?
+    @IBInspectable var form: String? {
+        set {   self.formValue = newValue
+            SDFancyTextField.validationFormsHashTable.add(self)
+        } get { return self.formValue
         }
     }
     
@@ -204,13 +312,10 @@ class SDFancyTextField: UIView {
         return groupValidationsAreCorrect()
     }
     
-    var fieldValidationErrors: [String]? /*{
-        if let possibleFieldValidationClosure = self.fieldValidationClosure {
-            return possibleFieldValidationClosure(self.textField.text ?? "").errorMessage
-        }
-        print("Field validation closure not set")
-        return nil
-    }*/
+    var fieldValidationErrors: [String]?
+    
+
+    // MARK: Init Methods
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -226,6 +331,8 @@ class SDFancyTextField: UIView {
         self.setup()
     }
     
+    
+    // MARK: Fancy Text Field Setup
     func setup() {
         self.setupMainView()
         self.setupTextFieldHolderView()
@@ -288,7 +395,49 @@ class SDFancyTextField: UIView {
         self.textField.addTarget(self, action: #selector(SDFancyTextField.textFieldEditingDidEnd(_:)), for: UIControlEvents.editingDidEnd)
     }
     
+    private func setupTextFieldHolderView() {
+        self.textFieldHolderView.backgroundColor = self.fieldBackgroundColorDefaultValue
+        self.textFieldHolderView.layer.cornerRadius = self.cornerRadiusDefaultValue - 2
+        self.textFieldHolderView.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(self.textFieldHolderView)
+        NSLayoutConstraint(item: self.textFieldHolderView, attribute: NSLayoutAttribute.leading, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.leadingMargin, multiplier: 1.0, constant: -6.0).isActive = true
+        NSLayoutConstraint(item: self.textFieldHolderView, attribute: NSLayoutAttribute.trailing, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.trailingMargin, multiplier: 1.0, constant: 6.0).isActive = true
+        NSLayoutConstraint(item: self.textFieldHolderView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.topMargin, multiplier: 1.0, constant: -6.0).isActive = true
+        NSLayoutConstraint(item: self.textFieldHolderView, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.bottomMargin, multiplier: 1.0, constant: 6.0).isActive = true
+    }
+    
+    private func setupMessageLabel() {
+        self.messageLabel.backgroundColor = UIColor.clear
+        self.messageLabel.text = "Must contain one number, capital letter and symbol"
+        self.messageLabel.font = self.messageLabel.font.withSize(14)
+        self.messageLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.messageLabel.textColor = self.borderColor
+        self.messageLabel.alpha = 0.0
+        self.textFieldHolderView.addSubview(self.messageLabel)
+        
+        NSLayoutConstraint(item: self.messageLabel, attribute: NSLayoutAttribute.leading, relatedBy: NSLayoutRelation.equal, toItem: textFieldHolderView, attribute: NSLayoutAttribute.leadingMargin, multiplier: 1.0, constant: 45).isActive = true
+        NSLayoutConstraint(item: self.messageLabel, attribute: NSLayoutAttribute.trailing, relatedBy: NSLayoutRelation.equal, toItem: textFieldHolderView, attribute: NSLayoutAttribute.trailingMargin, multiplier: 1.0, constant: -5).isActive = true
+        self.messageTopConstraint = NSLayoutConstraint(item: self.messageLabel, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: textFieldHolderView, attribute: NSLayoutAttribute.topMargin, multiplier: 1.0, constant: -30.0)
+        self.messageTopConstraint!.isActive = true
+        NSLayoutConstraint(item: self.messageLabel, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: textFieldHolderView, attribute: NSLayoutAttribute.bottomMargin, multiplier: 1.0, constant: 6.0).isActive = true
+    }
+    
+    private func setupTextField() {
+        self.textField.backgroundColor = UIColor.clear
+        self.textField.translatesAutoresizingMaskIntoConstraints = false
+        self.textFieldHolderView.addSubview(self.textField)
+        
+        NSLayoutConstraint(item: self.textField, attribute: NSLayoutAttribute.leading, relatedBy: NSLayoutRelation.equal, toItem: textFieldHolderView, attribute: NSLayoutAttribute.leadingMargin, multiplier: 1.0, constant: 45).isActive = true
+        NSLayoutConstraint(item: self.textField, attribute: NSLayoutAttribute.trailing, relatedBy: NSLayoutRelation.equal, toItem: textFieldHolderView, attribute: NSLayoutAttribute.trailingMargin, multiplier: 1.0, constant: -5).isActive = true
+        self.textFieldBottomConstraint = NSLayoutConstraint(item: self.textField, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: textFieldHolderView, attribute: NSLayoutAttribute.topMargin, multiplier: 1.0, constant: -6.0)
+        self.textFieldBottomConstraint!.isActive = true
+        NSLayoutConstraint(item: self.textField, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: textFieldHolderView, attribute: NSLayoutAttribute.bottomMargin, multiplier: 1.0, constant: 6.0).isActive = true
+    }
+    
+    // MARK: Text Field Actions
+    
     @objc private func textFieldEditingDidBegin(_ textField: UITextField) {
+        self.fancyTextFieldIsSelected = true
         self.imageHolderView.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
         
         let animation = CABasicAnimation(keyPath: "shadowOpacity")
@@ -319,7 +468,7 @@ class SDFancyTextField: UIView {
                        initialSpringVelocity: CGFloat(0.0),
                        options: UIViewAnimationOptions.allowUserInteraction,
                        animations: {
-                        if !self.fieldIsValid && !(self.textField.text ?? "").isEmpty {
+                        if !self.fieldIsValid && !(self.textField.text ?? "").isEmpty && self.allowAutoValidation {
                             self.borderColor = UIColor.red
                         } else {
                             if let possibleSelectedColor = self.selectedColor {
@@ -328,6 +477,30 @@ class SDFancyTextField: UIView {
                             }
                         }},
                        completion: nil)
+    }
+    
+    private func allFieldValidationErrorMessages() -> [String]? {
+        var fieldValidationErrors: [String]?
+        if let possibleGroupValidationErrors = self.fieldValidationErrors {
+            fieldValidationErrors = [String]()
+            fieldValidationErrors?.append(contentsOf: possibleGroupValidationErrors)
+        }
+        if let possibleFieldValidationClosure = self.fieldValidationClosure {
+            if let possibleSingularValidationError = possibleFieldValidationClosure(self.textField.text ?? "").errorMessage {
+                if fieldValidationErrors == nil {
+                    fieldValidationErrors = [String]()
+                }
+                fieldValidationErrors?.append(possibleSingularValidationError)
+            }
+        }
+        return fieldValidationErrors
+    }
+    
+    private func queuedValidationErrorMessage() -> String? {
+        if let possibleErrorMessage = self.allFieldValidationErrorMessages()?[0] {
+            return possibleErrorMessage
+        }
+        return nil
     }
     
     private func animateFieldIsNotValidMessage(valid: Bool, textIsEmpty: Bool) {
@@ -339,12 +512,15 @@ class SDFancyTextField: UIView {
                            initialSpringVelocity: CGFloat(0.0),
                            options: UIViewAnimationOptions.allowUserInteraction,
                            animations: {
-                            self.borderColor = self.originalBorderColor!},
+                            if let originalBorderColor = self.originalBorderColor {
+                               self.borderColor = originalBorderColor
+                            }
+                            },
                            completion: nil)
         } else {
             self.showMessage(!valid)
             if !valid {
-                self.messageLabel.text = self.fieldValidationErrors?[0] ?? "Invalid input"
+                self.messageLabel.text = self.queuedValidationErrorMessage() ?? "Input invalid"
                 UIView.animate(withDuration: 0.5,
                                delay: 0,
                                usingSpringWithDamping: CGFloat(0.0),
@@ -360,25 +536,33 @@ class SDFancyTextField: UIView {
                                initialSpringVelocity: CGFloat(0.0),
                                options: UIViewAnimationOptions.allowUserInteraction,
                                animations: {
-                                self.borderColor = self.originalBorderColor!},
+                                    if self.fancyTextFieldIsSelected {
+                                        self.borderColor = self.selectedColor ?? self.originalBorderColor!
+                                    } else {
+                                        self.borderColor = self.originalBorderColor!
+                                    }
+                                },
                                completion: nil)
             }
         }
     }
     
     @objc private func textFieldDidChange(_ textField: UITextField) {
-        animateFieldIsNotValidMessage(valid: self.fieldIsValid, textIsEmpty: (textField.text ?? "").isEmpty)
-        self.dividerView!.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
-        UIView.animate(withDuration: 1.0,
-                       delay: 0,
-                       usingSpringWithDamping: CGFloat(0.20),
-                       initialSpringVelocity: CGFloat(6.0),
-                       options: UIViewAnimationOptions.allowUserInteraction,
-                       animations: {self.dividerView!.transform = CGAffineTransform.identity},
-                       completion:nil)
+        if allowAutoValidation {
+            animateFieldIsNotValidMessage(valid: self.fieldIsValid, textIsEmpty: (textField.text ?? "").isEmpty)
+        }
+            self.dividerView!.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+            UIView.animate(withDuration: 1.0,
+                           delay: 0,
+                           usingSpringWithDamping: CGFloat(0.20),
+                           initialSpringVelocity: CGFloat(6.0),
+                           options: UIViewAnimationOptions.allowUserInteraction,
+                           animations: {self.dividerView!.transform = CGAffineTransform.identity},
+                           completion:nil)
     }
     
     @objc private func textFieldEditingDidEnd(_ textField: UITextField) {
+        self.fancyTextFieldIsSelected = false
         self.textField.transform = CGAffineTransform(scaleX: 0.98, y: 0.98)
         let animation = CABasicAnimation(keyPath: "shadowOpacity")
         animation.fromValue = self.layer.shadowOpacity
@@ -399,58 +583,20 @@ class SDFancyTextField: UIView {
                         */
                         self.textField.transform = CGAffineTransform.identity},
                        completion: nil)
-        UIView.animate(withDuration: 0.5,
-                       delay: 0,
-                       usingSpringWithDamping: CGFloat(0.00),
-                       initialSpringVelocity: CGFloat(0.0),
-                       options: UIViewAnimationOptions.allowUserInteraction,
-                       animations: {
-                        if !self.fieldIsValid && !(self.textField.text ?? "").isEmpty {
-                            self.borderColor = UIColor.red
-                        } else {
-                            if let possibleOriginalColor = self.originalBorderColor {
-                                self.borderColor = possibleOriginalColor
-                            }
-                        }},completion: nil)
-    }
-    
-    private func setupTextFieldHolderView() {
-        self.textFieldHolderView.backgroundColor = self.fieldBackgroundColorDefaultValue
-        self.textFieldHolderView.layer.cornerRadius = self.cornerRadiusDefaultValue - 2
-        self.textFieldHolderView.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(self.textFieldHolderView)
-        NSLayoutConstraint(item: self.textFieldHolderView, attribute: NSLayoutAttribute.leading, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.leadingMargin, multiplier: 1.0, constant: -6.0).isActive = true
-        NSLayoutConstraint(item: self.textFieldHolderView, attribute: NSLayoutAttribute.trailing, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.trailingMargin, multiplier: 1.0, constant: 6.0).isActive = true
-        NSLayoutConstraint(item: self.textFieldHolderView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.topMargin, multiplier: 1.0, constant: -6.0).isActive = true
-        NSLayoutConstraint(item: self.textFieldHolderView, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self, attribute: NSLayoutAttribute.bottomMargin, multiplier: 1.0, constant: 6.0).isActive = true
-    }
-    
-    private func setupMessageLabel() {
-        self.messageLabel.backgroundColor = UIColor.clear
-        self.messageLabel.text = "Must contain one number, capital letter and symbol"
-        self.messageLabel.font = self.messageLabel.font.withSize(14)
-        self.messageLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.messageLabel.textColor = self.borderColor
-        self.messageLabel.alpha = 0.0
-        self.textFieldHolderView.addSubview(self.messageLabel)
-        
-        NSLayoutConstraint(item: self.messageLabel, attribute: NSLayoutAttribute.leading, relatedBy: NSLayoutRelation.equal, toItem: textFieldHolderView, attribute: NSLayoutAttribute.leadingMargin, multiplier: 1.0, constant: 45).isActive = true
-        NSLayoutConstraint(item: self.messageLabel, attribute: NSLayoutAttribute.trailing, relatedBy: NSLayoutRelation.equal, toItem: textFieldHolderView, attribute: NSLayoutAttribute.trailingMargin, multiplier: 1.0, constant: -5).isActive = true
-       self.messageTopConstraint = NSLayoutConstraint(item: self.messageLabel, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: textFieldHolderView, attribute: NSLayoutAttribute.topMargin, multiplier: 1.0, constant: -30.0)
-        self.messageTopConstraint!.isActive = true
-        NSLayoutConstraint(item: self.messageLabel, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: textFieldHolderView, attribute: NSLayoutAttribute.bottomMargin, multiplier: 1.0, constant: 6.0).isActive = true
-    }
-    
-    private func setupTextField() {
-        self.textField.backgroundColor = UIColor.clear
-        self.textField.translatesAutoresizingMaskIntoConstraints = false
-        self.textFieldHolderView.addSubview(self.textField)
-        
-        NSLayoutConstraint(item: self.textField, attribute: NSLayoutAttribute.leading, relatedBy: NSLayoutRelation.equal, toItem: textFieldHolderView, attribute: NSLayoutAttribute.leadingMargin, multiplier: 1.0, constant: 45).isActive = true
-        NSLayoutConstraint(item: self.textField, attribute: NSLayoutAttribute.trailing, relatedBy: NSLayoutRelation.equal, toItem: textFieldHolderView, attribute: NSLayoutAttribute.trailingMargin, multiplier: 1.0, constant: -5).isActive = true
-        self.textFieldBottomConstraint = NSLayoutConstraint(item: self.textField, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: textFieldHolderView, attribute: NSLayoutAttribute.topMargin, multiplier: 1.0, constant: -6.0)
-        self.textFieldBottomConstraint!.isActive = true
-        NSLayoutConstraint(item: self.textField, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: textFieldHolderView, attribute: NSLayoutAttribute.bottomMargin, multiplier: 1.0, constant: 6.0).isActive = true
+
+            UIView.animate(withDuration: 0.5,
+                           delay: 0,
+                           usingSpringWithDamping: CGFloat(0.00),
+                           initialSpringVelocity: CGFloat(0.0),
+                           options: UIViewAnimationOptions.allowUserInteraction,
+                           animations: {
+                            if !self.fieldIsValid && !(self.textField.text ?? "").isEmpty && self.allowAutoValidation {
+                                self.borderColor = UIColor.red
+                            } else {
+                                if let possibleOriginalColor = self.originalBorderColor {
+                                    self.borderColor = possibleOriginalColor
+                                }
+                            }},completion: nil)
     }
     
     func showMessage(_ show: Bool) {
@@ -470,6 +616,8 @@ class SDFancyTextField: UIView {
             }
         })
     }
+    
+    // MARK: Interface BUilder Setup
     
     override func awakeFromNib() {
         self.setup()
