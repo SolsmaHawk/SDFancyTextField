@@ -173,6 +173,7 @@ class SDFancyTextField: UIView {
         } get { return validationGroupValues }
     }
     
+    private var fancyTextFieldIsSelected: Bool = false
     private var messageTopConstraint: NSLayoutConstraint?
     private var textFieldBottomConstraint: NSLayoutConstraint?
     private var imageHolderView: UIView = UIView()
@@ -393,6 +394,7 @@ class SDFancyTextField: UIView {
     // MARK: Text Field Actions
     
     @objc private func textFieldEditingDidBegin(_ textField: UITextField) {
+        self.fancyTextFieldIsSelected = true
         self.imageHolderView.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
         
         let animation = CABasicAnimation(keyPath: "shadowOpacity")
@@ -476,15 +478,6 @@ class SDFancyTextField: UIView {
             self.showMessage(!valid)
             if !valid {
                 self.messageLabel.text = self.queuedValidationErrorMessage() ?? "Input invalid"
-                /*
-                if let possibleGroupValidationError = self.fieldValidationErrors?[0] {
-                    self.messageLabel.text = possibleGroupValidationError
-                } else {
-                    if let possibleFieldValidationClosure = self.fieldValidationClosure {
-                        self.messageLabel.text = possibleFieldValidationClosure(self.textField.text ?? "").errorMessage ?? "Invalid input"
-                    }
-                }
-                 */
                 UIView.animate(withDuration: 0.5,
                                delay: 0,
                                usingSpringWithDamping: CGFloat(0.0),
@@ -500,7 +493,12 @@ class SDFancyTextField: UIView {
                                initialSpringVelocity: CGFloat(0.0),
                                options: UIViewAnimationOptions.allowUserInteraction,
                                animations: {
-                                self.borderColor = self.originalBorderColor!},
+                                    if self.fancyTextFieldIsSelected {
+                                        self.borderColor = self.selectedColor ?? self.originalBorderColor!
+                                    } else {
+                                        self.borderColor = self.originalBorderColor!
+                                    }
+                                },
                                completion: nil)
             }
         }
@@ -521,6 +519,7 @@ class SDFancyTextField: UIView {
     }
     
     @objc private func textFieldEditingDidEnd(_ textField: UITextField) {
+        self.fancyTextFieldIsSelected = false
         self.textField.transform = CGAffineTransform(scaleX: 0.98, y: 0.98)
         let animation = CABasicAnimation(keyPath: "shadowOpacity")
         animation.fromValue = self.layer.shadowOpacity
