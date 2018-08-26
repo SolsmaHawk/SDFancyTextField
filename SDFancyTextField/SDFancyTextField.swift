@@ -479,30 +479,6 @@ class SDFancyTextField: UIView {
                        completion: nil)
     }
     
-    private func allFieldValidationErrorMessages() -> [String]? {
-        var fieldValidationErrors: [String]?
-        if let possibleGroupValidationErrors = self.fieldValidationErrors {
-            fieldValidationErrors = [String]()
-            fieldValidationErrors?.append(contentsOf: possibleGroupValidationErrors)
-        }
-        if let possibleFieldValidationClosure = self.fieldValidationClosure {
-            if let possibleSingularValidationError = possibleFieldValidationClosure(self.textField.text ?? "").errorMessage {
-                if fieldValidationErrors == nil {
-                    fieldValidationErrors = [String]()
-                }
-                fieldValidationErrors?.append(possibleSingularValidationError)
-            }
-        }
-        return fieldValidationErrors
-    }
-    
-    private func queuedValidationErrorMessage() -> String? {
-        if let possibleErrorMessage = self.allFieldValidationErrorMessages()?[0] {
-            return possibleErrorMessage
-        }
-        return nil
-    }
-    
     private func animateFieldIsNotValidMessage(valid: Bool, textIsEmpty: Bool) {
         if textIsEmpty {
             self.showMessage(false)
@@ -599,6 +575,32 @@ class SDFancyTextField: UIView {
                             }},completion: nil)
     }
     
+    // MARK: Helper Methods
+    
+    private func allFieldValidationErrorMessages() -> [String]? {
+        var fieldValidationErrors: [String]?
+        if let possibleGroupValidationErrors = self.fieldValidationErrors {
+            fieldValidationErrors = [String]()
+            fieldValidationErrors?.append(contentsOf: possibleGroupValidationErrors)
+        }
+        if let possibleFieldValidationClosure = self.fieldValidationClosure {
+            if let possibleSingularValidationError = possibleFieldValidationClosure(self.textField.text ?? "").errorMessage {
+                if fieldValidationErrors == nil {
+                    fieldValidationErrors = [String]()
+                }
+                fieldValidationErrors?.append(possibleSingularValidationError)
+            }
+        }
+        return fieldValidationErrors
+    }
+    
+    private func queuedValidationErrorMessage() -> String? {
+        if let possibleErrorMessage = self.allFieldValidationErrorMessages()?[0] {
+            return possibleErrorMessage
+        }
+        return nil
+    }
+    
     func showMessage(_ show: Bool) {
         if show {
             self.textFieldBottomConstraint?.constant = 7.0
@@ -617,7 +619,7 @@ class SDFancyTextField: UIView {
         })
     }
     
-    // MARK: Interface BUilder Setup
+    // MARK: Interface Builder Setup
     
     override func awakeFromNib() {
         self.setup()
