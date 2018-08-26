@@ -112,6 +112,12 @@ class SDFancyTextField: UIView {
                     formIsValid = false
                     if withAnimation {
                         // animate textField with invalid animation
+                        fancyTextField.animateFieldIsNotValidMessage(valid: false, textIsEmpty: false)
+                        fancyTextField.isUserInteractionEnabled = false
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                            fancyTextField.animateFieldIsNotValidMessage(valid: false, textIsEmpty: true)
+                            fancyTextField.isUserInteractionEnabled = true
+                        }
                     }
                 }
             }
@@ -428,6 +434,30 @@ class SDFancyTextField: UIView {
                        completion: nil)
     }
     
+    private func allFieldValidationErrorMessages() -> [String]? {
+        var fieldValidationErrors: [String]?
+        if let possibleGroupValidationErrors = self.fieldValidationErrors {
+            fieldValidationErrors = [String]()
+            fieldValidationErrors?.append(contentsOf: possibleGroupValidationErrors)
+        }
+        if let possibleFieldValidationClosure = self.fieldValidationClosure {
+            if let possibleSingularValidationError = possibleFieldValidationClosure(self.textField.text ?? "").errorMessage {
+                if fieldValidationErrors == nil {
+                    fieldValidationErrors = [String]()
+                }
+                fieldValidationErrors?.append(possibleSingularValidationError)
+            }
+        }
+        return fieldValidationErrors
+    }
+    
+    private func queuedValidationErrorMessage() -> String? {
+        if let possibleErrorMessage = self.allFieldValidationErrorMessages()?[0] {
+            return possibleErrorMessage
+        }
+        return nil
+    }
+    
     private func animateFieldIsNotValidMessage(valid: Bool, textIsEmpty: Bool) {
         if textIsEmpty {
             self.showMessage(false)
@@ -437,12 +467,24 @@ class SDFancyTextField: UIView {
                            initialSpringVelocity: CGFloat(0.0),
                            options: UIViewAnimationOptions.allowUserInteraction,
                            animations: {
-                            self.borderColor = self.originalBorderColor!},
+                            if let originalBorderColor = self.originalBorderColor {
+                               self.borderColor = originalBorderColor
+                            }
+                            },
                            completion: nil)
         } else {
             self.showMessage(!valid)
             if !valid {
-                self.messageLabel.text = self.fieldValidationErrors?[0] ?? "Invalid input"
+                self.messageLabel.text = self.queuedValidationErrorMessage() ?? "Input invalid"
+                /*
+                if let possibleGroupValidationError = self.fieldValidationErrors?[0] {
+                    self.messageLabel.text = possibleGroupValidationError
+                } else {
+                    if let possibleFieldValidationClosure = self.fieldValidationClosure {
+                        self.messageLabel.text = possibleFieldValidationClosure(self.textField.text ?? "").errorMessage ?? "Invalid input"
+                    }
+                }
+                 */
                 UIView.animate(withDuration: 0.5,
                                delay: 0,
                                usingSpringWithDamping: CGFloat(0.0),

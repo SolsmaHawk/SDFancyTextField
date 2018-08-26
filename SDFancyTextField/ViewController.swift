@@ -21,6 +21,12 @@ class ViewController: UIViewController {
         
         userNameFancyTextField.form = "Main Form"
         passwordFancyTextField.form = "Main Form"
+        passwordFancyTextField.fieldValidationClosure = {textFieldText in
+            if textFieldText.contains("zero") {
+                return (true,nil)
+            }
+            return (false, "Does not contain zero.")
+        }
         passwordFancyTextField.quickValidationTypes = [.UppercaseLetter,.SpecialCharacter,.NotEmpty,.ContainsNumber]
         userNameFancyTextField.quickValidationTypes = [.UppercaseLetter,.SpecialCharacter,.NotEmpty,.ContainsNumber,.ValidEmail]
        /*
@@ -64,7 +70,7 @@ class ViewController: UIViewController {
             
         }
         
-        if SDFancyTextField.validate(form: "Main Form", withAnimation: false) {
+        if SDFancyTextField.validate(form: "Main Form", withAnimation: true) {
             
         }
     }
