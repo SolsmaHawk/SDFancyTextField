@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="X6h-mS-Fri">
-    <device id="retina4_7" orientation="portrait">
+    <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -14,24 +14,78 @@
             <objects>
                 <tableViewController id="X6h-mS-Fri" customClass="SDFancyTextFieldDemoTableViewController" customModule="SDFancyTextField" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="b2s-0O-4Zc">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="709"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <sections>
                             <tableViewSection id="4x6-Ok-HV0">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="687" id="i7k-HR-1An">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="687"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="790" id="i7k-HR-1An">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="790"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="i7k-HR-1An" id="Qro-YE-eIm">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="686.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="789.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1iq-Jk-TCu" customClass="SDFancyTextField" customModule="SDFancyTextField" customModuleProvider="target">
-                                                    <rect key="frame" x="16" y="11" width="343" height="45"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SDFancyTextField Demo" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dit-JL-KPl">
+                                                    <rect key="frame" x="16" y="11" width="288" height="52"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="52" id="Gni-Ov-zXe"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="25"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DoV-FQ-TG1">
+                                                    <rect key="frame" x="0.0" y="89" width="320" height="5"/>
+                                                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="5" id="kCZ-L5-a4J"/>
+                                                    </constraints>
+                                                </view>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O06-oc-NTe" customClass="SDFancyTextField" customModule="SDFancyTextField" customModuleProvider="target">
+                                                    <rect key="frame" x="16" y="176" width="288" height="45"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="45" id="nFn-SY-tgi"/>
+                                                        <constraint firstAttribute="height" constant="45" id="xUl-rC-BPi"/>
+                                                    </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="image" keyPath="iconImage" value="solsma_Dev_even"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Form 1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l2h-ed-Rc9">
+                                                    <rect key="frame" x="53" y="105" width="214" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="XLF-E5-Hoi"/>
+                                                        <constraint firstAttribute="width" constant="214" id="p5l-wh-7K2"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Must be a valid email" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="wSd-KK-KMo">
+                                                    <rect key="frame" x="8" y="126" width="304" height="42"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="42" id="6xu-gT-2tM"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Must contain a capital letter, a special character, a number and be 7 characters long" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="Q1h-ra-ucQ">
+                                                    <rect key="frame" x="8" y="229" width="304" height="42"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="42" id="i8w-S6-lGt"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="poU-0s-FcT" customClass="SDFancyTextField" customModule="SDFancyTextField" customModuleProvider="target">
+                                                    <rect key="frame" x="16" y="279" width="288" height="45"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="45" id="FWI-8T-lrI"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="image" keyPath="iconImage" value="solsma_Dev_even"/>
@@ -39,9 +93,26 @@
                                                 </view>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="1iq-Jk-TCu" secondAttribute="trailing" constant="16" id="YGt-uI-JIq"/>
-                                                <constraint firstItem="1iq-Jk-TCu" firstAttribute="top" secondItem="Qro-YE-eIm" secondAttribute="top" constant="11" id="exo-ne-dVO"/>
-                                                <constraint firstItem="1iq-Jk-TCu" firstAttribute="leading" secondItem="Qro-YE-eIm" secondAttribute="leading" constant="16" id="hxT-DQ-xMW"/>
+                                                <constraint firstAttribute="trailing" secondItem="O06-oc-NTe" secondAttribute="trailing" constant="16" id="1NL-5n-eNM"/>
+                                                <constraint firstItem="dit-JL-KPl" firstAttribute="leading" secondItem="Qro-YE-eIm" secondAttribute="leading" constant="16" id="2zF-k0-QXF"/>
+                                                <constraint firstItem="l2h-ed-Rc9" firstAttribute="centerX" secondItem="DoV-FQ-TG1" secondAttribute="centerX" id="7CY-61-G8H"/>
+                                                <constraint firstItem="Q1h-ra-ucQ" firstAttribute="top" secondItem="O06-oc-NTe" secondAttribute="bottom" constant="8" id="9SK-Kz-TNK"/>
+                                                <constraint firstItem="DoV-FQ-TG1" firstAttribute="leading" secondItem="Qro-YE-eIm" secondAttribute="leading" id="Iim-fe-3ah"/>
+                                                <constraint firstAttribute="trailing" secondItem="poU-0s-FcT" secondAttribute="trailing" constant="16" id="LPG-w6-z4X"/>
+                                                <constraint firstItem="wSd-KK-KMo" firstAttribute="leading" secondItem="Qro-YE-eIm" secondAttribute="leading" constant="8" id="NYd-pM-P6c"/>
+                                                <constraint firstItem="wSd-KK-KMo" firstAttribute="top" secondItem="DoV-FQ-TG1" secondAttribute="bottom" constant="32" id="PfB-0E-pE9"/>
+                                                <constraint firstItem="O06-oc-NTe" firstAttribute="top" secondItem="DoV-FQ-TG1" secondAttribute="bottom" constant="82" id="QiN-Aj-aJB"/>
+                                                <constraint firstItem="DoV-FQ-TG1" firstAttribute="top" secondItem="dit-JL-KPl" secondAttribute="bottom" constant="26" id="Snp-OQ-ucf"/>
+                                                <constraint firstItem="l2h-ed-Rc9" firstAttribute="top" secondItem="DoV-FQ-TG1" secondAttribute="bottom" constant="11" id="WZD-Vm-dBT"/>
+                                                <constraint firstItem="poU-0s-FcT" firstAttribute="top" secondItem="Q1h-ra-ucQ" secondAttribute="bottom" constant="8" id="YW8-Or-IUb"/>
+                                                <constraint firstItem="Q1h-ra-ucQ" firstAttribute="leading" secondItem="Qro-YE-eIm" secondAttribute="leading" constant="8" id="aOl-fM-BoJ"/>
+                                                <constraint firstAttribute="trailing" secondItem="DoV-FQ-TG1" secondAttribute="trailing" id="bNu-Gr-8yT"/>
+                                                <constraint firstAttribute="trailing" secondItem="wSd-KK-KMo" secondAttribute="trailing" constant="8" id="cBO-aa-oiF"/>
+                                                <constraint firstItem="dit-JL-KPl" firstAttribute="top" secondItem="Qro-YE-eIm" secondAttribute="top" constant="11" id="d9e-u4-sYl"/>
+                                                <constraint firstItem="poU-0s-FcT" firstAttribute="leading" secondItem="Qro-YE-eIm" secondAttribute="leading" constant="16" id="jnN-3t-hZt"/>
+                                                <constraint firstAttribute="trailing" secondItem="Q1h-ra-ucQ" secondAttribute="trailing" constant="8" id="jpk-KT-PUq"/>
+                                                <constraint firstItem="O06-oc-NTe" firstAttribute="leading" secondItem="Qro-YE-eIm" secondAttribute="leading" constant="16" id="mRW-dq-ElK"/>
+                                                <constraint firstAttribute="trailing" secondItem="dit-JL-KPl" secondAttribute="trailing" constant="16" id="qNg-BT-Bgy"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -53,10 +124,15 @@
                             <outlet property="delegate" destination="X6h-mS-Fri" id="AOd-hs-F4l"/>
                         </connections>
                     </tableView>
+                    <size key="freeformSize" width="320" height="709"/>
+                    <connections>
+                        <outlet property="everythingField" destination="poU-0s-FcT" id="do9-Uo-7Qu"/>
+                        <outlet property="validEmailField" destination="O06-oc-NTe" id="5Bh-TF-TzP"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RDh-KO-VVP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-122.40000000000001" y="22.938530734632685"/>
+            <point key="canvasLocation" x="-123.75" y="21.654929577464788"/>
         </scene>
     </scenes>
     <resources>

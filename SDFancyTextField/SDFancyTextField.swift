@@ -538,6 +538,7 @@ class SDFancyTextField: UIView {
         } else {
             self.showMessage(!valid)
             if !valid {
+                self.originalBorderColor = self.borderColor
                 self.messageLabel.text = self.queuedValidationErrorMessage() ?? "Input invalid"
                 UIView.animate(withDuration: 0.5,
                                delay: 0,

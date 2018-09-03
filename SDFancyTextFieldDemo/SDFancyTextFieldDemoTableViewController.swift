@@ -10,9 +10,14 @@ import UIKit
 
 class SDFancyTextFieldDemoTableViewController: UITableViewController {
 
+    @IBOutlet var everythingField: SDFancyTextField!
+    @IBOutlet var validEmailField: SDFancyTextField!
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.validEmailField.allowAutoValidation = true
+        self.validEmailField.quickValidationTypes = [.ValidEmail]
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
