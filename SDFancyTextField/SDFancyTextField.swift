@@ -184,6 +184,7 @@ class SDFancyTextField: UIView {
     private var messageLabel = UILabel()
     private var originalBorderColor: UIColor?
     private var borderColorDefaultValue: UIColor = UIColor.lightGray
+    @IBInspectable var errorColor: UIColor = UIColor.red
     @IBInspectable var allowAutoValidation: Bool = false
     @IBInspectable var borderColor: UIColor {
         set {   self.borderColorDefaultValue = newValue
@@ -462,7 +463,7 @@ class SDFancyTextField: UIView {
                        options: UIViewAnimationOptions.allowUserInteraction,
                        animations: {
                         if !self.fieldIsValid && !(self.textField.text ?? "").isEmpty && self.allowAutoValidation {
-                            self.borderColor = UIColor.red
+                            self.borderColor = self.errorColor
                         } else {
                             if let possibleSelectedColor = self.selectedColor {
                                 self.originalBorderColor = self.borderColor
@@ -511,7 +512,7 @@ class SDFancyTextField: UIView {
                            options: UIViewAnimationOptions.allowUserInteraction,
                            animations: {
                             if !self.fieldIsValid && !(self.textField.text ?? "").isEmpty && self.allowAutoValidation {
-                                self.borderColor = UIColor.red
+                                self.borderColor = self.errorColor
                             } else {
                                 if let possibleOriginalColor = self.originalBorderColor {
                                     self.borderColor = possibleOriginalColor
@@ -538,7 +539,9 @@ class SDFancyTextField: UIView {
         } else {
             self.showMessage(!valid)
             if !valid {
-                self.originalBorderColor = self.borderColor
+                if self.borderColor != self.errorColor {
+                    self.originalBorderColor = self.borderColor
+                }
                 self.messageLabel.text = self.queuedValidationErrorMessage() ?? "Input invalid"
                 UIView.animate(withDuration: 0.5,
                                delay: 0,
@@ -546,7 +549,7 @@ class SDFancyTextField: UIView {
                                initialSpringVelocity: CGFloat(0.0),
                                options: UIViewAnimationOptions.allowUserInteraction,
                                animations: {
-                                self.borderColor = UIColor.red },
+                                self.borderColor = self.errorColor },
                                completion: nil)
             } else {
                 UIView.animate(withDuration: 0.5,
