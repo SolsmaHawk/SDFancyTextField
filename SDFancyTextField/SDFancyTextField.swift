@@ -587,7 +587,7 @@ class SDFancyTextField: UIView {
     }
     
     private func queuedValidationErrorMessage() -> String? {
-        if let possibleErrorMessage = self.allFieldValidationErrorMessages()?[0] {
+        if let possibleErrorMessage = self.allFieldValidationErrorMessages()?.last {
             return possibleErrorMessage
         }
         return nil

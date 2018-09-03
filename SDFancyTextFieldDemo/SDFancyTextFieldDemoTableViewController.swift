@@ -17,6 +17,16 @@ class SDFancyTextFieldDemoTableViewController: UITableViewController {
 
         self.validEmailField.allowAutoValidation = true
         self.validEmailField.quickValidationTypes = [.ValidEmail]
+        self.everythingField.allowAutoValidation = true
+        self.everythingField.quickValidationTypes = [.ContainsNumber,.SpecialCharacter,.UppercaseLetter]
+        
+        self.everythingField.fieldValidationClosure = {textFieldText in
+            if textFieldText.contains("test") {
+                return (true, nil)
+            } else {
+                return (false, "Must contain the word 'test'")
+            }
+        }
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
