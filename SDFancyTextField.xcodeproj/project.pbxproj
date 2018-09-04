@@ -7,22 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		310E19E1213DE69300F78101 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 310E19E0213DE69300F78101 /* ViewController.swift */; };
+		318E5E83213F4EFE0018DB99 /* SDFancyTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318E5E82213F4EFE0018DB99 /* SDFancyTextField.swift */; };
 		31DA174F2133872E00BF2459 /* SDFancyTextFieldDemo.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 31DA174E2133872E00BF2459 /* SDFancyTextFieldDemo.storyboard */; };
 		31DA1751213387B800BF2459 /* SDFancyTextFieldDemoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DA1750213387B800BF2459 /* SDFancyTextFieldDemoTableViewController.swift */; };
-		31DA175821338A9000BF2459 /* SDFancyTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DA175721338A9000BF2459 /* SDFancyTextField.swift */; };
 		31F4348421115AFE003F8A34 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31F4348321115AFE003F8A34 /* AppDelegate.swift */; };
-		31F4348621115AFE003F8A34 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31F4348521115AFE003F8A34 /* ViewController.swift */; };
 		31F4348B21115AFE003F8A34 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 31F4348A21115AFE003F8A34 /* Assets.xcassets */; };
 		31F4348E21115AFE003F8A34 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 31F4348C21115AFE003F8A34 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		310E19E0213DE69300F78101 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		318E5E82213F4EFE0018DB99 /* SDFancyTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SDFancyTextField.swift; sourceTree = "<group>"; };
 		31DA174E2133872E00BF2459 /* SDFancyTextFieldDemo.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SDFancyTextFieldDemo.storyboard; sourceTree = "<group>"; };
 		31DA1750213387B800BF2459 /* SDFancyTextFieldDemoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDFancyTextFieldDemoTableViewController.swift; sourceTree = "<group>"; };
-		31DA175721338A9000BF2459 /* SDFancyTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDFancyTextField.swift; sourceTree = "<group>"; };
 		31F4348021115AFE003F8A34 /* SDFancyTextField.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SDFancyTextField.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		31F4348321115AFE003F8A34 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		31F4348521115AFE003F8A34 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		31F4348A21115AFE003F8A34 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		31F4348D21115AFE003F8A34 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		31F4348F21115AFE003F8A34 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -42,7 +42,7 @@
 		31DA175921338AB700BF2459 /* SDFancyTextField */ = {
 			isa = PBXGroup;
 			children = (
-				31DA175721338A9000BF2459 /* SDFancyTextField.swift */,
+				318E5E82213F4EFE0018DB99 /* SDFancyTextField.swift */,
 			);
 			path = SDFancyTextField;
 			sourceTree = "<group>";
@@ -71,8 +71,8 @@
 				31DA174E2133872E00BF2459 /* SDFancyTextFieldDemo.storyboard */,
 				31DA1750213387B800BF2459 /* SDFancyTextFieldDemoTableViewController.swift */,
 				31F4348A21115AFE003F8A34 /* Assets.xcassets */,
+				310E19E0213DE69300F78101 /* ViewController.swift */,
 				31F4348C21115AFE003F8A34 /* LaunchScreen.storyboard */,
-				31F4348521115AFE003F8A34 /* ViewController.swift */,
 				31F4348F21115AFE003F8A34 /* Info.plist */,
 			);
 			path = SDFancyTextFieldDemo;
@@ -150,10 +150,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				31F4348621115AFE003F8A34 /* ViewController.swift in Sources */,
 				31DA1751213387B800BF2459 /* SDFancyTextFieldDemoTableViewController.swift in Sources */,
 				31F4348421115AFE003F8A34 /* AppDelegate.swift in Sources */,
-				31DA175821338A9000BF2459 /* SDFancyTextField.swift in Sources */,
+				310E19E1213DE69300F78101 /* ViewController.swift in Sources */,
+				318E5E83213F4EFE0018DB99 /* SDFancyTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
