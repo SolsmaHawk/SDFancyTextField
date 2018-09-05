@@ -16,6 +16,7 @@ class SDFancyTextField: UIView {
     typealias TextFieldValidationClosure = ((_ textFieldText: String) -> (success: Bool, errorMessage: String?))
     static private var validationFormsHashTable = NSHashTable<SDFancyTextField>(options: .weakMemory)
     static private var validationGroupsHashTable = NSHashTable<SDFancyTextField>(options: .weakMemory)
+    static private var singularValidationsHashTable = NSHashTable<SDFancyTextField>(options: .weakMemory)
     static private var groupValidationClosures: [String:[TextFieldValidationClosure]]?
     
     struct ValidationGroup {
@@ -288,7 +289,18 @@ class SDFancyTextField: UIView {
             self.textFieldHolderView.backgroundColor = newValue }
         get { return self.textFieldHolderView.backgroundColor ?? UIColor.white }}
     
-    var fieldValidationClosure: TextFieldValidationClosure?
+    private var fieldValidationClosureValue: TextFieldValidationClosure?
+    var fieldValidationClosure: TextFieldValidationClosure? {
+        get {
+            return self.fieldValidationClosureValue
+        }
+        set {
+            if !SDFancyTextField.singularValidationsHashTable.contains(self) {
+                SDFancyTextField.singularValidationsHashTable.add(self)
+            }
+            self.fieldValidationClosureValue = newValue
+        }
+    }
     
     var fieldIsValid: Bool {
         func groupValidationsAreCorrect() -> Bool {
@@ -473,10 +485,24 @@ class SDFancyTextField: UIView {
                        completion: nil)
     }
     
+    private func animateOtherFancyTextFields() {
+        for fancyTextField in SDFancyTextField.validationGroupsHashTable.allObjects {
+            if fancyTextField.allowAutoValidation {
+                fancyTextField.animateFieldIsNotValidMessage(valid: fancyTextField.fieldIsValid, textIsEmpty: (fancyTextField.textField.text ?? "").isEmpty)
+            }
+        }
+        for fancyTextField in SDFancyTextField.singularValidationsHashTable.allObjects {
+            if fancyTextField.allowAutoValidation {
+                fancyTextField.animateFieldIsNotValidMessage(valid: fancyTextField.fieldIsValid, textIsEmpty: (fancyTextField.textField.text ?? "").isEmpty)
+            }
+        }
+    }
+    
     @objc private func textFieldDidChange(_ textField: UITextField) {
         if allowAutoValidation {
             animateFieldIsNotValidMessage(valid: self.fieldIsValid, textIsEmpty: (textField.text ?? "").isEmpty)
         }
+        self.animateOtherFancyTextFields()
             self.dividerView!.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
             UIView.animate(withDuration: 1.0,
                            delay: 0,
