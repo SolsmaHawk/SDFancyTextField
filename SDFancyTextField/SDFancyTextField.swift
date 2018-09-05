@@ -265,7 +265,19 @@ class SDFancyTextField: UIView {
         } get { return self.layer.cornerRadius
         }
     }
-    
+    private var validFieldIconImageValue: UIImage?
+    @IBInspectable var validFieldIconImage: UIImage? {
+        get {
+            if let possibleValidIconImage = self.validFieldIconImageValue {
+                return possibleValidIconImage
+            }
+            return self.iconImage
+        }
+        set {
+            self.validFieldIconImageValue = newValue
+        }
+    }
+    @IBInspectable var invalidFieldIconImage: UIImage?
     private var iconImageView: UIImageView = UIImageView()
     @IBInspectable var iconImage: UIImage? {
         set {   self.iconImageView.image = newValue}
