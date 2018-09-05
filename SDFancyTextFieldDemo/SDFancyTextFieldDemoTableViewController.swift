@@ -10,6 +10,7 @@ import UIKit
 
 class SDFancyTextFieldDemoTableViewController: UITableViewController {
 
+    @IBOutlet var retypePasswordField: SDFancyTextField!
     @IBOutlet var everythingField: SDFancyTextField!
     @IBOutlet var validEmailField: SDFancyTextField!
     override func viewDidLoad() {
@@ -19,6 +20,7 @@ class SDFancyTextFieldDemoTableViewController: UITableViewController {
         self.validEmailField.quickValidationTypes = [.ValidEmail]
         self.everythingField.allowAutoValidation = true
         self.everythingField.quickValidationTypes = [.ContainsNumber,.SpecialCharacter,.UppercaseLetter]
+        self.retypePasswordField.allowAutoValidation = true
         
         self.everythingField.fieldValidationClosure = {textFieldText in
             if (textFieldText.lowercased().contains("test") && textFieldText.count >= 7) {
@@ -28,6 +30,13 @@ class SDFancyTextFieldDemoTableViewController: UITableViewController {
                 return (false, "Must contain the word 'test'")
             }
             return (false, "Length must be 7 or greater")
+        }
+        
+        self.retypePasswordField.fieldValidationClosure = {textFieldText in
+            if textFieldText == self.everythingField.textField.text {
+                return (true,nil)
+            }
+            return (false, "Passwords must match")
         }
     }
 

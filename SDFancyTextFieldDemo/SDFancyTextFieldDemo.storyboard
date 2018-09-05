@@ -88,46 +88,39 @@
                                                         <constraint firstAttribute="height" constant="45" id="FWI-8T-lrI"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="image" keyPath="iconImage" value="solsma_Dev_even"/>
+                                                        <userDefinedRuntimeAttribute type="image" keyPath="iconImage" value="password_icon"/>
                                                         <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
                                                             <color key="value" red="0.19810587169999999" green="0.48732060189999998" blue="0.7945447564" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="color" keyPath="selectedColor">
                                                             <color key="value" red="0.21173727510000001" green="0.21178042890000001" blue="0.21173459289999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="iconImageColorMatchesBorderColor" value="YES"/>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="isSecureEntry" value="YES"/>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="placeHolderText" value="Password"/>
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xix-X6-Eee" customClass="SDFancyTextField" customModule="SDFancyTextField" customModuleProvider="target">
-                                                    <rect key="frame" x="16" y="388" width="288" height="45"/>
+                                                    <rect key="frame" x="16" y="334" width="288" height="45"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="45" id="aG2-yY-9XC"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="image" keyPath="iconImage" value="solsma_Dev_even"/>
+                                                        <userDefinedRuntimeAttribute type="image" keyPath="iconImage" value="password_icon"/>
                                                         <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                            <color key="value" red="0.0" green="0.79595527450000003" blue="0.064283117900000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="value" red="0.19810587169999999" green="0.48732060189999998" blue="0.7945447564" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="iconImageColorMatchesBorderColor" value="YES"/>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="placeHolderText" value="Retype Password"/>
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Must contain a capital letter, a special character, a number, the word 'test' and be 7 characters long" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="YU1-ZX-Jaj">
-                                                    <rect key="frame" x="8" y="338" width="304" height="42"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="42" id="IAD-4m-L3E"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="YU1-ZX-Jaj" secondAttribute="trailing" constant="8" id="0cI-Co-nRz"/>
                                                 <constraint firstAttribute="trailing" secondItem="O06-oc-NTe" secondAttribute="trailing" constant="16" id="1NL-5n-eNM"/>
                                                 <constraint firstItem="dit-JL-KPl" firstAttribute="leading" secondItem="Qro-YE-eIm" secondAttribute="leading" constant="16" id="2zF-k0-QXF"/>
                                                 <constraint firstItem="l2h-ed-Rc9" firstAttribute="centerX" secondItem="DoV-FQ-TG1" secondAttribute="centerX" id="7CY-61-G8H"/>
                                                 <constraint firstItem="Q1h-ra-ucQ" firstAttribute="top" secondItem="O06-oc-NTe" secondAttribute="bottom" constant="8" id="9SK-Kz-TNK"/>
-                                                <constraint firstItem="xix-X6-Eee" firstAttribute="top" secondItem="YU1-ZX-Jaj" secondAttribute="bottom" constant="8" id="CEg-dM-jAu"/>
-                                                <constraint firstItem="YU1-ZX-Jaj" firstAttribute="top" secondItem="poU-0s-FcT" secondAttribute="bottom" constant="14" id="FFW-GV-yEY"/>
                                                 <constraint firstItem="DoV-FQ-TG1" firstAttribute="leading" secondItem="Qro-YE-eIm" secondAttribute="leading" id="Iim-fe-3ah"/>
                                                 <constraint firstAttribute="trailing" secondItem="poU-0s-FcT" secondAttribute="trailing" constant="16" id="LPG-w6-z4X"/>
                                                 <constraint firstItem="wSd-KK-KMo" firstAttribute="leading" secondItem="Qro-YE-eIm" secondAttribute="leading" constant="8" id="NYd-pM-P6c"/>
@@ -137,7 +130,6 @@
                                                 <constraint firstItem="O06-oc-NTe" firstAttribute="top" secondItem="DoV-FQ-TG1" secondAttribute="bottom" constant="82" id="QiN-Aj-aJB"/>
                                                 <constraint firstItem="DoV-FQ-TG1" firstAttribute="top" secondItem="dit-JL-KPl" secondAttribute="bottom" constant="26" id="Snp-OQ-ucf"/>
                                                 <constraint firstItem="l2h-ed-Rc9" firstAttribute="top" secondItem="DoV-FQ-TG1" secondAttribute="bottom" constant="11" id="WZD-Vm-dBT"/>
-                                                <constraint firstItem="YU1-ZX-Jaj" firstAttribute="leading" secondItem="Qro-YE-eIm" secondAttribute="leading" constant="8" id="Wpz-pE-29F"/>
                                                 <constraint firstItem="poU-0s-FcT" firstAttribute="top" secondItem="Q1h-ra-ucQ" secondAttribute="bottom" constant="8" id="YW8-Or-IUb"/>
                                                 <constraint firstItem="Q1h-ra-ucQ" firstAttribute="leading" secondItem="Qro-YE-eIm" secondAttribute="leading" constant="8" id="aOl-fM-BoJ"/>
                                                 <constraint firstAttribute="trailing" secondItem="DoV-FQ-TG1" secondAttribute="trailing" id="bNu-Gr-8yT"/>
@@ -145,6 +137,7 @@
                                                 <constraint firstItem="dit-JL-KPl" firstAttribute="top" secondItem="Qro-YE-eIm" secondAttribute="top" constant="11" id="d9e-u4-sYl"/>
                                                 <constraint firstItem="poU-0s-FcT" firstAttribute="leading" secondItem="Qro-YE-eIm" secondAttribute="leading" constant="16" id="jnN-3t-hZt"/>
                                                 <constraint firstAttribute="trailing" secondItem="Q1h-ra-ucQ" secondAttribute="trailing" constant="8" id="jpk-KT-PUq"/>
+                                                <constraint firstItem="xix-X6-Eee" firstAttribute="top" secondItem="poU-0s-FcT" secondAttribute="bottom" constant="10" id="l7d-44-6Zg"/>
                                                 <constraint firstItem="O06-oc-NTe" firstAttribute="leading" secondItem="Qro-YE-eIm" secondAttribute="leading" constant="16" id="mRW-dq-ElK"/>
                                                 <constraint firstAttribute="trailing" secondItem="dit-JL-KPl" secondAttribute="trailing" constant="16" id="qNg-BT-Bgy"/>
                                             </constraints>
@@ -161,6 +154,7 @@
                     <size key="freeformSize" width="320" height="709"/>
                     <connections>
                         <outlet property="everythingField" destination="poU-0s-FcT" id="do9-Uo-7Qu"/>
+                        <outlet property="retypePasswordField" destination="xix-X6-Eee" id="ipA-B4-8jT"/>
                         <outlet property="validEmailField" destination="O06-oc-NTe" id="5Bh-TF-TzP"/>
                     </connections>
                 </tableViewController>
@@ -170,6 +164,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="password_icon" width="200" height="200"/>
         <image name="solsma_Dev_even" width="600" height="600"/>
     </resources>
 </document>
