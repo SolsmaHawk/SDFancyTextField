@@ -41,6 +41,7 @@ class SDFancyTextField: UIView {
         case CharacterLength    = "QuickValidationType_characterLength"
         case NotEmpty           = "QuickValidationType_notEmpty"
         case ValidEmail         = "QuickValidationType_validEmail"
+        case CanBeEmpty         = "QuickValidationType_canBeEmpty"
     }
     
     static private func validationClosuresFor(_ group:String) -> [TextFieldValidationClosure]? {
@@ -52,6 +53,10 @@ class SDFancyTextField: UIView {
     
     private class func addValidationFor(type: QuickValidationType) {
         switch type {
+        case .CanBeEmpty:
+            SDFancyTextField.addValidationFor(group:ValidationGroup.init(name: type.rawValue    ), with: {  textFieldText in
+                return (true,nil)
+            })
         case .UppercaseLetter:
             SDFancyTextField.addValidationFor(group:ValidationGroup.init(name: type.rawValue    ), with: {  textFieldText in
                 let capitalLetterRegEx  = ".*[A-Z]+.*"
@@ -133,7 +138,7 @@ class SDFancyTextField: UIView {
     }
     
     private class func applyFormValidatedAnimationTo(form: String) {
-        let fancyTextFieldsFilteredByForm = SDFancyTextField.validationGroupsHashTable.allObjects.filter {(a) -> Bool in
+        let fancyTextFieldsFilteredByForm = SDFancyTextField.validationFormsHashTable.allObjects.filter {(a) -> Bool in
             return (a.form ?? "") == form
         }
         let fancyTextFieldsSortedByOrigin = fancyTextFieldsFilteredByForm.sorted(by: {(a,b) -> Bool in
@@ -526,6 +531,9 @@ class SDFancyTextField: UIView {
     // MARK: Text Field Actions
     
     @objc private func textFieldEditingDidBegin(_ textField: UITextField) {
+        if !self.allowAutoValidation {
+            self.animateFieldIsNotValidMessage(valid: false, textIsEmpty: true)
+        }
         changeBorderColor(editingBegan:true)
         self.fancyTextFieldIsSelected = true
         self.imageHolderView.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)

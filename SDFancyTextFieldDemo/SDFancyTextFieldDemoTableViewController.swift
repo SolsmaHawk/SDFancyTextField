@@ -52,6 +52,12 @@ class SDFancyTextFieldDemoTableViewController: UITableViewController {
             }
             return (false, "Passwords must match")
         }
+        
+        /* FORM TWO */
+        addressField.quickValidationTypes = [.NotEmpty]
+        cityField.quickValidationTypes = [.NotEmpty]
+        apartmentField.quickValidationTypes = [.CanBeEmpty]
+        phoneNumberField.quickValidationTypes = [.NotEmpty]
     }
 
     @IBAction func validateFormOneButtonPressed(_ sender: Any) {
@@ -61,7 +67,9 @@ class SDFancyTextFieldDemoTableViewController: UITableViewController {
     }
     
     @IBAction func validateFormTwoButtonPressed(_ sender: Any) {
-        
+        if !SDFancyTextField.validate(form: "form2", withAnimation: true) {
+            
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

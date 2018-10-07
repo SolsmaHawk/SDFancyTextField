@@ -186,7 +186,7 @@
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="boolean" keyPath="iconImageColorMatchesBorderColor" value="YES"/>
                                                         <userDefinedRuntimeAttribute type="boolean" keyPath="isSecureEntry" value="NO"/>
-                                                        <userDefinedRuntimeAttribute type="string" keyPath="placeHolderText" value="Apartment, Unit #"/>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="placeHolderText" value="Apartment, Unit # (optional)"/>
                                                         <userDefinedRuntimeAttribute type="string" keyPath="form" value="form2"/>
                                                         <userDefinedRuntimeAttribute type="color" keyPath="validColor">
                                                             <color key="value" red="0.0" green="0.79595527450000003" blue="0.064283117900000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
