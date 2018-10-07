@@ -52,6 +52,9 @@
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="image" keyPath="iconImage" value="solsma_Dev_even"/>
                                                         <userDefinedRuntimeAttribute type="boolean" keyPath="allowAutoValidation" value="YES"/>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                            <color key="value" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Form 1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l2h-ed-Rc9">
@@ -91,10 +94,10 @@
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="image" keyPath="iconImage" value="password_icon"/>
                                                         <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                            <color key="value" red="0.19810587169999999" green="0.48732060189999998" blue="0.7945447564" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="value" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="color" keyPath="selectedColor">
-                                                            <color key="value" red="0.21173727510000001" green="0.21178042890000001" blue="0.21173459289999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="value" red="0.30185431239999999" green="0.54745078089999999" blue="0.81736385820000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="boolean" keyPath="iconImageColorMatchesBorderColor" value="YES"/>
                                                         <userDefinedRuntimeAttribute type="boolean" keyPath="isSecureEntry" value="YES"/>
@@ -110,10 +113,14 @@
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="image" keyPath="iconImage" value="password_icon"/>
                                                         <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                            <color key="value" red="0.19810587169999999" green="0.48732060189999998" blue="0.7945447564" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <color key="value" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="boolean" keyPath="iconImageColorMatchesBorderColor" value="YES"/>
                                                         <userDefinedRuntimeAttribute type="string" keyPath="placeHolderText" value="Retype Password"/>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="selectedColor">
+                                                            <color key="value" red="0.30185431239999999" green="0.54745078089999999" blue="0.81736385820000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="isSecureEntry" value="YES"/>
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                             </subviews>
