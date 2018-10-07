@@ -14,17 +14,17 @@
             <objects>
                 <tableViewController id="X6h-mS-Fri" customClass="SDFancyTextFieldDemoTableViewController" customModule="SDFancyTextField" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="b2s-0O-4Zc">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="709"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="1400"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <sections>
                             <tableViewSection id="4x6-Ok-HV0">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="790" id="i7k-HR-1An">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="790"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" rowHeight="1400" id="i7k-HR-1An">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="1400"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="i7k-HR-1An" id="Qro-YE-eIm">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="789.66666666666663"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="1399.6666666666667"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SDFancyTextField Demo" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dit-JL-KPl">
@@ -41,6 +41,13 @@
                                                     <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="5" id="kCZ-L5-a4J"/>
+                                                    </constraints>
+                                                </view>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1PO-bO-w27">
+                                                    <rect key="frame" x="0.0" y="432" width="320" height="5"/>
+                                                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="5" id="dJp-6i-zCK"/>
                                                     </constraints>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O06-oc-NTe" customClass="SDFancyTextField" customModule="SDFancyTextField" customModuleProvider="target">
@@ -64,6 +71,16 @@
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="XLF-E5-Hoi"/>
                                                         <constraint firstAttribute="width" constant="214" id="p5l-wh-7K2"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Form 2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LKg-JW-4NF">
+                                                    <rect key="frame" x="53" y="445" width="214" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="RvS-gO-0an"/>
+                                                        <constraint firstAttribute="width" constant="214" id="aR4-Le-ISb"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -107,6 +124,75 @@
                                                         <userDefinedRuntimeAttribute type="string" keyPath="form" value="form1"/>
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KLr-Mp-zky" customClass="SDFancyTextField" customModule="SDFancyTextField" customModuleProvider="target">
+                                                    <rect key="frame" x="16" y="481" width="288" height="45"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="45" id="RGv-bj-Nka"/>
+                                                    </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="image" keyPath="iconImage" value="phoneIcon"/>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                            <color key="value" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="selectedColor">
+                                                            <color key="value" red="0.93635863070000003" green="0.61471742389999995" blue="0.1268651485" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="iconImageColorMatchesBorderColor" value="YES"/>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="isSecureEntry" value="NO"/>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="placeHolderText" value="Phone Number"/>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="form" value="form2"/>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="validColor">
+                                                            <color key="value" red="0.0" green="0.79595527450000003" blue="0.064283117900000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </view>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KDc-Dv-4pE" customClass="SDFancyTextField" customModule="SDFancyTextField" customModuleProvider="target">
+                                                    <rect key="frame" x="16" y="534" width="288" height="45"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="45" id="uh3-ck-PZC"/>
+                                                    </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="image" keyPath="iconImage" value="addressIcon"/>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                            <color key="value" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="selectedColor">
+                                                            <color key="value" red="0.93635863070000003" green="0.61471742389999995" blue="0.1268651485" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="iconImageColorMatchesBorderColor" value="YES"/>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="isSecureEntry" value="NO"/>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="placeHolderText" value="Address"/>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="form" value="form2"/>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="validColor">
+                                                            <color key="value" red="0.0" green="0.79595527450000003" blue="0.064283117900000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </view>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5rK-7Y-Q5K" customClass="SDFancyTextField" customModule="SDFancyTextField" customModuleProvider="target">
+                                                    <rect key="frame" x="16" y="587" width="288" height="45"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="45" id="96h-k8-UTU"/>
+                                                    </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="image" keyPath="iconImage" value="addressIcon"/>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                            <color key="value" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="selectedColor">
+                                                            <color key="value" red="0.93635863070000003" green="0.61471742389999995" blue="0.1268651485" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="iconImageColorMatchesBorderColor" value="YES"/>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="isSecureEntry" value="NO"/>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="placeHolderText" value="Apartment, Unit #"/>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="form" value="form2"/>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="validColor">
+                                                            <color key="value" red="0.0" green="0.79595527450000003" blue="0.064283117900000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xix-X6-Eee" customClass="SDFancyTextField" customModule="SDFancyTextField" customModuleProvider="target">
                                                     <rect key="frame" x="16" y="334" width="288" height="45"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -138,14 +224,54 @@
                                                         <action selector="validateFormOneButtonPressed:" destination="X6h-mS-Fri" eventType="touchUpInside" id="Yqy-Dg-cdC"/>
                                                     </connections>
                                                 </button>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rDD-k8-pQn" customClass="SDFancyTextField" customModule="SDFancyTextField" customModuleProvider="target">
+                                                    <rect key="frame" x="16" y="640" width="288" height="45"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="45" id="YG9-Kf-Dem"/>
+                                                    </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="image" keyPath="iconImage" value="cityIcon"/>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                            <color key="value" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="selectedColor">
+                                                            <color key="value" red="0.93635863070000003" green="0.61471742389999995" blue="0.1268651485" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="iconImageColorMatchesBorderColor" value="YES"/>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="isSecureEntry" value="NO"/>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="placeHolderText" value="City"/>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="form" value="form2"/>
+                                                        <userDefinedRuntimeAttribute type="color" keyPath="validColor">
+                                                            <color key="value" red="0.0" green="0.79595527450000003" blue="0.064283117900000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </view>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RDr-Is-dXn">
+                                                    <rect key="frame" x="85" y="693" width="150" height="37"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="37" id="Wic-f7-9Db"/>
+                                                        <constraint firstAttribute="width" constant="150" id="rc7-97-B9U"/>
+                                                    </constraints>
+                                                    <state key="normal" title="Validate Form 2"/>
+                                                    <connections>
+                                                        <action selector="validateFormTwoButtonPressed:" destination="X6h-mS-Fri" eventType="touchUpInside" id="2jj-s7-9Fq"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="O06-oc-NTe" secondAttribute="trailing" constant="16" id="1NL-5n-eNM"/>
                                                 <constraint firstItem="dit-JL-KPl" firstAttribute="leading" secondItem="Qro-YE-eIm" secondAttribute="leading" constant="16" id="2zF-k0-QXF"/>
+                                                <constraint firstItem="5rK-7Y-Q5K" firstAttribute="centerX" secondItem="KDc-Dv-4pE" secondAttribute="centerX" id="5HO-mO-JCl"/>
                                                 <constraint firstItem="l2h-ed-Rc9" firstAttribute="centerX" secondItem="DoV-FQ-TG1" secondAttribute="centerX" id="7CY-61-G8H"/>
+                                                <constraint firstItem="KDc-Dv-4pE" firstAttribute="width" secondItem="KLr-Mp-zky" secondAttribute="width" id="7ie-yZ-ocI"/>
+                                                <constraint firstItem="KLr-Mp-zky" firstAttribute="top" secondItem="LKg-JW-4NF" secondAttribute="bottom" constant="15" id="8ZY-Id-5em"/>
                                                 <constraint firstItem="Q1h-ra-ucQ" firstAttribute="top" secondItem="O06-oc-NTe" secondAttribute="bottom" constant="8" id="9SK-Kz-TNK"/>
+                                                <constraint firstItem="rDD-k8-pQn" firstAttribute="width" secondItem="5rK-7Y-Q5K" secondAttribute="width" id="BeK-Yq-c2w"/>
+                                                <constraint firstItem="LKg-JW-4NF" firstAttribute="top" secondItem="1PO-bO-w27" secondAttribute="bottom" constant="8" id="FqJ-6R-bed"/>
                                                 <constraint firstItem="DoV-FQ-TG1" firstAttribute="leading" secondItem="Qro-YE-eIm" secondAttribute="leading" id="Iim-fe-3ah"/>
                                                 <constraint firstAttribute="trailing" secondItem="poU-0s-FcT" secondAttribute="trailing" constant="16" id="LPG-w6-z4X"/>
+                                                <constraint firstItem="rDD-k8-pQn" firstAttribute="top" secondItem="5rK-7Y-Q5K" secondAttribute="bottom" constant="8" id="MYp-fw-mhQ"/>
                                                 <constraint firstItem="wSd-KK-KMo" firstAttribute="leading" secondItem="Qro-YE-eIm" secondAttribute="leading" constant="8" id="NYd-pM-P6c"/>
                                                 <constraint firstAttribute="trailing" secondItem="xix-X6-Eee" secondAttribute="trailing" constant="16" id="PBC-S4-mxy"/>
                                                 <constraint firstItem="wSd-KK-KMo" firstAttribute="top" secondItem="DoV-FQ-TG1" secondAttribute="bottom" constant="32" id="PfB-0E-pE9"/>
@@ -153,17 +279,30 @@
                                                 <constraint firstItem="G4L-BY-O0w" firstAttribute="top" secondItem="xix-X6-Eee" secondAttribute="bottom" constant="8" id="QCc-I0-glZ"/>
                                                 <constraint firstItem="O06-oc-NTe" firstAttribute="top" secondItem="DoV-FQ-TG1" secondAttribute="bottom" constant="82" id="QiN-Aj-aJB"/>
                                                 <constraint firstItem="DoV-FQ-TG1" firstAttribute="top" secondItem="dit-JL-KPl" secondAttribute="bottom" constant="26" id="Snp-OQ-ucf"/>
+                                                <constraint firstItem="1PO-bO-w27" firstAttribute="leading" secondItem="Qro-YE-eIm" secondAttribute="leading" id="URF-oL-Exl"/>
+                                                <constraint firstItem="RDr-Is-dXn" firstAttribute="centerX" secondItem="rDD-k8-pQn" secondAttribute="centerX" id="Vxc-pS-hzh"/>
                                                 <constraint firstItem="l2h-ed-Rc9" firstAttribute="top" secondItem="DoV-FQ-TG1" secondAttribute="bottom" constant="11" id="WZD-Vm-dBT"/>
+                                                <constraint firstItem="KDc-Dv-4pE" firstAttribute="top" secondItem="KLr-Mp-zky" secondAttribute="bottom" constant="8" id="XOB-MR-moW"/>
                                                 <constraint firstItem="poU-0s-FcT" firstAttribute="top" secondItem="Q1h-ra-ucQ" secondAttribute="bottom" constant="8" id="YW8-Or-IUb"/>
+                                                <constraint firstAttribute="trailing" secondItem="1PO-bO-w27" secondAttribute="trailing" id="Ypg-CR-Nc3"/>
+                                                <constraint firstItem="5rK-7Y-Q5K" firstAttribute="width" secondItem="KDc-Dv-4pE" secondAttribute="width" id="ZBg-EG-2KT"/>
                                                 <constraint firstItem="Q1h-ra-ucQ" firstAttribute="leading" secondItem="Qro-YE-eIm" secondAttribute="leading" constant="8" id="aOl-fM-BoJ"/>
                                                 <constraint firstAttribute="trailing" secondItem="DoV-FQ-TG1" secondAttribute="trailing" id="bNu-Gr-8yT"/>
                                                 <constraint firstAttribute="trailing" secondItem="wSd-KK-KMo" secondAttribute="trailing" constant="8" id="cBO-aa-oiF"/>
                                                 <constraint firstItem="dit-JL-KPl" firstAttribute="top" secondItem="Qro-YE-eIm" secondAttribute="top" constant="11" id="d9e-u4-sYl"/>
+                                                <constraint firstItem="LKg-JW-4NF" firstAttribute="centerX" secondItem="1PO-bO-w27" secondAttribute="centerX" id="gLu-Lm-0KX"/>
+                                                <constraint firstItem="1PO-bO-w27" firstAttribute="top" secondItem="G4L-BY-O0w" secondAttribute="bottom" constant="8" id="ifE-Yf-vzc"/>
                                                 <constraint firstItem="poU-0s-FcT" firstAttribute="leading" secondItem="Qro-YE-eIm" secondAttribute="leading" constant="16" id="jnN-3t-hZt"/>
                                                 <constraint firstAttribute="trailing" secondItem="Q1h-ra-ucQ" secondAttribute="trailing" constant="8" id="jpk-KT-PUq"/>
                                                 <constraint firstItem="xix-X6-Eee" firstAttribute="top" secondItem="poU-0s-FcT" secondAttribute="bottom" constant="10" id="l7d-44-6Zg"/>
+                                                <constraint firstAttribute="trailing" secondItem="KLr-Mp-zky" secondAttribute="trailing" constant="16" id="lqb-Ob-qet"/>
                                                 <constraint firstItem="O06-oc-NTe" firstAttribute="leading" secondItem="Qro-YE-eIm" secondAttribute="leading" constant="16" id="mRW-dq-ElK"/>
+                                                <constraint firstItem="5rK-7Y-Q5K" firstAttribute="top" secondItem="KDc-Dv-4pE" secondAttribute="bottom" constant="8" id="me2-Sw-vj9"/>
+                                                <constraint firstItem="KDc-Dv-4pE" firstAttribute="centerX" secondItem="KLr-Mp-zky" secondAttribute="centerX" id="mps-MB-xcT"/>
+                                                <constraint firstItem="rDD-k8-pQn" firstAttribute="centerX" secondItem="5rK-7Y-Q5K" secondAttribute="centerX" id="p35-iu-T0s"/>
                                                 <constraint firstAttribute="trailing" secondItem="dit-JL-KPl" secondAttribute="trailing" constant="16" id="qNg-BT-Bgy"/>
+                                                <constraint firstItem="RDr-Is-dXn" firstAttribute="top" secondItem="rDD-k8-pQn" secondAttribute="bottom" constant="8" id="rI1-wb-shV"/>
+                                                <constraint firstItem="KLr-Mp-zky" firstAttribute="leading" secondItem="Qro-YE-eIm" secondAttribute="leading" constant="16" id="vio-W4-B1y"/>
                                                 <constraint firstItem="G4L-BY-O0w" firstAttribute="centerX" secondItem="xix-X6-Eee" secondAttribute="centerX" id="yyO-rH-bjr"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -176,9 +315,13 @@
                             <outlet property="delegate" destination="X6h-mS-Fri" id="AOd-hs-F4l"/>
                         </connections>
                     </tableView>
-                    <size key="freeformSize" width="320" height="709"/>
+                    <size key="freeformSize" width="320" height="1400"/>
                     <connections>
+                        <outlet property="addressField" destination="KDc-Dv-4pE" id="diP-5T-we1"/>
+                        <outlet property="apartmentField" destination="5rK-7Y-Q5K" id="Di4-yH-g36"/>
+                        <outlet property="cityField" destination="rDD-k8-pQn" id="gWb-Si-RLB"/>
                         <outlet property="everythingField" destination="poU-0s-FcT" id="do9-Uo-7Qu"/>
+                        <outlet property="phoneNumberField" destination="KLr-Mp-zky" id="Phd-2h-J8y"/>
                         <outlet property="retypePasswordField" destination="xix-X6-Eee" id="ipA-B4-8jT"/>
                         <outlet property="validEmailField" destination="O06-oc-NTe" id="5Bh-TF-TzP"/>
                     </connections>
@@ -189,7 +332,10 @@
         </scene>
     </scenes>
     <resources>
+        <image name="addressIcon" width="614.4000244140625" height="614.4000244140625"/>
+        <image name="cityIcon" width="980" height="982"/>
         <image name="password_icon" width="200" height="200"/>
+        <image name="phoneIcon" width="1200" height="1200"/>
         <image name="solsma_Dev_even" width="600" height="600"/>
     </resources>
 </document>

@@ -10,6 +10,10 @@ import UIKit
 
 class SDFancyTextFieldDemoTableViewController: UITableViewController {
 
+    @IBOutlet var cityField: SDFancyTextField!
+    @IBOutlet var apartmentField: SDFancyTextField!
+    @IBOutlet var addressField: SDFancyTextField!
+    @IBOutlet var phoneNumberField: SDFancyTextField!
     @IBOutlet var retypePasswordField: SDFancyTextField!
     @IBOutlet var everythingField: SDFancyTextField!
     @IBOutlet var validEmailField: SDFancyTextField!
@@ -54,6 +58,10 @@ class SDFancyTextFieldDemoTableViewController: UITableViewController {
         if !SDFancyTextField.validate(form: "form1", withAnimation: true) {
             
         }
+    }
+    
+    @IBAction func validateFormTwoButtonPressed(_ sender: Any) {
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
