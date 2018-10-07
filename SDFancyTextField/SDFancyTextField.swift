@@ -110,14 +110,17 @@ class SDFancyTextField: UIView {
         for fancyTextField in SDFancyTextField.validationGroupsHashTable.allObjects {
             if fancyTextField.form == form {
                 if !fancyTextField.fieldIsValid {
+                    fancyTextField.textField.resignFirstResponder()
                     formIsValid = false
                     if withAnimation {
                         fancyTextField.animateFieldIsNotValidMessage(valid: false, textIsEmpty: false)
                         fancyTextField.isUserInteractionEnabled = false
+                        
                         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                            fancyTextField.animateFieldIsNotValidMessage(valid: false, textIsEmpty: true)
+                            //fancyTextField.animateFieldIsNotValidMessage(valid: false, textIsEmpty: true)
                             fancyTextField.isUserInteractionEnabled = true
                         }
+                        
                     }
                 }
             }
