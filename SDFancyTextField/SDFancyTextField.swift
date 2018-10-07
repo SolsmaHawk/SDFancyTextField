@@ -195,7 +195,8 @@ class SDFancyTextField: UIView {
                 self.borderColorDefaultValue = newValue
                 self.dividerView?.backgroundColor = newValue
                 self.backgroundColor = newValue
-        } get { return self.backgroundColor ?? UIColor.lightGray
+        } get {
+                return self.backgroundColor ?? self.borderColorDefaultValue
         }
     }
     
@@ -373,6 +374,9 @@ class SDFancyTextField: UIView {
     
     private func setupMainView() {
         self.backgroundColor = self.borderColorDefaultValue
+        if self.borderColor == self.borderColorDefaultValue {
+            self.borderColor = self.borderColorDefaultValue
+        }
         self.layer.cornerRadius = self.cornerRadiusDefaultValue
         self.layer.shadowColor = self.shadowColorDefaultValue.cgColor
         self.layer.shadowOpacity = 0.0
@@ -586,7 +590,7 @@ class SDFancyTextField: UIView {
                         self.borderColor = self.originalBorderColor!
                     }
                 } else {
-                    self.borderColor = UIColor.red
+                    self.borderColor = self.errorColor
                 }
             }
         } else if editingBegan ?? false {
