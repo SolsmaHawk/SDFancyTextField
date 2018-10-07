@@ -126,7 +126,48 @@ class SDFancyTextField: UIView {
                 }
             }
         }
+        if formIsValid {
+            SDFancyTextField.applyFormValidatedAnimationTo(form: form)
+        }
         return formIsValid
+    }
+    
+    private class func applyFormValidatedAnimationTo(form: String) {
+        let fancyTextFieldsFilteredByForm = SDFancyTextField.validationGroupsHashTable.allObjects.filter {(a) -> Bool in
+            return (a.form ?? "") == form
+        }
+        let fancyTextFieldsSortedByOrigin = fancyTextFieldsFilteredByForm.sorted(by: {(a,b) -> Bool in
+            return a.frame.origin.y < b.frame.origin.y
+        })
+        var animationDelay: Float = 0.0
+        for fancyTextField in fancyTextFieldsSortedByOrigin {
+            fancyTextField.applyValidAnimationWith(delay: animationDelay)
+            animationDelay += 0.15
+        }
+    }
+    
+    private func applyValidAnimationWith(delay: Float) {
+        self.resignFirstResponder()
+        DispatchQueue.main.asyncAfter(deadline: .now() + Double.init(delay)) {
+            self.borderColor = UIColor.init(red: 0.15, green: 0.68, blue: 0.38, alpha: 1.0)
+            self.changeIconColorToMatchBorder()
+            
+        }
+        self.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
+        UIView.animate(withDuration: 1.5,
+                       delay: TimeInterval(delay),
+                       usingSpringWithDamping: CGFloat(0.4),
+                       initialSpringVelocity: CGFloat(6.0),
+                       options: UIViewAnimationOptions.allowUserInteraction,
+                       animations: {self.transform = CGAffineTransform.identity},
+                       completion:{complete in
+                        if complete {
+                            /*
+                            self.borderColor = self.originalBorderColor ?? self.borderColor
+                            self.changeIconColorToMatchBorder()
+                             */
+                        }
+        })
     }
     
     private func applyFieldNotValidAnimation() {
@@ -200,6 +241,7 @@ class SDFancyTextField: UIView {
     private var messageLabel = UILabel()
     private var originalBorderColor: UIColor?
     private var borderColorDefaultValue: UIColor = UIColor.lightGray
+    @IBInspectable var validColor: UIColor = UIColor.init(red: 15, green: 68, blue: 38, alpha: 1.0)
     @IBInspectable var errorColor: UIColor = UIColor.red
     @IBInspectable var allowAutoValidation: Bool = false
     @IBInspectable var borderColor: UIColor {
