@@ -110,6 +110,7 @@ class SDFancyTextField: UIView {
         for fancyTextField in SDFancyTextField.validationGroupsHashTable.allObjects {
             if fancyTextField.form == form {
                 if !fancyTextField.fieldIsValid {
+                    fancyTextField.applyFieldNotValidAnimation()
                     fancyTextField.textField.resignFirstResponder()
                     formIsValid = false
                     if withAnimation {
@@ -126,6 +127,17 @@ class SDFancyTextField: UIView {
             }
         }
         return formIsValid
+    }
+    
+    private func applyFieldNotValidAnimation() {
+        self.transform = CGAffineTransform(scaleX: 0.98, y: 0.98)
+        UIView.animate(withDuration: 1.5,
+                       delay: 0,
+                       usingSpringWithDamping: CGFloat(0.4),
+                       initialSpringVelocity: CGFloat(6.0),
+                       options: UIViewAnimationOptions.allowUserInteraction,
+                       animations: {self.transform = CGAffineTransform.identity},
+                       completion:nil)
     }
     
     class func validate(group: ValidationGroup) -> [ValidationResponse]? {
