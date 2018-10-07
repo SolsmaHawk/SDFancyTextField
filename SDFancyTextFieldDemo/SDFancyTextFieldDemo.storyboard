@@ -55,6 +55,8 @@
                                                         <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
                                                             <color key="value" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="form" value="form1"/>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="placeHolderText" value="Email"/>
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Form 1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l2h-ed-Rc9">
@@ -102,6 +104,7 @@
                                                         <userDefinedRuntimeAttribute type="boolean" keyPath="iconImageColorMatchesBorderColor" value="YES"/>
                                                         <userDefinedRuntimeAttribute type="boolean" keyPath="isSecureEntry" value="YES"/>
                                                         <userDefinedRuntimeAttribute type="string" keyPath="placeHolderText" value="Password"/>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="form" value="form1"/>
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xix-X6-Eee" customClass="SDFancyTextField" customModule="SDFancyTextField" customModuleProvider="target">
@@ -121,8 +124,20 @@
                                                             <color key="value" red="0.30185431239999999" green="0.54745078089999999" blue="0.81736385820000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="boolean" keyPath="isSecureEntry" value="YES"/>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="form" value="form1"/>
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G4L-BY-O0w">
+                                                    <rect key="frame" x="85" y="387" width="150" height="37"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="37" id="5VC-DJ-ChD"/>
+                                                        <constraint firstAttribute="width" constant="150" id="alH-Zz-rFv"/>
+                                                    </constraints>
+                                                    <state key="normal" title="Validate Form 1"/>
+                                                    <connections>
+                                                        <action selector="validateFormOneButtonPressed:" destination="X6h-mS-Fri" eventType="touchUpInside" id="Yqy-Dg-cdC"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="O06-oc-NTe" secondAttribute="trailing" constant="16" id="1NL-5n-eNM"/>
@@ -135,6 +150,7 @@
                                                 <constraint firstAttribute="trailing" secondItem="xix-X6-Eee" secondAttribute="trailing" constant="16" id="PBC-S4-mxy"/>
                                                 <constraint firstItem="wSd-KK-KMo" firstAttribute="top" secondItem="DoV-FQ-TG1" secondAttribute="bottom" constant="32" id="PfB-0E-pE9"/>
                                                 <constraint firstItem="xix-X6-Eee" firstAttribute="leading" secondItem="Qro-YE-eIm" secondAttribute="leading" constant="16" id="Pjn-p6-XSa"/>
+                                                <constraint firstItem="G4L-BY-O0w" firstAttribute="top" secondItem="xix-X6-Eee" secondAttribute="bottom" constant="8" id="QCc-I0-glZ"/>
                                                 <constraint firstItem="O06-oc-NTe" firstAttribute="top" secondItem="DoV-FQ-TG1" secondAttribute="bottom" constant="82" id="QiN-Aj-aJB"/>
                                                 <constraint firstItem="DoV-FQ-TG1" firstAttribute="top" secondItem="dit-JL-KPl" secondAttribute="bottom" constant="26" id="Snp-OQ-ucf"/>
                                                 <constraint firstItem="l2h-ed-Rc9" firstAttribute="top" secondItem="DoV-FQ-TG1" secondAttribute="bottom" constant="11" id="WZD-Vm-dBT"/>
@@ -148,6 +164,7 @@
                                                 <constraint firstItem="xix-X6-Eee" firstAttribute="top" secondItem="poU-0s-FcT" secondAttribute="bottom" constant="10" id="l7d-44-6Zg"/>
                                                 <constraint firstItem="O06-oc-NTe" firstAttribute="leading" secondItem="Qro-YE-eIm" secondAttribute="leading" constant="16" id="mRW-dq-ElK"/>
                                                 <constraint firstAttribute="trailing" secondItem="dit-JL-KPl" secondAttribute="trailing" constant="16" id="qNg-BT-Bgy"/>
+                                                <constraint firstItem="G4L-BY-O0w" firstAttribute="centerX" secondItem="xix-X6-Eee" secondAttribute="centerX" id="yyO-rH-bjr"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -168,7 +185,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RDh-KO-VVP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-123.75" y="21.654929577464788"/>
+            <point key="canvasLocation" x="-124.8" y="21.059113300492612"/>
         </scene>
     </scenes>
     <resources>

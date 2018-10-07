@@ -572,6 +572,9 @@ class SDFancyTextField: UIView {
     
     // MARK: Helper Methods
     
+    private func fieldNotAllowedToBeEmpty() -> Bool {
+        return self.quickValidationTypes?.contains(.NotEmpty) ?? false
+    }
     private func changeIconColorToMatchBorder() {
         if iconImageColorMatchesBorderColor {
             self.iconImage = self.iconImage?.withRenderingMode(.alwaysTemplate)
@@ -685,6 +688,9 @@ class SDFancyTextField: UIView {
     }
     
     private func queuedValidationErrorMessage() -> String? {
+        if self.fieldNotAllowedToBeEmpty() && (self.textField.text?.isEmpty ?? false) {
+            return "Cannot be empty"
+        }
         if let possibleErrorMessage = self.allFieldValidationErrorMessages()?.last {
             return possibleErrorMessage
         }
