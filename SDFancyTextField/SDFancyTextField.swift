@@ -572,6 +572,13 @@ class SDFancyTextField: UIView {
     
     // MARK: Helper Methods
     
+    private func changeIconColorToMatchBorder() {
+        if iconImageColorMatchesBorderColor {
+            self.iconImage = self.iconImage?.withRenderingMode(.alwaysTemplate)
+            self.iconImageView.tintColor = self.borderColor
+        }
+    }
+    
     private func changeBorderColor(textDidChange: Bool? = nil, editingEnded: Bool? = nil, editingBegan: Bool? = nil, valid: Bool? = nil, textIsEmpty: Bool? = nil) {
         if textDidChange ?? false {
             if textIsEmpty ?? false {
@@ -610,6 +617,7 @@ class SDFancyTextField: UIView {
                 }
             }
         }
+        changeIconColorToMatchBorder()
     }
     
     private func animateFieldIsNotValidMessage(valid: Bool, textIsEmpty: Bool) {
