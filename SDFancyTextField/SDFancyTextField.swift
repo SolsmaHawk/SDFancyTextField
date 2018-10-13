@@ -432,6 +432,7 @@ class SDFancyTextField: UIView {
         self.setupImageHolderViewAndImage()
         self.setupMessageLabel()
         self.setupActions()
+        self.addTapRecognizer()
     }
     
     private func setupMainView() {
@@ -444,6 +445,11 @@ class SDFancyTextField: UIView {
         self.layer.shadowOpacity = 0.0
         self.layer.shadowOffset = CGSize(width: 1.5, height: 1.5)
         self.layer.shadowRadius = 1
+    }
+    
+    private func addTapRecognizer() {
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+        self.addGestureRecognizer(tapRecognizer)
     }
     
     private func addDividerView() {
@@ -530,8 +536,12 @@ class SDFancyTextField: UIView {
     
     // MARK: Text Field Actions
     
+    @objc func handleTap(_ sender: UITapGestureRecognizer) {
+        self.textField.becomeFirstResponder()
+    }
+    
     @objc private func textFieldEditingDidBegin(_ textField: UITextField) {
-        if !self.allowAutoValidation {
+        if !self.allowAutoValidation || self.fieldNotAllowedToBeEmpty() {
             self.animateFieldIsNotValidMessage(valid: false, textIsEmpty: true)
         }
         changeBorderColor(editingBegan:true)
