@@ -10,6 +10,8 @@ import UIKit
 
 class SDFancyTextFieldDemoTableViewController: UITableViewController {
 
+    @IBOutlet var form3Field1: SDFancyTextField!
+    @IBOutlet var form3Field2: SDFancyTextField!
     @IBOutlet var cityField: SDFancyTextField!
     @IBOutlet var apartmentField: SDFancyTextField!
     @IBOutlet var addressField: SDFancyTextField!
@@ -56,22 +58,48 @@ class SDFancyTextFieldDemoTableViewController: UITableViewController {
         /* FORM TWO */
         addressField.quickValidationTypes = [.NotEmpty]
         cityField.quickValidationTypes = [.NotEmpty]
-        apartmentField.quickValidationTypes = [.CanBeEmpty]
+        apartmentField.quickValidationTypes = [.CanBeEmpty] // set a field to 'CanBeEmpty' if its an optional field and you want it to be animated with the form validation
         phoneNumberField.quickValidationTypes = [.NotEmpty]
+        
+        /* FORM THREE */
+        form3Field1.quickValidationTypes = [.NotEmpty]
+        form3Field1.allowAutoValidation = true
+        form3Field2.quickValidationTypes = [.NotEmpty]
+        form3Field2.allowAutoValidation = true
+        form3Field1.fieldValidationClosure = {textFieldText in
+            if CharacterSet.decimalDigits.isSuperset(of: CharacterSet(charactersIn: textFieldText)) {
+                return (true,nil)
+            }
+            return (false, "Must only contain numbers")
+        }
+        form3Field2.fieldValidationClosure = {textFieldText in
+            let numbersRange = textFieldText.rangeOfCharacter(from: .decimalDigits)
+            let hasNumbers = (numbersRange != nil)
+            if !hasNumbers {
+                return (true,nil)
+            }
+            return (false, "Cannot contain any numbers")
+        }
+        
     }
 
     @IBAction func validateFormOneButtonPressed(_ sender: Any) {
-        if !SDFancyTextField.validate(form: "form1", withAnimation: true) {
-            
-        }
+        let _ = SDFancyTextField.validate(form: "form1", withAnimation: true)
     }
     
     @IBAction func validateFormTwoButtonPressed(_ sender: Any) {
-        if !SDFancyTextField.validate(form: "form2", withAnimation: true) {
-            
-        }
+        let _ = SDFancyTextField.validate(form: "form2", withAnimation: true)
     }
     
+    @IBAction func validateFormThreeButtonPressed(_ sender: Any) {
+        let _ = SDFancyTextField.validate(form: "form3", withAnimation: true)
+    }
+    
+    @IBAction func validateAllFormsButtonPressed(_ sender: Any) {
+        let _ = SDFancyTextField.validate(form: "form1", withAnimation: true)
+        let _ = SDFancyTextField.validate(form: "form2", withAnimation: true)
+        let _ = SDFancyTextField.validate(form: "form3", withAnimation: true)
+    }
     override func viewWillAppear(_ animated: Bool) {
         
     }
