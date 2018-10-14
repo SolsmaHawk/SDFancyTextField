@@ -22,7 +22,7 @@ pod 'SDFancyTextField'
 
 ## Author
 
-SolsmaHawk, solsma@me.com
+John Solsma (Solsma Dev Inc.), solsma@me.com
 
 ## License
 
