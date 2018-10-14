@@ -48,9 +48,11 @@ class SDFancyTextFieldDemoTableViewController: UITableViewController {
         
         /* A common text form scenario is retyping a password and making sure it matches a previous password field. In the field validation closure below you can see how a second field can be made to match another text field's text. If either text field is changed this text field will be automatically validated to make sure both fields contain the exact same text. */
         self.retypePasswordField.quickValidationTypes = [.NotEmpty]
-        self.retypePasswordField.fieldValidationClosure = {textFieldText in
-            if textFieldText == self.everythingField.textField.text {
-                return (true,nil)
+        self.retypePasswordField.fieldValidationClosure = {[weak self] textFieldText in
+            if let strongSelf = self {
+                if textFieldText == strongSelf.everythingField.textField.text {
+                    return (true,nil)
+                }
             }
             return (false, "Passwords must match")
         }
