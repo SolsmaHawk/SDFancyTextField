@@ -30,7 +30,7 @@ TODO: Add long description of the pod here.
 
   s.ios.deployment_target = '8.0'
 
-  s.source_files = 'SDFancyTextField/Classes/**/*'
+  s.source_files = 'SDFancyTextField/SDFancyTextField/SDFancyTextField.swift'
   
   # s.resource_bundles = {
   #   'SDFancyTextField' => ['SDFancyTextField/Assets/*.png']
