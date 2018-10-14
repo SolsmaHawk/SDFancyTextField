@@ -8,6 +8,19 @@
 
 import UIKit
 
+extension UIView {
+    var parentViewController: UIViewController? {
+        var parentResponder: UIResponder? = self
+        while parentResponder != nil {
+            parentResponder = parentResponder!.next
+            if let viewController = parentResponder as? UIViewController {
+                return viewController
+            }
+        }
+        return nil
+    }
+}
+
 @IBDesignable
 class SDFancyTextField: UIView {
     
@@ -113,7 +126,7 @@ class SDFancyTextField: UIView {
     class func validate(form: String, withAnimation: Bool) -> Bool {
         var formIsValid = true
         for fancyTextField in SDFancyTextField.validationGroupsHashTable.allObjects {
-            if fancyTextField.form == form {
+            if fancyTextField.form == form && fancyTextField.fieldIsVisble() {
                 if !fancyTextField.fieldIsValid {
                     fancyTextField.applyFieldNotValidAnimation()
                     fancyTextField.textField.resignFirstResponder()
@@ -646,6 +659,13 @@ class SDFancyTextField: UIView {
     }
     
     // MARK: Helper Methods
+    
+    private func fieldIsVisble() -> Bool {
+        if self.parentViewController?.viewIfLoaded?.window != nil {
+            return true
+        }
+        return false
+    }
     
     private func fieldNotAllowedToBeEmpty() -> Bool {
         return self.quickValidationTypes?.contains(.NotEmpty) ?? false
