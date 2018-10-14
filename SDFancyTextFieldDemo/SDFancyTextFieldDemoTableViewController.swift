@@ -24,7 +24,7 @@ class SDFancyTextFieldDemoTableViewController: UITableViewController {
 
         // Most properties can be set during initialization or in Interface Builder
         
-        // Set email field to allow auto validation *can also be set in IB*
+        // Set email field to allow auto validation * can also be set in IB *
         self.validEmailField.allowAutoValidation = true
         // Set quick validation type(s) for email field
         self.validEmailField.quickValidationTypes = [.ValidEmail, .NotEmpty]
@@ -34,8 +34,8 @@ class SDFancyTextFieldDemoTableViewController: UITableViewController {
         // You can set multiple quick validation types to a field
         self.everythingField.quickValidationTypes = [.ContainsNumber, .SpecialCharacter, .UppercaseLetter, .NotEmpty]
         self.retypePasswordField.allowAutoValidation = true
-        
-        /* Using a field validation closure you can set a completely custom validation type. This field validation closure checks the field to see if contains the character sequence 'test' and also that it has a length of 7 or greater. Field validation closures return a tuple of (Bool, String). The Bool indicates the success of the validation closure and the String is the message displayed within the text field */
+
+        /* Using a field validation closure you can set a completely custom validation type for a single field. This field validation closure checks the field to see if contains the character sequence 'test' and also that it has a length of 7 or greater. Field validation closures return a tuple of (Bool, String). The Bool indicates the success of the validation closure and the String is the message displayed within the text field */
         self.everythingField.fieldValidationClosure = {textFieldText in
             if (textFieldText.lowercased().contains("test") && textFieldText.count >= 7) {
                 return (true, nil)
@@ -46,11 +46,28 @@ class SDFancyTextFieldDemoTableViewController: UITableViewController {
             return (false, "Length must be 7 or greater")
         }
         
-        /* A common text form scenario is retyping a password and making sure it matches a previous password field. In the field validation closure below you can see how a second field can be made to match another text field's text. If either text field is changed this text field will be automatically validated to make sure both fields contain the exact same text. */
+        /* You can add your own group validation similar to Quick Validations that can easily be appled to multiple fields. The validation below adds a check for the word 'new' in a text field. In order to apply it to your field, an append statement below adds it in addition to the quick validations already added to the field */
+         
+        /*
+         SDFancyTextField.addValidationFor(group: SDFancyTextField.ValidationGroup.init(name: "mustContainNew"), with: {textFieldText in
+         if textFieldText.lowercased().contains("new") {
+         return (true,nil)
+         }
+         return (false,"Must contain 'new'")
+         })
+         */
+         /*
+         // To ADD it to existing validations - self.everythingField.addValidationForGroup(name: "mustContainNew")
+         // To REPLACE existing validations - self.everythingField.validationGroups = [SDFancyTextField.ValidationGroup.init(name: "mustContainNew")]
+         */
+        
+        /* A common text form scenario is retyping a password and making sure it matches a previous password field. In the field validation closure below you can see how a second field can be made to match another text field's text. If either text field is changed this text field will be automatically validated to make sure both fields contain the exact same text. NOTE: To avoid reference cycles, make sure to reference WEAK self within validation closures */
         self.retypePasswordField.quickValidationTypes = [.NotEmpty]
-        self.retypePasswordField.fieldValidationClosure = {textFieldText in
-            if textFieldText == self.everythingField.textField.text {
-                return (true,nil)
+        self.retypePasswordField.fieldValidationClosure = { /* Weak reference to self */ [weak self] textFieldText in
+            if let strongSelf = self { /* Optional binding to check self */
+                if textFieldText == strongSelf.everythingField.textField.text {
+                    return (true,nil)
+                }
             }
             return (false, "Passwords must match")
         }
@@ -84,6 +101,7 @@ class SDFancyTextFieldDemoTableViewController: UITableViewController {
     }
 
     @IBAction func validateFormOneButtonPressed(_ sender: Any) {
+        // SDFancyTextField.validate(form:String) evalutates to a Bool - you can use it or ignore the result as demonstrated below
         let _ = SDFancyTextField.validate(form: "form1", withAnimation: true)
     }
     
