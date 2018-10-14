@@ -659,6 +659,13 @@ class SDFancyTextField: UIView {
     }
     
     // MARK: Helper Methods
+
+    public func addValidationForGroup(name: String) {
+        if self.validationGroups == nil {
+            self.validationGroups = [SDFancyTextField.ValidationGroup]()
+        }
+        self.validationGroups?.append(SDFancyTextField.ValidationGroup.init(name: name))
+    }
     
     private func fieldIsVisble() -> Bool {
         if self.parentViewController?.viewIfLoaded?.window != nil {
