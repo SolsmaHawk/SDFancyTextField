@@ -46,17 +46,17 @@ class SDFancyTextFieldDemoTableViewController: UITableViewController {
             return (false, "Length must be 7 or greater")
         }
         
-        /* *** You can add your own group validation similar to Quick Validations that can easily be appled to multiple fields. The validation below adds a check for the word 'new' in a text field. In order to apply it to your field, an append statement below adds it in addition to the quick validations already added to the field **
+        /* You can add your own group validation similar to Quick Validations that can easily be appled to multiple fields. The validation below adds a check for the word 'new' in a text field. In order to apply it to your field, an append statement below adds it in addition to the quick validations already added to the field */
          
-         
+         /*
          SDFancyTextField.addValidationFor(group: SDFancyTextField.ValidationGroup.init(name: "mustContainNew"), with: {textFieldText in
          if textFieldText.lowercased().contains("new") {
          return (true,nil)
          }
          return (false,"Must contain 'new'")
          })
- 
-         
+         */
+         /*
          // To ADD it to existing validations - self.everythingField.validationGroups?.append(SDFancyTextField.ValidationGroup.init(name: "mustContainNew"))
          // To REPLACE existing validations - self.everythingField.validationGroups = [SDFancyTextField.ValidationGroup.init(name: "mustContainNew")]
          */
@@ -101,6 +101,7 @@ class SDFancyTextFieldDemoTableViewController: UITableViewController {
     }
 
     @IBAction func validateFormOneButtonPressed(_ sender: Any) {
+        // SDFancyTextField.validate(form:String) evalutates to a Bool - you can use it or ignore the result as demonstrated below
         let _ = SDFancyTextField.validate(form: "form1", withAnimation: true)
     }
     
