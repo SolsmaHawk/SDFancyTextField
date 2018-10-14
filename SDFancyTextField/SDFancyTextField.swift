@@ -125,7 +125,7 @@ class SDFancyTextField: UIView {
     
     class func validate(form: String, withAnimation: Bool) -> Bool {
         var formIsValid = true
-        for fancyTextField in SDFancyTextField.validationGroupsHashTable.allObjects {
+        for fancyTextField in SDFancyTextField.validationFormsHashTable.allObjects {
             if fancyTextField.form == form && fancyTextField.fieldIsVisble() {
                 if !fancyTextField.fieldIsValid {
                     fancyTextField.applyFieldNotValidAnimation()
