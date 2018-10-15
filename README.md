@@ -5,6 +5,10 @@
 [![License](https://img.shields.io/cocoapods/l/SDFancyTextField.svg?style=flat)](https://cocoapods.org/pods/SDFancyTextField)
 [![Platform](https://img.shields.io/cocoapods/p/SDFancyTextField.svg?style=flat)](https://cocoapods.org/pods/SDFancyTextField)
 
+## Description
+
+SDFancyTextField is a UIView subclass that replicates the functionality of a UITextField with many added features including automated field-validation and unique animations. UITextField has always been a little… plain. With SDFancyTextField you can easily add an interactive textfield in code or using interface builder. Using interface builder, an SDFancyTextField can be placed in your view and entirely customized within IB. In only a couple lines of code you can have the textfield setup to automatically validate and organize textfields into forms that can be validated all at once (all with fancy animations 😎).
+
 ## Example
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
