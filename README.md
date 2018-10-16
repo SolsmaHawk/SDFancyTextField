@@ -17,6 +17,8 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 ## Requirements
 
+Swift 4
+
 ## Installation
 
 SDFancyTextField is available through [CocoaPods](https://cocoapods.org). To install
@@ -26,6 +28,11 @@ it, simply add the following line to your Podfile:
 pod 'SDFancyTextField'
 ```
 
+## How to use
+
+### Interface Builder
+![](Screenshots/SDFancyTextField_example1.png)
+The easiest way to create a ```SDFancyTextField``` is to drag and drop a ```UIView``` in interface builder and set its class to ```SDFancyTextField```.
 ## Author
 
 John Solsma (Solsma Dev Inc.), solsma@me.com
