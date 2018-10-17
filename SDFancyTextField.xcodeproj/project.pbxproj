@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		31145A022173F9D300F21D3F /* SDFancyTextField.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 31145A012173F9D300F21D3F /* SDFancyTextField.podspec */; };
 		31145A042173F9E000F21D3F /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 31145A032173F9E000F21D3F /* README.md */; };
-		31145A06217404D600F21D3F /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 31145A05217404D600F21D3F /* LICENSE */; };
+		318CF0D521779B9D000D0B70 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 318CF0D421779B9D000D0B70 /* LICENSE */; };
 		318E5E83213F4EFE0018DB99 /* SDFancyTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318E5E82213F4EFE0018DB99 /* SDFancyTextField.swift */; };
 		31DA174F2133872E00BF2459 /* SDFancyTextFieldDemo.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 31DA174E2133872E00BF2459 /* SDFancyTextFieldDemo.storyboard */; };
 		31DA1751213387B800BF2459 /* SDFancyTextFieldDemoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31DA1750213387B800BF2459 /* SDFancyTextFieldDemoTableViewController.swift */; };
@@ -21,7 +21,7 @@
 /* Begin PBXFileReference section */
 		31145A012173F9D300F21D3F /* SDFancyTextField.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SDFancyTextField.podspec; sourceTree = SOURCE_ROOT; };
 		31145A032173F9E000F21D3F /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
-		31145A05217404D600F21D3F /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE; path = ../../../SDFancyTextField/LICENSE; sourceTree = "<group>"; };
+		318CF0D421779B9D000D0B70 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = SOURCE_ROOT; };
 		318E5E82213F4EFE0018DB99 /* SDFancyTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SDFancyTextField.swift; sourceTree = "<group>"; };
 		31DA174E2133872E00BF2459 /* SDFancyTextFieldDemo.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SDFancyTextFieldDemo.storyboard; sourceTree = "<group>"; };
 		31DA1750213387B800BF2459 /* SDFancyTextFieldDemoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDFancyTextFieldDemoTableViewController.swift; sourceTree = "<group>"; };
@@ -77,8 +77,8 @@
 				31F4348A21115AFE003F8A34 /* Assets.xcassets */,
 				31F4348C21115AFE003F8A34 /* LaunchScreen.storyboard */,
 				31145A012173F9D300F21D3F /* SDFancyTextField.podspec */,
+				318CF0D421779B9D000D0B70 /* LICENSE */,
 				31145A032173F9E000F21D3F /* README.md */,
-				31145A05217404D600F21D3F /* LICENSE */,
 				31F4348F21115AFE003F8A34 /* Info.plist */,
 			);
 			path = SDFancyTextFieldDemo;
@@ -143,7 +143,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				31145A06217404D600F21D3F /* LICENSE in Resources */,
+				318CF0D521779B9D000D0B70 /* LICENSE in Resources */,
 				31F4348E21115AFE003F8A34 /* LaunchScreen.storyboard in Resources */,
 				31145A022173F9D300F21D3F /* SDFancyTextField.podspec in Resources */,
 				31145A042173F9E000F21D3F /* README.md in Resources */,
@@ -291,7 +291,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 38XTM9YA6F;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = SDFancyTextFieldDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Solsma-Dev.SDFancyTextField";
@@ -306,7 +306,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 38XTM9YA6F;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = SDFancyTextFieldDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Solsma-Dev.SDFancyTextField";
