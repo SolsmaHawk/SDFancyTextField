@@ -22,17 +22,17 @@ extension UIView {
 }
 
 @IBDesignable
-class SDFancyTextField: UIView {
+public class SDFancyTextField: UIView {
     
     // MARK: Form Validation
     
-    typealias TextFieldValidationClosure = ((_ textFieldText: String) -> (success: Bool, errorMessage: String?))
+    public typealias TextFieldValidationClosure = ((_ textFieldText: String) -> (success: Bool, errorMessage: String?))
     static private var validationFormsHashTable = NSHashTable<SDFancyTextField>(options: .weakMemory)
     static private var validationGroupsHashTable = NSHashTable<SDFancyTextField>(options: .weakMemory)
     static private var singularValidationsHashTable = NSHashTable<SDFancyTextField>(options: .weakMemory)
     static private var groupValidationClosures: [String:[TextFieldValidationClosure]]?
     
-    struct ValidationGroup {
+    public struct ValidationGroup {
         var name: String
     }
     
@@ -96,7 +96,7 @@ class SDFancyTextField: UIView {
                 if textFieldText.isEmpty {
                     return (false, "Cannot be empty")
                 }
-                    return (true, nil)
+                return (true, nil)
             })
         case .ValidEmail:
             SDFancyTextField.addValidationFor(group: ValidationGroup.init(name: type.rawValue), with: { textFieldText in
@@ -112,7 +112,7 @@ class SDFancyTextField: UIView {
         }
     }
     
-    class func addValidationFor(group:ValidationGroup, with validation: @escaping TextFieldValidationClosure) {
+    public class func addValidationFor(group:ValidationGroup, with validation: @escaping TextFieldValidationClosure) {
         if groupValidationClosures == nil {
             groupValidationClosures = [String:[TextFieldValidationClosure]]()
         }
@@ -123,7 +123,7 @@ class SDFancyTextField: UIView {
         }
     }
     
-    class func validate(form: String, withAnimation: Bool) -> Bool {
+    public class func validate(form: String, withAnimation: Bool) -> Bool {
         var formIsValid = true
         for fancyTextField in SDFancyTextField.validationFormsHashTable.allObjects {
             if fancyTextField.form == form && fancyTextField.fieldIsVisble() {
@@ -181,8 +181,8 @@ class SDFancyTextField: UIView {
                        completion:{complete in
                         if complete {
                             /*
-                            self.borderColor = self.originalBorderColor ?? self.borderColor
-                            self.changeIconColorToMatchBorder()
+                             self.borderColor = self.originalBorderColor ?? self.borderColor
+                             self.changeIconColorToMatchBorder()
                              */
                         }
         })
@@ -267,11 +267,11 @@ class SDFancyTextField: UIView {
             if self.originalBorderColor == nil {
                 self.originalBorderColor = newValue
             }
-                self.borderColorDefaultValue = newValue
-                self.dividerView?.backgroundColor = newValue
-                self.backgroundColor = newValue
+            self.borderColorDefaultValue = newValue
+            self.dividerView?.backgroundColor = newValue
+            self.backgroundColor = newValue
         } get {
-                return self.backgroundColor ?? self.borderColorDefaultValue
+            return self.backgroundColor ?? self.borderColorDefaultValue
         }
     }
     
@@ -418,13 +418,13 @@ class SDFancyTextField: UIView {
     
     var fieldValidationErrors: [String]?
     
-
+    
     // MARK: Init Methods
     
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
-
+    
     convenience init(with frame: CGRect = CGRect.init(x: 0, y: 0, width: 0, height: 0), iconImage: UIImage? = nil, cornerRadius: CGFloat = 10, borderColor: UIColor = UIColor.lightGray, shadowColor: UIColor = UIColor.black, fieldBackgroundColor: UIColor = UIColor.white) {
         self.init(frame: frame)
         self.iconImage = iconImage
@@ -494,7 +494,7 @@ class SDFancyTextField: UIView {
             self.iconImage = self.iconImage?.withRenderingMode(.alwaysTemplate)
             self.iconImageView.tintColor = self.borderColor
         }
- 
+        
         
         NSLayoutConstraint(item: self.iconImageView, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: self.imageHolderView, attribute: NSLayoutAttribute.width, multiplier: 1.0, constant: 0).isActive = true
         NSLayoutConstraint(item: self.iconImageView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: self.imageHolderView, attribute: NSLayoutAttribute.height, multiplier: 1.0, constant: 0.0).isActive = true
@@ -583,13 +583,13 @@ class SDFancyTextField: UIView {
                        initialSpringVelocity: CGFloat(0.0),
                        options: UIViewAnimationOptions.allowUserInteraction,
                        animations: {
-//                        if !self.fieldIsValid && !(self.textField.text ?? "").isEmpty && self.allowAutoValidation {
-//                            self.borderColor = self.errorColor
-//                        } else {
-//                            if let possibleSelectedColor = self.selectedColor {
-//                                self.borderColor = possibleSelectedColor
-//                            }
-//                        }
+                        //                        if !self.fieldIsValid && !(self.textField.text ?? "").isEmpty && self.allowAutoValidation {
+                        //                            self.borderColor = self.errorColor
+                        //                        } else {
+                        //                            if let possibleSelectedColor = self.selectedColor {
+                        //                                self.borderColor = possibleSelectedColor
+                        //                            }
+                        //                        }
                         
         },
                        completion: nil)
@@ -613,14 +613,14 @@ class SDFancyTextField: UIView {
             animateFieldIsNotValidMessage(valid: self.fieldIsValid, textIsEmpty: (textField.text ?? "").isEmpty)
         }
         self.animateOtherFancyTextFields()
-            self.dividerView!.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
-            UIView.animate(withDuration: 1.0,
-                           delay: 0,
-                           usingSpringWithDamping: CGFloat(0.20),
-                           initialSpringVelocity: CGFloat(6.0),
-                           options: UIViewAnimationOptions.allowUserInteraction,
-                           animations: {self.dividerView!.transform = CGAffineTransform.identity},
-                           completion:nil)
+        self.dividerView!.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+        UIView.animate(withDuration: 1.0,
+                       delay: 0,
+                       usingSpringWithDamping: CGFloat(0.20),
+                       initialSpringVelocity: CGFloat(6.0),
+                       options: UIViewAnimationOptions.allowUserInteraction,
+                       animations: {self.dividerView!.transform = CGAffineTransform.identity},
+                       completion:nil)
     }
     
     @objc private func textFieldEditingDidEnd(_ textField: UITextField) {
@@ -641,25 +641,25 @@ class SDFancyTextField: UIView {
                        animations: {
                         self.textField.transform = CGAffineTransform.identity},
                        completion: nil)
-
-            UIView.animate(withDuration: 0.5,
-                           delay: 0,
-                           usingSpringWithDamping: CGFloat(0.00),
-                           initialSpringVelocity: CGFloat(0.0),
-                           options: UIViewAnimationOptions.allowUserInteraction,
-                           animations: {
-//                            if !self.fieldIsValid && !(self.textField.text ?? "").isEmpty && self.allowAutoValidation {
-//                                self.borderColor = self.errorColor
-//                            } else {
-//                                if let possibleOriginalColor = self.originalBorderColor {
-//                                    self.borderColor = possibleOriginalColor
-//                                }
-//                            }
-            },completion: nil)
+        
+        UIView.animate(withDuration: 0.5,
+                       delay: 0,
+                       usingSpringWithDamping: CGFloat(0.00),
+                       initialSpringVelocity: CGFloat(0.0),
+                       options: UIViewAnimationOptions.allowUserInteraction,
+                       animations: {
+                        //                            if !self.fieldIsValid && !(self.textField.text ?? "").isEmpty && self.allowAutoValidation {
+                        //                                self.borderColor = self.errorColor
+                        //                            } else {
+                        //                                if let possibleOriginalColor = self.originalBorderColor {
+                        //                                    self.borderColor = possibleOriginalColor
+                        //                                }
+                        //                            }
+        },completion: nil)
     }
     
     // MARK: Helper Methods
-
+    
     public func addValidationForGroup(name: String) {
         if self.validationGroups == nil {
             self.validationGroups = [SDFancyTextField.ValidationGroup]()
@@ -735,9 +735,9 @@ class SDFancyTextField: UIView {
                            initialSpringVelocity: CGFloat(0.0),
                            options: UIViewAnimationOptions.allowUserInteraction,
                            animations: {
-//                            if let originalBorderColor = self.originalBorderColor {
-//                                self.borderColor = originalBorderColor
-//                            }
+                            //                            if let originalBorderColor = self.originalBorderColor {
+                            //                                self.borderColor = originalBorderColor
+                            //                            }
             },
                            completion: nil)
         } else {
@@ -750,7 +750,7 @@ class SDFancyTextField: UIView {
                                initialSpringVelocity: CGFloat(0.0),
                                options: UIViewAnimationOptions.allowUserInteraction,
                                animations: {
-                               // self.borderColor = UIColor.red
+                                // self.borderColor = UIColor.red
                                 
                 },
                                completion: nil)
@@ -761,11 +761,11 @@ class SDFancyTextField: UIView {
                                initialSpringVelocity: CGFloat(0.0),
                                options: UIViewAnimationOptions.allowUserInteraction,
                                animations: {
-//                                if self.fancyTextFieldIsSelected {
-//                                    self.borderColor = self.selectedColor ?? self.originalBorderColor ?? self.borderColor
-//                                } else {
-//                                    self.borderColor = self.originalBorderColor!
-//                                }
+                                //                                if self.fancyTextFieldIsSelected {
+                                //                                    self.borderColor = self.selectedColor ?? self.originalBorderColor ?? self.borderColor
+                                //                                } else {
+                                //                                    self.borderColor = self.originalBorderColor!
+                                //                                }
                 },
                                completion: nil)
             }
@@ -819,14 +819,14 @@ class SDFancyTextField: UIView {
     
     // MARK: Interface Builder Setup
     
-    override func awakeFromNib() {
+    public override func awakeFromNib() {
         self.setup()
     }
-    override func prepareForInterfaceBuilder() {
+    public override func prepareForInterfaceBuilder() {
         self.setup()
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 }
